@@ -1,0 +1,61 @@
+{
+    "components": {
+        "Select": {
+            "meta": {
+                "parameters": {
+                    "borderRadius": {
+                        "type": "number"
+                    }
+                }
+            },
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "labelFontWeight": "400",
+                        "borderRadius": 10
+                    },
+                    "variantGroups": {
+                        "status": {
+                            "basic": {
+                                "backgroundColor": "#f6f6f6",
+                                "borderColor": "#ddd",
+                                "borderRadius": 10
+                            }
+                        },
+                        "size": {
+                            "small": {
+                                "paddingVertical": 3,
+                                "textFontWeight": "400",
+                                "borderRadius": 10
+                            },
+                            "medium": {
+                                "paddingVertical": 7,
+                                "textFontWeight": "400",
+                                "borderRadius": 10
+                            },
+                            "large": {
+                                "paddingVertical": 11,
+                                "textFontWeight": "400",
+                                "borderRadius": 10
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "SelectOption": {
+            "meta": {
+                "parameters": {
+                    "backgroundColor": "white"
+                }
+            },
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "textFontWeight": "400"
+                    }
+                }
+            }
+        }
+    }
+}
