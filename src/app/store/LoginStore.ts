@@ -1,5 +1,4 @@
 import {makeAutoObservable} from 'mobx';
-import {AlertActionType} from '../../components/Alert/AlertAction';
 import {AlertType} from '../../components/Alert/AlertPopup';
 import {AlertMessage} from '../../components/Layout/BaseLayoutView';
 import AuthServices from '../../services/auth';
@@ -27,7 +26,8 @@ export class LoginStore {
       const data = await AuthServices.login(this.email, this.password);
       this.logingIn = false;
       if (data.success) {
-        console.log('Login succesfull');
+        this.isAuthorized = true;
+        return data;
       } else {
         this.error = {
           title: 'Ocurrió un error',
@@ -36,6 +36,7 @@ export class LoginStore {
           showIcon: true,
           actions: [{label: 'Cerrar'}],
         };
+        return null;
       }
     } else {
       this.logingIn = false;
@@ -46,6 +47,7 @@ export class LoginStore {
         showIcon: true,
         actions: [{label: 'Cerrar'}],
       };
+      return null;
     }
   };
 
