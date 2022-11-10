@@ -8,6 +8,7 @@ import {SignupController, SignupViewModel} from './app/modules/auth';
 import {ProfileController, ProfileViewModel} from './app/modules/profile';
 
 import {default as theme} from './../custom-theme.json';
+import {PatientsController} from './app/modules/patients';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,8 @@ const TabNavigation = () => {
       viewModel={new ProfileViewModel(authStore, profileStore)}
     />
   );
+
+  const PatientsScreen = () => <PatientsController />;
 
   return (
     <Tab.Navigator
@@ -57,7 +60,7 @@ const TabNavigation = () => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={SignupScreen}
+        component={PatientsScreen}
       />
       <Tab.Screen
         name="dates"

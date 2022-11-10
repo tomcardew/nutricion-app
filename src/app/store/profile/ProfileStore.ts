@@ -36,7 +36,7 @@ export class ProfileStore {
     this.alert = null;
     this.alert = {
       title: 'Cerrar sesión',
-      message: '¿Estás seguro de cerrar la sesión?',
+      message: '¿Estás seguro(a) de cerrar la sesión?',
       showIcon: true,
       type: AlertType.Warning,
       actions: [

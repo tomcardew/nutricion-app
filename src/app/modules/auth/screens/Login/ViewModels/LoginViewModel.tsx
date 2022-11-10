@@ -23,25 +23,12 @@ class LoginViewModel {
   };
 
   login = async () => {
-    this.authStore.setToken('XD');
-    this.authStore.setUser({
-      nombre: 'Panfilo Panfilesco',
-      urlFoto: 'https://picsum.photos/1000',
-      activo: true,
-      email: '',
-      esAdministrador: false,
-      fechaNacimiento: new Date(),
-      genero: '',
-      idUsuario: '',
-      seccion_ejercicios: false,
-      tempToken: '',
-    });
-    // const data = await this.loginStore.login();
-    // if (this.loginStore.isAuthorized == true) {
-    //   this.authStore.setToken(data.token)
-    //   this.authStore.setUser(data.user)
-    // this.navigation.navigate(ScreenNames.Dashboard.toString());
-    // }
+    const data = await this.loginStore.login();
+    if (this.loginStore.isAuthorized == true) {
+      this.authStore.setToken(data.token);
+      this.authStore.setUser(data.user);
+      this.navigation.navigate(ScreenNames.Dashboard.toString());
+    }
   };
 
   goToRegister = () => {
