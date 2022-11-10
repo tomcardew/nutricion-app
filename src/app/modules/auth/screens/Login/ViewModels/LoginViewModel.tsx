@@ -1,26 +1,34 @@
 import {useNavigation} from '@react-navigation/native';
 import {LoginStore} from '../../../../../store/LoginStore';
 import ScreenNames from '../../../../../../constants/Screens';
+import {AuthStore} from '../../../../../store/AuthStore';
 
 class LoginViewModel {
-  store: LoginStore;
+  loginStore: LoginStore;
+  authStore: AuthStore;
   navigation: any;
 
-  constructor(store: LoginStore) {
-    this.store = store;
+  constructor(loginStore: LoginStore, authStore: AuthStore) {
+    this.loginStore = loginStore;
+    this.authStore = authStore;
     this.navigation = useNavigation();
   }
 
   didChangeEmail = (newValue: string) => {
-    this.store.setEmail(newValue);
+    this.loginStore.setEmail(newValue);
   };
 
   didChangePassword = (newValue: string) => {
-    this.store.setPassword(newValue);
+    this.loginStore.setPassword(newValue);
   };
 
-  login = () => {
-    this.store.login();
+  login = async () => {
+    const data = await this.loginStore.login();
+    if (this.loginStore.isAuthorized == true) {
+      this.authStore.setToken(data.token);
+      this.authStore.setUser(data.user);
+      this.navigation.navigate(ScreenNames.Dashboard.toString());
+    }
   };
 
   goToRegister = () => {
@@ -32,7 +40,7 @@ class LoginViewModel {
   };
 
   dismissAlert = () => {
-    this.store.error = null;
+    this.loginStore.error = null;
   };
 }
 

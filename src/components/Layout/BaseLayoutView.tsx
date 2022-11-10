@@ -7,10 +7,10 @@ import {
   ScrollView,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
-import {default as theme} from '../../../custom-theme.json';
+import { default as theme } from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
-import AlertPopup, {AlertType} from '../Alert/AlertPopup';
-import {AlertAction} from '../Alert/AlertAction';
+import AlertPopup, { AlertType } from '../Alert/AlertPopup';
+import { AlertAction } from '../Alert/AlertAction';
 
 interface Props {
   title?: string;
@@ -43,8 +43,8 @@ const BaseLayoutView = ({
   loadingMessage,
   alert,
   showBackButton = true,
-  onBackAction = () => {},
-  onAlertDismiss = () => {},
+  onBackAction = () => { },
+  onAlertDismiss = () => { },
 }: Props) => {
   const content = () => (
     <View style={styles.content}>
