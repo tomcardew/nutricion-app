@@ -10,7 +10,7 @@ interface Props {
 
 const PatientsController = observer(({viewModel}: Props) => {
   useEffect(() => {
-    viewModel.patientsStore.load();
+    viewModel.load();
   }, []);
 
   return (
@@ -27,6 +27,7 @@ const PatientsController = observer(({viewModel}: Props) => {
         query={viewModel.patientsStore.query}
         didChangeQuery={undefined}
         onPatientPress={viewModel.goToPatient}
+        onReload={viewModel.load}
       />
     </BaseLayoutView>
   );

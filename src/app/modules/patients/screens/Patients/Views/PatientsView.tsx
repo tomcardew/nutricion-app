@@ -3,12 +3,14 @@ import {StyleSheet, View, Dimensions, Image, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SearchBar} from '../../../../../../components/Inputs';
 import MyPatient, {Patient} from './MyPatient';
+import EmptyView from '../../../../../../components/EmptyView';
 
 interface Props {
   query: string;
   data: Patient[];
   onPatientPress?: (id: number) => void;
   didChangeQuery?: () => void;
+  onReload?: () => void;
 }
 
 const PatientsView = ({
@@ -16,6 +18,7 @@ const PatientsView = ({
   query,
   didChangeQuery = () => {},
   onPatientPress = () => {},
+  onReload = () => {},
 }: Props) => {
   const renderItem = ({item}: any) => (
     <MyPatient data={item} onPress={onPatientPress} />
@@ -24,12 +27,19 @@ const PatientsView = ({
   return (
     <View style={styles.content}>
       <SearchBar value={query} onChangeText={didChangeQuery} />
+      {data.length == 0 && (
+        <EmptyView
+          relodable
+          message="No hay pacientes registrados"
+          onReload={onReload}
+        />
+      )}
       <FlatList
         data={data}
         numColumns={3}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
-        keyExtractor={item => `patients-list-${item.id}`}
+        keyExtractor={item => `patients-list-${item.idUsuario}`}
       />
     </View>
   );

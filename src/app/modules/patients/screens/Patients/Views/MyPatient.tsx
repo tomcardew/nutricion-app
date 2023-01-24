@@ -1,10 +1,19 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import ProfilePicture from '../../../../../../components/Images/ProfilePicture';
+import {nameToFirstLetters} from '../../../../../../utils/Utils';
 
 export interface Patient {
-  id: number;
-  name: string;
-  image?: string;
+  idUsuario: number;
+  nombre: string;
+  urlFoto?: string;
 }
 
 interface Props {
@@ -13,13 +22,26 @@ interface Props {
 }
 
 const MyPatient = ({data, onPress = () => {}}: Props) => {
-  const {id, name, image} = data;
+  const {idUsuario, nombre, urlFoto} = data;
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => { onPress(id) }}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        onPress(idUsuario);
+      }}>
       <View style={styles.content}>
-        <Image style={styles.image} source={{uri: image}} />
-        <Text style={styles.name} numberOfLines={1}>{name}</Text>
+        <Image
+          style={styles.image}
+          source={{
+            uri: urlFoto
+              ? urlFoto
+              : `https://ui-avatars.com/api/?name=${nombre}&size=200&background=e5f9bb`,
+          }}
+        />
+        <Text style={styles.name} numberOfLines={1}>
+          {nombre}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -39,6 +61,7 @@ const styles = StyleSheet.create({
     width: (Dimensions.get('window').width - 100) / 3,
     height: (Dimensions.get('window').width - 100) / 3,
     borderRadius: 500,
+    backgroundColor: '#eee',
   },
   name: {
     fontSize: 14,

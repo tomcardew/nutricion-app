@@ -12,10 +12,12 @@ import PatientViewModel from '../app/modules/patients/screens/Patient/ViewModels
 const Stack = createNativeStackNavigator();
 
 const PatientsRouter = () => {
-  const {patientsStore} = useStores();
+  const {patientsStore, authStore} = useStores();
 
   const PatientsScreen = () => (
-    <PatientsController viewModel={new PatientsViewModel(patientsStore)} />
+    <PatientsController
+      viewModel={new PatientsViewModel(patientsStore, authStore)}
+    />
   );
 
   const PatientScreen = () => (

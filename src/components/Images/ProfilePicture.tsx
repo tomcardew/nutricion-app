@@ -17,20 +17,15 @@ interface Props {
 
 const ProfilePicture = ({url, fallback, style}: Props) => {
   const item = () => {
-    if (url) {
-      return (
-        <Image
-          style={styles.item}
-          source={{
-            uri: url,
-          }}
-        />
-      );
-    }
     return (
-      <View style={styles.item}>
-        <Text style={styles.text}>{fallback}</Text>
-      </View>
+      <Image
+        style={styles.item}
+        source={{
+          uri: url
+            ? url
+            : `https://ui-avatars.com/api/?name=${fallback}&size=200&background=e5f9bb`,
+        }}
+      />
     );
   };
   return <View style={[styles.container, style]}>{item()}</View>;
