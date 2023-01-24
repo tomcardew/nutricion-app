@@ -2,13 +2,13 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from '@ui-kitten/components';
 
-import {useStores} from '../use-store';
+import {useStores} from '../../use-store';
 
-import {SignupController, SignupViewModel} from './app/modules/auth';
-import {ProfileController, ProfileViewModel} from './app/modules/profile';
+import {SignupController, SignupViewModel} from '../app/modules/auth';
+import {ProfileController, ProfileViewModel} from '../app/modules/profile';
 
-import {default as theme} from './../custom-theme.json';
-import {PatientsController} from './app/modules/patients';
+import {default as theme} from '../../custom-theme.json';
+import PatientsRouter from './Patients';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,8 +24,6 @@ const TabNavigation = () => {
       viewModel={new ProfileViewModel(authStore, profileStore)}
     />
   );
-
-  const PatientsScreen = () => <PatientsController />;
 
   return (
     <Tab.Navigator
@@ -60,7 +58,7 @@ const TabNavigation = () => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={PatientsScreen}
+        component={PatientsRouter}
       />
       <Tab.Screen
         name="dates"

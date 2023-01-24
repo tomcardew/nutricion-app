@@ -7,10 +7,10 @@ import {
   ScrollView,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
-import { default as theme } from '../../../custom-theme.json';
+import {default as theme} from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
-import AlertPopup, { AlertType } from '../Alert/AlertPopup';
-import { AlertAction } from '../Alert/AlertAction';
+import AlertPopup, {AlertType} from '../Alert/AlertPopup';
+import {AlertAction} from '../Alert/AlertAction';
 
 interface Props {
   title?: string;
@@ -18,9 +18,13 @@ interface Props {
   children?: any;
   hideHeader?: boolean;
   showOverSafeArea?: boolean;
+  contentUnderHeader?: boolean;
   loading: boolean;
   alert?: AlertMessage | null;
   showBackButton?: boolean;
+  disableScrollBar?: boolean;
+  backgroundColor?: string;
+  color?: string;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
@@ -39,12 +43,16 @@ const BaseLayoutView = ({
   children,
   hideHeader,
   showOverSafeArea,
+  contentUnderHeader,
   loading = false,
   loadingMessage,
   alert,
   showBackButton = true,
-  onBackAction = () => { },
-  onAlertDismiss = () => { },
+  disableScrollBar = false,
+  backgroundColor = theme['color-primary-600'],
+  color = 'white',
+  onBackAction = () => {},
+  onAlertDismiss = () => {},
 }: Props) => {
   const content = () => (
     <View style={styles.content}>
@@ -62,17 +70,31 @@ const BaseLayoutView = ({
         barStyle="light-content"
       />
       {!hideHeader && (
-        <HeaderView
-          title={title}
-          showBackIcon={showBackButton}
-          onBackAction={onBackAction}
-        />
+        <View
+          style={{
+            width: '100%',
+            position: contentUnderHeader ? 'absolute' : 'relative',
+            top: 0,
+            zIndex: 10,
+          }}>
+          <HeaderView
+            title={title}
+            showBackIcon={showBackButton}
+            onBackAction={onBackAction}
+            backgroundColor={backgroundColor}
+            color={color}
+          />
+        </View>
       )}
-      <ScrollView
-        showsVerticalScrollIndicator
-        contentContainerStyle={styles.content}>
-        {children}
-      </ScrollView>
+      {disableScrollBar ? (
+        <View>{children}</View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator
+          contentContainerStyle={styles.content}>
+          {children}
+        </ScrollView>
+      )}
     </View>
   );
 

@@ -3,6 +3,8 @@ enum ScreenNames {
   Signup,
   ForgotPassword,
   Dashboard,
+  Patients,
+  Patient,
 }
 
 export default ScreenNames;

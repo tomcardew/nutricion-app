@@ -5,7 +5,7 @@ import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {configure} from 'mobx';
 
-import Router from './src/router';
+import Router from './src/routes';
 import {default as theme} from './custom-theme.json';
 import {default as mapping} from './mapping.json';
 import {useStores} from './use-store';

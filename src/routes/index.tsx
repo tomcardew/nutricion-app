@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useStores} from '../use-store';
-import ScreenNames from './constants/Screens';
+import {useStores} from '../../use-store';
+import ScreenNames from '../constants/Screens';
 import TabNavigation from './TabNavigation';
 import {observer} from 'mobx-react';
 
@@ -12,7 +12,7 @@ import {
   SignupViewModel,
   ForgotPasswordController,
   ForgotPasswordViewModel,
-} from './app/modules/auth';
+} from '../app/modules/auth';
 
 const Stack = createNativeStackNavigator();
 

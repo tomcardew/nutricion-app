@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
+    maxWidth: 400,
   },
   innerContainer: {
     padding: 15,

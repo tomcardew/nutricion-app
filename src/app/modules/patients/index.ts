@@ -1,3 +1,11 @@
 import PatientsController from './screens/Patients/Controllers/PatientsController';
+import PatientController from './screens/Patient/Controllers/PatientController';
+import PatientsViewModel from './screens/Patients/ViewModels/PatientsViewModel';
+import PatientViewModel from './screens/Patient/ViewModels/PatientViewModel';
 
-export {PatientsController};
+export {
+  PatientsController,
+  PatientController,
+  PatientsViewModel,
+  PatientViewModel,
+};
