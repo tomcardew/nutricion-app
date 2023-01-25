@@ -22,6 +22,7 @@ export class RequestData {
   constructor(
     public service: NetworkingConfig,
     public token?: string,
+    public params?: string,
     public query?: string,
     public body?: ObjectType,
   ) {
@@ -29,12 +30,15 @@ export class RequestData {
     this.path = service.path;
     this.method = service.method;
     this.token = token;
+    this.params = params;
     this.query = query;
     this.body = body;
   }
 
   get fullPath() {
-    return `${this.url}/${this.path}${this.query ? '&' + this.query : ''}`;
+    return `${this.url}/${this.path}${this.params ? this.params : ''}${
+      this.query ? '&' + this.query : ''
+    }`;
   }
 
   setQuery(query: ObjectType) {
@@ -44,6 +48,11 @@ export class RequestData {
 
   setBody(body: ObjectType) {
     this.body = body;
+    return this;
+  }
+
+  setParams(params: string) {
+    this.params = params;
     return this;
   }
 
@@ -109,6 +118,18 @@ const getPatients: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getPatientById: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients',
+  method: RequestMethod.GET,
+};
+
+const getPatientProgress: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/progress',
+  method: RequestMethod.GET,
+}
+
 export const Networking = {
   auth: {
     login,
@@ -117,5 +138,7 @@ export const Networking = {
   },
   administrator: {
     getPatients,
+    getPatientById,
+    getPatientProgress,
   },
 };

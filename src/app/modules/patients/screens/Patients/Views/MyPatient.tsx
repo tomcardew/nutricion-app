@@ -2,23 +2,16 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import ProfilePicture from '../../../../../../components/Images/ProfilePicture';
-import {nameToFirstLetters} from '../../../../../../utils/Utils';
-
-export interface Patient {
-  idUsuario: number;
-  nombre: string;
-  urlFoto?: string;
-}
+import { Patient } from '../../../../../../models/Patients';
+import { Image } from '../../../../../../components/Images';
 
 interface Props {
   data: Patient;
-  onPress?: (id: number) => void;
+  onPress?: (id: string) => void;
 }
 
 const MyPatient = ({data, onPress = () => {}}: Props) => {

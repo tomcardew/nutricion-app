@@ -18,10 +18,10 @@ class PatientsViewModel {
   }
 
   load = async () => {
-    await this.patientsStore.load(this.authStore.token);
+    await this.patientsStore.getPatients(this.authStore.token);
   };
 
-  goToPatient = (id: number) => {
+  goToPatient = (id: string) => {
     this.patientsStore.setSelectedPatientWith(id);
     this.navigation.navigate(ScreenNames.Patient.toString());
   };

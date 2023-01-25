@@ -1,21 +1,32 @@
 import {useNavigation} from '@react-navigation/native';
 import {AlertMessage} from '../../../../../../components/Layout/BaseLayoutView';
-import ScreenNames from '../../../../../../constants/Screens';
 import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {AuthStore} from '../../../../../store/AuthStore';
+import ScreenNames from '../../../../../../constants/Screens';
 
 class PatientViewModel {
+  authStore: AuthStore;
   patientsStore: PatientsStore;
   navigation: any;
 
   alert: AlertMessage | null = null;
 
-  constructor(patientsStore: PatientsStore) {
+  constructor(patientsStore: PatientsStore, authStore: AuthStore) {
     this.patientsStore = patientsStore;
+    this.authStore = authStore;
     this.navigation = useNavigation();
-    console.log(this.navigation);
   }
 
+  load = async () => {
+    await this.patientsStore.getPatientById(this.authStore.token ?? '');
+  };
+
+  navigateTo = (screen: ScreenNames, props?: any) => {
+    this.navigation.navigate(screen.toString(), props)
+  };
+
   goBack = () => {
+    console.log("going back")
     this.navigation.goBack();
   };
 }

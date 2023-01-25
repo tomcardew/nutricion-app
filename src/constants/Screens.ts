@@ -5,6 +5,7 @@ enum ScreenNames {
   Dashboard,
   Patients,
   Patient,
+  PatientData,
 }
 
 export default ScreenNames;

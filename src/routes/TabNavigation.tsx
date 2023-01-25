@@ -31,21 +31,6 @@ const TabNavigation = () => {
         headerShown: false,
       }}>
       <Tab.Screen
-        name="profile"
-        options={{
-          tabBarLabel: 'Perfil',
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              style={{width: size, height: size}}
-              fill={color}
-              name="home-outline"
-            />
-          ),
-          tabBarActiveTintColor: theme['color-primary-600'],
-        }}
-        component={ProfileScreen}
-      />
-      <Tab.Screen
         name="pacients"
         options={{
           tabBarLabel: 'Pacientes',
@@ -59,6 +44,21 @@ const TabNavigation = () => {
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
         component={PatientsRouter}
+      />
+      <Tab.Screen
+        name="profile"
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: ({color, size}) => (
+            <Icon
+              style={{width: size, height: size}}
+              fill={color}
+              name="home-outline"
+            />
+          ),
+          tabBarActiveTintColor: theme['color-primary-600'],
+        }}
+        component={ProfileScreen}
       />
       <Tab.Screen
         name="dates"

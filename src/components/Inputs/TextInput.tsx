@@ -10,6 +10,7 @@ interface Props {
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   accessoryRight?: JSX.Element | undefined;
+  autocapitalize?: boolean;
   textContentType?:
     | 'none'
     | 'URL'
@@ -68,6 +69,7 @@ const TextInput = ({
   secureTextEntry,
   keyboardType,
   textContentType,
+  autocapitalize = true,
   onChangeText = () => {},
 }: Props) => {
   const [state, setState] = useState({passwordVisible: false});
@@ -87,6 +89,7 @@ const TextInput = ({
         keyboardType={keyboardType}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry && !state.passwordVisible}
+        autoCapitalize={autocapitalize ? "sentences" : "none"}
         accessoryRight={
           accessoryRight ? (
             accessoryRight

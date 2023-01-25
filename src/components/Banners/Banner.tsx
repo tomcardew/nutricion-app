@@ -1,14 +1,12 @@
 import React from 'react';
 import {
   StyleSheet,
-  Image,
   StyleProp,
   ViewStyle,
   Dimensions,
-  View,
 } from 'react-native';
 import {Layout, Text} from '@ui-kitten/components';
-import {default as theme} from '../../../custom-theme.json';
+import Image from '../Images/Image';
 
 interface Props {
   imageUrl?: string;

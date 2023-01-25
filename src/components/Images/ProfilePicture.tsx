@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  Text,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
-import {default as theme} from '../../../custom-theme.json';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import Image from './Image';
+import FastImage from 'react-native-fast-image';
 
 interface Props {
   url?: string;

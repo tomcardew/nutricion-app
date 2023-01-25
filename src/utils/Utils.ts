@@ -26,3 +26,8 @@ export const nameToFirstLetters = (fullname: string) => {
   });
   return initialLetters.join('');
 };
+
+export interface KeyValue {
+  key: string;
+  value: any;
+}
