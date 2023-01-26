@@ -59,6 +59,24 @@ export class PatientsStore {
     }
   };
 
+  public toggleExercises = async (token: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.toggleExercises(
+        this.selectedPatientId,
+        token,
+      );
+      this.loading = false;
+      if (data.success && this.selectedPatient) {
+        const newData: Patient = {
+          ...this.selectedPatient,
+          seccion_ejercicios: !this.selectedPatient.seccion_ejercicios,
+        };
+        this.selectedPatient = newData;
+      }
+    }
+  };
+
   public setSelectedPatientWith(id: string) {
     this.selectedPatientId = id;
   }

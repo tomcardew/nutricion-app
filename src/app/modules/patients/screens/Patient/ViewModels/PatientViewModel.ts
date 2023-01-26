@@ -22,11 +22,15 @@ class PatientViewModel {
   };
 
   navigateTo = (screen: ScreenNames, props?: any) => {
-    this.navigation.navigate(screen.toString(), props)
+    this.navigation.navigate(screen.toString(), props);
+  };
+
+  toggleExercises = async () => {
+    await this.patientsStore.toggleExercises(this.authStore.token ?? '');
   };
 
   goBack = () => {
-    console.log("going back")
+    console.log('going back');
     this.navigation.goBack();
   };
 }

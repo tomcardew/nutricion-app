@@ -42,6 +42,20 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  toggleExercises: async (id: string, token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.toggleExercises,
+        token,
+      );
+      request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;

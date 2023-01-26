@@ -1,4 +1,4 @@
-import {Icon} from '@ui-kitten/components';
+import {Icon, Toggle} from '@ui-kitten/components';
 import React from 'react';
 import {
   StyleSheet,
@@ -11,12 +11,27 @@ import {
 interface Props {
   title: string;
   onPress?: () => void;
+  type?: 'menu' | 'toggle';
+  active?: boolean;
 }
 
-const MenuOptionView = ({title, onPress = () => {}}: Props) => (
-  <TouchableOpacity style={styles.container} onPress={onPress}>
+const MenuOptionView = ({
+  title,
+  type = 'menu',
+  active,
+  onPress = () => {},
+}: Props) => (
+  <TouchableOpacity
+    style={styles.container}
+    disabled={type == 'toggle'}
+    onPress={onPress}>
     <Text style={styles.text}>{title}</Text>
-    <Icon name="arrow-ios-forward-outline" fill="#000" style={styles.icon} />
+    {type == 'menu' && (
+      <Icon name="arrow-ios-forward-outline" fill="#000" style={styles.icon} />
+    )}
+    {type == 'toggle' && (
+      <Toggle style={styles.toggle} checked={active} onChange={onPress} />
+    )}
   </TouchableOpacity>
 );
 
@@ -42,6 +57,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -20,
     left: Dimensions.get('window').width - 50,
+  },
+  toggle: {
+    position: 'absolute',
+    left: Dimensions.get('window').width - 70,
   },
 });
 

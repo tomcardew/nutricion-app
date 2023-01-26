@@ -128,7 +128,13 @@ const getPatientProgress: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/progress',
   method: RequestMethod.GET,
-}
+};
+
+const toggleExercises: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/activate-exercises',
+  method: RequestMethod.PATCH,
+};
 
 export const Networking = {
   auth: {
@@ -140,5 +146,6 @@ export const Networking = {
     getPatients,
     getPatientById,
     getPatientProgress,
+    toggleExercises,
   },
 };

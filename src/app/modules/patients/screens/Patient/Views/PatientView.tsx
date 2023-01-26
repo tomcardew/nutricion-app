@@ -9,17 +9,20 @@ import ScreenNames from '../../../../../../constants/Screens';
 interface Props {
   data: Patient | null;
   onNavigateTo?: (screen: ScreenNames, props?: any) => void;
+  onToggleExercises?: () => void;
 }
 
 interface MenuOption {
   title: string;
   screen?: ScreenNames;
   props?: any;
+  type?: 'menu' | 'toggle';
 }
 
 const PatientView = ({
   data,
   onNavigateTo = (screen: ScreenNames) => {},
+  onToggleExercises = () => {},
 }: Props) => {
   const options: MenuOption[] = [
     {
@@ -37,11 +40,16 @@ const PatientView = ({
     },
     {
       title: 'Activar/Desactivar Ejercicios',
+      type: 'toggle',
     },
   ];
 
   const onItemPressed = (item: MenuOption) => {
-    onNavigateTo(item.screen ?? ScreenNames.Login, item.props);
+    if (item.screen) {
+      onNavigateTo(item.screen ?? ScreenNames.Login, item.props);
+    } else if (item.type == 'toggle') {
+      onToggleExercises();
+    }
   };
 
   return (
@@ -65,6 +73,8 @@ const PatientView = ({
           renderItem={item => (
             <MenuOptionView
               title={item.item.title}
+              type={item.item.type}
+              active={data?.seccion_ejercicios}
               onPress={() => {
                 onItemPressed(item.item);
               }}
