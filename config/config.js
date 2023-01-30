@@ -57,6 +57,7 @@ function createViewWithName(name) {
       name,
     );
     regenerateModuleIndex(module);
+    regenerateScreensCatalog();
   });
 }
 
@@ -143,6 +144,17 @@ function regenerateModuleIndex(module) {
     content = content + `${screen}Controller,\n${screen}ViewModel,\n`;
   });
   content = content + '}';
+  writeFileSyncRecursive(path, content);
+}
+
+function regenerateScreensCatalog() {
+  const path = './src/constants/Screens.ts';
+  const screens = getScreens();
+  let content = 'enum ScreenNames {\n';
+  screens.forEach((value, index) => {
+    content = content + `\t${value},\n`;
+  });
+  content = content + '}\n\nexport default ScreenNames;';
   writeFileSyncRecursive(path, content);
 }
 
