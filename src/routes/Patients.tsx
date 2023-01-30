@@ -10,6 +10,8 @@ import ScreenNames from '../constants/Screens';
 import {useStores} from '../../use-store';
 import PatientViewModel from '../app/modules/patients/screens/Patient/ViewModels/PatientViewModel';
 import PatientDataViewModel from '../app/modules/patients/screens/PatientData/ViewModels/PatientDataViewModel';
+import PatientGalleryController from '../app/modules/patients/screens/PatientGallery/Controllers/PatientGalleryController';
+import PatientGalleryViewModel from '../app/modules/patients/screens/PatientGallery/ViewModels/PatientGalleryViewModel';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +24,7 @@ const PatientsRouter = () => {
     authStore,
     patientsStore,
   );
+  const patientGalleryViewModel = new PatientGalleryViewModel();
 
   const PatientsScreen = () => (
     <PatientsController viewModel={patientsViewModel} />
@@ -33,6 +36,10 @@ const PatientsRouter = () => {
 
   const PatientDataScreen = () => (
     <PatientDataController viewModel={patientDataViewModel} />
+  );
+
+  const PatientGalleryScreen = () => (
+    <PatientGalleryController viewModel={patientGalleryViewModel} />
   );
 
   return (
@@ -48,6 +55,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.PatientData.toString()}
         component={PatientDataScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientGallery.toString()}
+        component={PatientGalleryScreen}
       />
     </Stack.Navigator>
   );

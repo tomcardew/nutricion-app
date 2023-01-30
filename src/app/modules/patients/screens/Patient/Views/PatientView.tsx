@@ -34,6 +34,7 @@ const PatientView = ({
     },
     {
       title: 'Galería',
+      screen: ScreenNames.PatientGallery,
     },
     {
       title: 'Programar Ejercicios',
