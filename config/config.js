@@ -150,7 +150,7 @@ function regenerateModuleIndex(module) {
 function regenerateScreensCatalog() {
   const path = './src/constants/Screens.ts';
   const screens = getScreens();
-  let content = 'enum ScreenNames {\n';
+  let content = 'enum ScreenNames {\n\tDashboard,\n';
   screens.forEach((value, index) => {
     content = content + `\t${value},\n`;
   });

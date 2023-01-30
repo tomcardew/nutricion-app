@@ -8,7 +8,6 @@ class PatientGalleryViewModel {
   }
 
   goBack = () => {
-    console.log(this.navigation);
     this.navigation.goBack();
   };
 }
