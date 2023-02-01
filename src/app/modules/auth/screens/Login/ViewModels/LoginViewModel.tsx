@@ -29,6 +29,20 @@ class LoginViewModel {
       this.authStore.setUser(data.user);
       this.navigation.navigate(ScreenNames.Dashboard.toString());
     }
+    // this.authStore.setToken('XD');
+    // this.authStore.setUser({
+    //   idUsuario: '',
+    //   email: 'tomcar97@gmail.com',
+    //   activo: true,
+    //   esAdministrador: true,
+    //   fechaNacimiento: new Date(),
+    //   genero: 'Masculino',
+    //   nombre: 'Andrés Villagómez',
+    //   seccion_ejercicios: false,
+    //   tempToken: undefined,
+    //   urlFoto:
+    //     'https://i.etsystatic.com/36532523/r/il/97ae46/4078306713/il_340x270.4078306713_n74s.jpg',
+    // });
   };
 
   goToRegister = () => {

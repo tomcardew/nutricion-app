@@ -9,6 +9,8 @@ interface Props {
   value: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
+  accessoryRight?: JSX.Element | undefined;
+  autocapitalize?: boolean;
   textContentType?:
     | 'none'
     | 'URL'
@@ -63,9 +65,11 @@ const TextInput = ({
   label,
   placeholder,
   value,
+  accessoryRight,
   secureTextEntry,
   keyboardType,
   textContentType,
+  autocapitalize = true,
   onChangeText = () => {},
 }: Props) => {
   const [state, setState] = useState({passwordVisible: false});
@@ -76,7 +80,7 @@ const TextInput = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{label}</Text>
+      {label && <Text style={styles.text}>{label}</Text>}
       <Input
         placeholder={placeholder}
         value={value}
@@ -85,8 +89,11 @@ const TextInput = ({
         keyboardType={keyboardType}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry && !state.passwordVisible}
+        autoCapitalize={autocapitalize ? "sentences" : "none"}
         accessoryRight={
-          secureTextEntry ? (
+          accessoryRight ? (
+            accessoryRight
+          ) : secureTextEntry ? (
             <EyeAccessory
               selected={state.passwordVisible}
               onToggle={togglePassword}

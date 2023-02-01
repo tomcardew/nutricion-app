@@ -1,5 +1,6 @@
 import Environment from './Environment';
 import RequestError from '../utils/RequestError';
+import {useStores} from '../../use-store';
 
 export enum RequestMethod {
   GET = 'GET',
@@ -14,16 +15,30 @@ export type ObjectType = {
 };
 
 export class RequestData {
+  public url: string = '';
+  public path: string = '';
+  public method: RequestMethod = RequestMethod.GET;
+
   constructor(
-    public url: string,
-    public path: string,
-    public method: RequestMethod,
+    public service: NetworkingConfig,
+    public token?: string,
+    public params?: string,
     public query?: string,
     public body?: ObjectType,
-  ) {}
+  ) {
+    this.url = service.url;
+    this.path = service.path;
+    this.method = service.method;
+    this.token = token;
+    this.params = params;
+    this.query = query;
+    this.body = body;
+  }
 
   get fullPath() {
-    return `${this.url}/${this.path}${this.query ? '&' + this.query : ''}`;
+    return `${this.url}/${this.path}${this.params ? this.params : ''}${
+      this.query ? '&' + this.query : ''
+    }`;
   }
 
   setQuery(query: ObjectType) {
@@ -36,6 +51,11 @@ export class RequestData {
     return this;
   }
 
+  setParams(params: string) {
+    this.params = params;
+    return this;
+  }
+
   async request() {
     try {
       const result = await fetch(this.fullPath, {
@@ -43,6 +63,7 @@ export class RequestData {
         body: JSON.stringify(this.body),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: this.token ?? 'asas',
         },
       });
       return await result.json();
@@ -91,10 +112,40 @@ const passwordRecovery: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getPatients: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients',
+  method: RequestMethod.GET,
+};
+
+const getPatientById: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients',
+  method: RequestMethod.GET,
+};
+
+const getPatientProgress: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/progress',
+  method: RequestMethod.GET,
+};
+
+const toggleExercises: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/activate-exercises',
+  method: RequestMethod.PATCH,
+};
+
 export const Networking = {
   auth: {
     login,
     signup,
     passwordRecovery,
+  },
+  administrator: {
+    getPatients,
+    getPatientById,
+    getPatientProgress,
+    toggleExercises,
   },
 };

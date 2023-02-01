@@ -22,8 +22,10 @@ export class LoginStore {
 
   public login = async () => {
     this.logingIn = true;
+    const email = this.email.trim()
+    const password = this.password.trim()
     if (this.email && this.password) {
-      const data = await AuthServices.login(this.email, this.password);
+      const data = await AuthServices.login(email, password);
       this.logingIn = false;
       if (data.success) {
         this.isAuthorized = true;
