@@ -1,16 +1,15 @@
-import React from 'react'
-import { StyleProp } from 'react-native'
-import FastImage, { Source, ImageStyle } from 'react-native-fast-image'
+import React from 'react';
+import {StyleProp} from 'react-native';
+import FastImage, {Source, ImageStyle} from 'react-native-fast-image';
 
 interface Props {
-    style?: StyleProp<ImageStyle>,
-    source?: number | Source | undefined
+  style?: StyleProp<ImageStyle>;
+  source?: number | Source | undefined;
+  resizeMode?: 'cover' | 'contain';
 }
 
 const Image = (props: Props) => {
-    return (
-        <FastImage {...props} />
-    )
-}
+  return <FastImage {...props} />;
+};
 
 export default Image;

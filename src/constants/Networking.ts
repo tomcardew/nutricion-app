@@ -136,6 +136,12 @@ const toggleExercises: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getPatientPictures: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/pictures',
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -147,5 +153,6 @@ export const Networking = {
     getPatientById,
     getPatientProgress,
     toggleExercises,
+    getPatientPictures,
   },
 };

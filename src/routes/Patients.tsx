@@ -24,7 +24,10 @@ const PatientsRouter = () => {
     authStore,
     patientsStore,
   );
-  const patientGalleryViewModel = new PatientGalleryViewModel();
+  const patientGalleryViewModel = new PatientGalleryViewModel(
+    patientsStore,
+    authStore,
+  );
 
   const PatientsScreen = () => (
     <PatientsController viewModel={patientsViewModel} />

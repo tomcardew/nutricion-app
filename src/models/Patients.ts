@@ -39,3 +39,14 @@ export function patientProgressToKeyValues(data: any) {
 
   return results;
 }
+
+export interface GalleryItems {
+  date: Date;
+  data: PatientPicture[];
+}
+
+export interface PatientPicture {
+  id: number;
+  url: string;
+  fecha_foto: string;
+}

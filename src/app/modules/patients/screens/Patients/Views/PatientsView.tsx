@@ -27,7 +27,9 @@ const PatientsView = ({
 
   return (
     <View style={styles.content}>
-      <SearchBar value={query} onChangeText={didChangeQuery} />
+      {data.length > 0 && (
+        <SearchBar value={query} onChangeText={didChangeQuery} />
+      )}
       {data.length == 0 && (
         <EmptyView
           relodable

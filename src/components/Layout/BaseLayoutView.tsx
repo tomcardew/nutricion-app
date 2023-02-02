@@ -25,6 +25,7 @@ interface Props {
   disableScrollBar?: boolean;
   backgroundColor?: string;
   color?: string;
+  overlay?: JSX.Element;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
@@ -51,6 +52,7 @@ const BaseLayoutView = ({
   disableScrollBar = false,
   backgroundColor = theme['color-primary-600'],
   color = 'white',
+  overlay,
   onBackAction = () => {},
   onAlertDismiss = () => {},
 }: Props) => {
@@ -95,6 +97,7 @@ const BaseLayoutView = ({
           {children}
         </ScrollView>
       )}
+      {overlay}
     </View>
   );
 
