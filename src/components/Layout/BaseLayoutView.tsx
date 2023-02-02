@@ -85,7 +85,7 @@ const BaseLayoutView = ({
             title={title}
             subtitle={subtitle}
             showBackIcon={showBackButton}
-            onBackAction={onBackAction}
+            onBackAction={() => onBackAction()}
             backgroundColor={backgroundColor}
             color={color}
           />

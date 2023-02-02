@@ -22,8 +22,8 @@ export class LoginStore {
 
   public login = async () => {
     this.logingIn = true;
-    const email = this.email.trim()
-    const password = this.password.trim()
+    const email = this.email.trim();
+    const password = this.password.trim();
     if (this.email && this.password) {
       const data = await AuthServices.login(email, password);
       this.logingIn = false;
@@ -66,7 +66,6 @@ export class LoginStore {
     if (this.email) {
       const data = await AuthServices.passwordRecovery(this.email);
       this.loading = false;
-      console.log(data);
       if (data.success) {
         this.alert = {
           title: 'Listo',

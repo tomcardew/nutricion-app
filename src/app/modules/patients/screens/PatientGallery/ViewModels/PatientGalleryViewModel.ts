@@ -10,10 +10,14 @@ class PatientGalleryViewModel {
 
   alert: AlertMessage | null = null;
 
-  constructor(patientsStore: PatientsStore, authStore: AuthStore) {
+  constructor(
+    patientsStore: PatientsStore,
+    authStore: AuthStore,
+    navigation: any,
+  ) {
     this.patientsStore = patientsStore;
     this.authStore = authStore;
-    this.navigation = useNavigation();
+    this.navigation = navigation;
   }
 
   load = async (refreshing: boolean = false) => {

@@ -15,10 +15,14 @@ class PatientDataViewModel {
 
   alert: AlertMessage | null = null;
 
-  constructor(authStore: AuthStore, patientsStore: PatientsStore) {
+  constructor(
+    authStore: AuthStore,
+    patientsStore: PatientsStore,
+    navigation: any,
+  ) {
     this.authStore = authStore;
     this.patientsStore = patientsStore;
-    this.navigation = useNavigation();
+    this.navigation = navigation;
     this.route = useRoute();
   }
 
@@ -27,7 +31,6 @@ class PatientDataViewModel {
   };
 
   goBack = () => {
-    console.log();
     this.navigation.goBack();
   };
 }

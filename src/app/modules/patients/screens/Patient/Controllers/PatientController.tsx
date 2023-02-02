@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import PatientViewModel from '../ViewModels/PatientViewModel';
 import PatientView from '../Views/PatientView';
-import {Patient} from '../../../../../../models/Patients';
 
 interface Props {
   viewModel: PatientViewModel;
@@ -26,6 +25,7 @@ const PatientController = observer(({viewModel}: Props) => {
       loading={viewModel.patientsStore.loading}
       alert={null}
       disableScrollBar
+      showBackButton
       onAlertDismiss={() => {}}
       onBackAction={viewModel.goBack}>
       <PatientView

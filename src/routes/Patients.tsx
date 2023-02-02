@@ -12,21 +12,33 @@ import PatientViewModel from '../app/modules/patients/screens/Patient/ViewModels
 import PatientDataViewModel from '../app/modules/patients/screens/PatientData/ViewModels/PatientDataViewModel';
 import PatientGalleryController from '../app/modules/patients/screens/PatientGallery/Controllers/PatientGalleryController';
 import PatientGalleryViewModel from '../app/modules/patients/screens/PatientGallery/ViewModels/PatientGalleryViewModel';
+import {useNavigation} from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
 const PatientsRouter = () => {
   const {patientsStore, authStore} = useStores();
+  const navigation = useNavigation();
 
-  const patientsViewModel = new PatientsViewModel(patientsStore, authStore);
-  const patientViewModel = new PatientViewModel(patientsStore, authStore);
+  const patientsViewModel = new PatientsViewModel(
+    patientsStore,
+    authStore,
+    navigation,
+  );
+  const patientViewModel = new PatientViewModel(
+    patientsStore,
+    authStore,
+    navigation,
+  );
   const patientDataViewModel = new PatientDataViewModel(
     authStore,
     patientsStore,
+    navigation,
   );
   const patientGalleryViewModel = new PatientGalleryViewModel(
     patientsStore,
     authStore,
+    navigation,
   );
 
   const PatientsScreen = () => (

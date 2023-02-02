@@ -36,7 +36,6 @@ export class AuthStore {
           }`,
         );
         this.hydrating = false;
-        console.log(this.user?.urlFoto);
       }),
     );
   }

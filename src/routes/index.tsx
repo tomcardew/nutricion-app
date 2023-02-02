@@ -33,8 +33,6 @@ const Router = observer(() => {
     />
   );
 
-  console.log(authStore.token);
-
   return (
     <Stack.Navigator
       initialRouteName={
