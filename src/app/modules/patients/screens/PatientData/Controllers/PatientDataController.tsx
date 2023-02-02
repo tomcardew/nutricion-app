@@ -16,6 +16,7 @@ const PatientDataController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
       title="Datos del paciente"
+      subtitle={viewModel.patientsStore.selectedPatient?.nombre}
       loadingMessage="Cargando..."
       loading={viewModel.patientsStore.loading}
       disableScrollBar

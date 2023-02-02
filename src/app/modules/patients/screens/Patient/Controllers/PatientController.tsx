@@ -21,6 +21,7 @@ const PatientController = observer(({viewModel}: Props) => {
           ? viewModel.patientsStore.selectedPatient.nombre
           : 'Paciente'
       }
+      subtitle={viewModel.patientsStore.selectedPatient?.email}
       loadingMessage="Cargando..."
       loading={viewModel.patientsStore.loading}
       alert={null}

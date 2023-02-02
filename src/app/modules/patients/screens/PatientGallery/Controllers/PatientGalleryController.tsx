@@ -25,6 +25,7 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
       title="Galería"
+      subtitle={viewModel.patientsStore.selectedPatient?.nombre}
       loading={viewModel.patientsStore.loading}
       disableScrollBar
       loadingMessage="Cargando..."

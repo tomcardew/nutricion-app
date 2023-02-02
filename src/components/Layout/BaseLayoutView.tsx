@@ -14,6 +14,7 @@ import {AlertAction} from '../Alert/AlertAction';
 
 interface Props {
   title?: string;
+  subtitle?: string;
   loadingMessage: string | undefined;
   children?: any;
   hideHeader?: boolean;
@@ -41,6 +42,7 @@ export interface AlertMessage {
 
 const BaseLayoutView = ({
   title = 'Fitness App',
+  subtitle,
   children,
   hideHeader,
   showOverSafeArea,
@@ -81,6 +83,7 @@ const BaseLayoutView = ({
           }}>
           <HeaderView
             title={title}
+            subtitle={subtitle}
             showBackIcon={showBackButton}
             onBackAction={onBackAction}
             backgroundColor={backgroundColor}

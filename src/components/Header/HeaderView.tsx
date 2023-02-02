@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Layout,
   TopNavigation,
@@ -11,6 +11,7 @@ import {default as theme} from '../../../custom-theme.json';
 
 interface Props {
   title?: string;
+  subtitle?: string;
   showBackIcon?: boolean;
   color?: string;
   backgroundColor?: string;
@@ -21,6 +22,7 @@ const BackIcon = (props: any) => <Icon {...props} name="arrow-back" />;
 
 const HeaderView = ({
   title = 'Fitness App',
+  subtitle,
   showBackIcon = false,
   color = 'white',
   backgroundColor = theme['color-primary-500'],
@@ -41,9 +43,14 @@ const HeaderView = ({
       <TopNavigation
         alignment="center"
         title={props => (
-          <Text {...props} style={[styles.title, {color}]}>
-            {title}
-          </Text>
+          <View>
+            <Text {...props} style={[styles.title, {color}]}>
+              {title}
+            </Text>
+            {subtitle && (
+              <Text style={[styles.subtitle, {color}]}>{subtitle}</Text>
+            )}
+          </View>
         )}
         style={{backgroundColor}}
         accessoryLeft={renderBackAction}
@@ -60,6 +67,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
   },
 });
 
