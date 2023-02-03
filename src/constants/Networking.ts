@@ -11,7 +11,7 @@ export enum RequestMethod {
 }
 
 export type ObjectType = {
-  [key: string]: string;
+  [key: string]: any;
 };
 
 export class RequestData {
@@ -142,6 +142,12 @@ const getPatientPictures: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const postPatientExercise: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/set-exercise',
+  method: RequestMethod.POST,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -184,6 +190,7 @@ export const Networking = {
     getPatientProgress,
     toggleExercises,
     getPatientPictures,
+    postPatientExercise,
   },
   catalogues: {
     getExerciseCategories,

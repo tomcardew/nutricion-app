@@ -1,4 +1,5 @@
 import {Networking, RequestData} from '../constants/Networking';
+import {PatientExerciseBody} from '../models/Patients';
 
 const AdministratorServices = {
   getPatients: async (token: string) => {
@@ -63,6 +64,25 @@ const AdministratorServices = {
         token,
       );
       request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postPatientExercise: async (
+    id: string,
+    token: string,
+    data: PatientExerciseBody,
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.postPatientExercise,
+        token,
+      );
+      request.setParams(`/${id}`);
+      request.setBody({...data});
 
       const response = await request.request();
       return response;

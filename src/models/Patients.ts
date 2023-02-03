@@ -50,3 +50,13 @@ export interface PatientPicture {
   url: string;
   fecha_foto: string;
 }
+
+export interface PatientExerciseBody {
+  nombre_ejercicio: number;
+  categoria_ejercicio: number;
+  series: number;
+  peso: string;
+  repeticiones: number;
+  descansos: number;
+  notas: string;
+}

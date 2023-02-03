@@ -1,5 +1,6 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {IndexPath} from '@ui-kitten/components';
+import {AlertType} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/patients/PatientsStore';
 
@@ -67,6 +68,32 @@ class PatientExercisesViewModel {
       this.patientsStore.setCurrentRest(path);
     }
   };
+
+  didChangeWeight = (value: string) => {
+    this.patientsStore.setWeight(value);
+  };
+
+  didChangeNote = (value: string) => {
+    this.patientsStore.setNote(value);
+  };
+
+  onSaveExercise = async () => {
+    await this.patientsStore.saveExercise(this.authStore.token ?? '');
+  };
+
+  dismissAlert = () => {
+    console.log(this.patientsStore.alert);
+    if (this.patientsStore.alert?.type == AlertType.Success) {
+      this.patientsStore.clearExercises();
+      this.navigation.goBack();
+    }
+    this.patientsStore.alert = null;
+  };
+
+  onUnload() {
+    this.patientsStore.clearExercises();
+    this.patientsStore.alert = null;
+  }
 
   goBack = () => {
     this.navigation.goBack();

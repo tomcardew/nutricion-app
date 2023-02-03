@@ -1,4 +1,3 @@
-import {AlertMessage} from '../../../components/Layout/BaseLayoutView';
 import {makeAutoObservable} from 'mobx';
 import AdministratorServices from '../../../services/administrator';
 import {
@@ -17,6 +16,7 @@ import {
 } from '../../../models/Catalogues';
 import CataloguesServices from '../../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
+import {AlertMessage, AlertType} from '../../../models/Common';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -43,6 +43,8 @@ export class PatientsStore {
   public currentRepetitions: IndexPath | undefined = undefined;
   public rest_raw: Rest[] = [];
   public currentRest: IndexPath | undefined = undefined;
+  public weight: string = '';
+  public note: string = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -133,6 +135,7 @@ export class PatientsStore {
 
   public setCurrentCategory(path: IndexPath | undefined) {
     this.currentCategory = path;
+    this.resetCurrentExercises();
   }
 
   public getExercisesByCategory = async (token: string) => {
@@ -152,6 +155,7 @@ export class PatientsStore {
 
   public setCurrentExercise(path: IndexPath | undefined) {
     this.currentExercise = path;
+    this.resetCurrentExercises();
   }
 
   public getSeries = async (token: string) => {
@@ -196,6 +200,77 @@ export class PatientsStore {
     this.currentRest = path;
   }
 
+  private resetCurrentExercises() {
+    this.currentSeries = undefined;
+    this.currentRepetitions = undefined;
+    this.currentRest = undefined;
+    this.weight = '';
+    this.note = '';
+  }
+
+  public setWeight(value: string) {
+    this.weight = value;
+  }
+
+  public setNote(value: string) {
+    this.note = value;
+  }
+
+  public saveExercise = async (token: string) => {
+    if (this.selectedPatientId && this.canSaveExercise) {
+      this.loading = true;
+      const data = await AdministratorServices.postPatientExercise(
+        this.selectedPatientId,
+        token,
+        {
+          nombre_ejercicio: this.selectedExercise ?? 0,
+          categoria_ejercicio: this.selectedCategory ?? 0,
+          series: this.selectedSerie ?? 0,
+          peso: this.weight + 'kg',
+          repeticiones: this.selectedRepetition ?? 0,
+          descansos: this.selectedRest ?? 0,
+          notas: this.note,
+        },
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: 'Operación exitosa',
+          message: 'El ejercicio ha sido guardado correctamente',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'El ejercicio no pudo ser guardado correctamente',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
+      }
+    } else {
+      console.log('Cant save');
+    }
+  };
+
+  public clearExercises() {
+    this.categories_raw = [];
+    this.currentCategory = undefined;
+    this.exercisesByCurrentCategory_raw = null;
+    this.currentExercise = undefined;
+    this.series_raw = [];
+    this.currentSeries = undefined;
+    this.repetitions_raw = [];
+    this.currentRepetitions = undefined;
+    this.rest_raw = [];
+    this.currentRest = undefined;
+    this.weight = '';
+    this.note = '';
+  }
+
   public setSelectedPatientWith(id: string) {
     this.selectedPatientId = id;
   }
@@ -231,6 +306,13 @@ export class PatientsStore {
     return this.categories_raw.map(item => item.categoria);
   }
 
+  get selectedCategory() {
+    if (this.currentCategory) {
+      return this.categories_raw[this.currentCategory.row].id;
+    }
+    return undefined;
+  }
+
   get selectedCategoryValue() {
     if (this.currentCategory) {
       return this.categories_raw[this.currentCategory.row].categoria;
@@ -247,6 +329,14 @@ export class PatientsStore {
     return undefined;
   }
 
+  get selectedExercise() {
+    if (this.currentExercise && this.exercisesByCurrentCategory_raw) {
+      return this.exercisesByCurrentCategory_raw[this.currentExercise.row]
+        .NombreEjercicio.id;
+    }
+    return undefined;
+  }
+
   get selectedExerciseValue() {
     if (this.currentExercise && this.exercisesByCurrentCategory_raw) {
       return this.exercisesByCurrentCategory_raw[this.currentExercise.row]
@@ -257,6 +347,13 @@ export class PatientsStore {
 
   get series() {
     return this.series_raw.map(item => `${item.series}`);
+  }
+
+  get selectedSerie() {
+    if (this.currentSeries) {
+      return this.series_raw[this.currentSeries.row].id;
+    }
+    return undefined;
   }
 
   get selectedSerieValue() {
@@ -270,6 +367,13 @@ export class PatientsStore {
     return this.repetitions_raw.map(item => `${item.repeticiones}`);
   }
 
+  get selectedRepetition() {
+    if (this.currentRepetitions) {
+      return this.repetitions_raw[this.currentRepetitions.row].id;
+    }
+    return undefined;
+  }
+
   get selectedRepetitionValue() {
     if (this.currentRepetitions) {
       return this.repetitions_raw[this.currentRepetitions.row].repeticiones;
@@ -281,10 +385,32 @@ export class PatientsStore {
     return this.rest_raw.map(item => item.descansos);
   }
 
+  get selectedRest() {
+    if (this.currentRest) {
+      return this.rest_raw[this.currentRest.row].id;
+    }
+    return undefined;
+  }
+
   get selectedRestValue() {
     if (this.currentRest) {
       return this.rest_raw[this.currentRest.row].descansos;
     }
     return undefined;
+  }
+
+  get canSaveExercise() {
+    if (
+      this.currentCategory &&
+      this.currentExercise &&
+      this.currentSeries &&
+      this.currentRepetitions &&
+      this.currentRest &&
+      this.weight &&
+      this.note
+    ) {
+      return true;
+    }
+    return false;
   }
 }

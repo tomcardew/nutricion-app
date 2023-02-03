@@ -1,19 +1,14 @@
 import {Icon} from '@ui-kitten/components';
 import React, {useRef, useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
-import AlertActionButton, {AlertAction} from './AlertAction';
+import AlertActionButton from './AlertAction';
 import {default as theme} from '../../../custom-theme.json';
-
-export enum AlertType {
-  Error,
-  Warning,
-  Info,
-  Success,
-}
+import {AlertAction, AlertType, ErrorMessage} from '../../models/Common';
 
 interface Props {
   title?: string;
   message?: string;
+  error?: ErrorMessage;
   type: AlertType;
   showIcon?: boolean;
   actions?: AlertAction[] | null;
@@ -61,6 +56,7 @@ const IconView = ({type}: IconViewProps) => {
 const AlertPopup = ({
   title,
   message,
+  error,
   showIcon = true,
   actions = [],
   type = AlertType.Success,
@@ -108,6 +104,11 @@ const AlertPopup = ({
               <Text style={styles.title}>{title}</Text>
             </View>
             <Text style={styles.message}>{message}</Text>
+            {error && (
+              <Text style={styles.error}>
+                {error.message} ({error.code})
+              </Text>
+            )}
           </View>
           <View
             style={[
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   message: {
-    fontSize: 15,
+    fontSize: 16,
     marginBottom: 0,
     textAlign: 'center',
     color: 'black',
@@ -198,6 +199,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 40,
     marginBottom: 10,
+  },
+  error: {
+    fontWeight: '300',
+    fontSize: 10,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    marginTop: 5,
   },
 });
 

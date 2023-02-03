@@ -1,20 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
-
-export enum AlertActionType {
-  Normal,
-  Destructive,
-  Action,
-}
-
-export interface AlertAction {
-  label: string;
-  type?: AlertActionType;
-  isFirstTwo?: boolean | null;
-
-  onClick?: () => void;
-}
+import {AlertAction, AlertActionType} from '../../models/Common';
 
 const AlertActionButton = ({
   label,

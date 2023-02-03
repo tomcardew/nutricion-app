@@ -9,8 +9,8 @@ import {
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
-import AlertPopup, {AlertType} from '../Alert/AlertPopup';
-import {AlertAction} from '../Alert/AlertAction';
+import AlertPopup from '../Alert/AlertPopup';
+import {AlertMessage, AlertType, ErrorMessage} from '../../models/Common';
 
 interface Props {
   title?: string;
@@ -30,14 +30,6 @@ interface Props {
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
-}
-
-export interface AlertMessage {
-  title: string;
-  message: string;
-  type: AlertType;
-  showIcon: boolean;
-  actions: AlertAction[];
 }
 
 const BaseLayoutView = ({
@@ -63,6 +55,7 @@ const BaseLayoutView = ({
       <AlertPopup
         title={alert?.title}
         message={alert?.message}
+        error={alert?.error}
         type={alert?.type || AlertType.Error}
         showIcon={alert?.showIcon}
         actions={alert?.actions}

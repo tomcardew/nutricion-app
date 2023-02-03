@@ -4,13 +4,22 @@ import {ViewStyle, StyleProp, StyleSheet} from 'react-native';
 
 interface Props {
   title: string;
+  disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
 }
 
-const PrimaryButton = ({title, style, onPress = () => {}}: Props) => {
+const PrimaryButton = ({
+  title,
+  disabled = false,
+  style,
+  onPress = () => {},
+}: Props) => {
   return (
-    <Button style={[styles.container, style]} onPress={onPress}>
+    <Button
+      disabled={disabled}
+      style={[styles.container, style]}
+      onPress={onPress}>
       {title}
     </Button>
   );
