@@ -1,11 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import {RootStore} from '../../../../../store/LoginStore';
+import {LoginStore} from '../../../../../store/LoginStore';
 
 class ForgotPasswordViewModel {
-  store: RootStore;
+  store: LoginStore;
   navigation: any;
 
-  constructor(store: RootStore) {
+  constructor(store: LoginStore) {
     this.store = store;
     this.navigation = useNavigation();
   }
