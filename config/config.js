@@ -29,6 +29,18 @@ function createModule() {
   });
 }
 
+const createComponentPrompt = {
+  type: 'input',
+  name: 'name',
+  message: 'Component name?',
+};
+
+function createComponent() {
+  inquirer.prompt([createComponentPrompt]).then(answers => {
+    createComponentWithName(answers.name);
+  });
+}
+
 const createViewWithNamePrompt = {
   type: 'list',
   name: 'module',
@@ -61,11 +73,20 @@ function createViewWithName(name) {
   });
 }
 
+function createComponentWithName(name) {
+  const global = `./src/components`;
+  createViewFile(
+    './config/templates/component.txt',
+    `${global}/${name}.tsx`,
+    name,
+  );
+}
+
 const createPrompt = {
   type: 'list',
   name: 'action',
   message: 'What kind of element you want to create?',
-  choices: ['view', 'module'],
+  choices: ['view', 'module', 'component'],
 };
 
 function create() {
@@ -76,6 +97,8 @@ function create() {
         break;
       case 'module':
         createModule();
+      case 'component':
+        createComponent();
       default:
         break;
     }
