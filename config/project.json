@@ -1,1 +1,1 @@
-{"modules":["auth","patients","profile"],"screens":["ForgotPassword","Login","Signup","Patient","PatientData","Patients","Profile"]}
+{"modules":["auth","patients","profile"],"screens":["ForgotPassword","Login","Signup","Patient","PatientData","PatientGallery","Patients","Profile"]}

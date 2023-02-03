@@ -142,6 +142,36 @@ const getPatientPictures: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getExerciseCategories: NetworkingConfig = {
+  url: fullURL,
+  path: 'catalogues/categories',
+  method: RequestMethod.GET,
+};
+
+const getExercisesByCategory: NetworkingConfig = {
+  url: fullURL,
+  path: 'catalogues/exercisesByCategory',
+  method: RequestMethod.GET,
+};
+
+const getSeries: NetworkingConfig = {
+  url: fullURL,
+  path: 'catalogues/series',
+  method: RequestMethod.GET,
+};
+
+const getRepetitions: NetworkingConfig = {
+  url: fullURL,
+  path: 'catalogues/repetitions',
+  method: RequestMethod.GET,
+};
+
+const getRest: NetworkingConfig = {
+  url: fullURL,
+  path: 'catalogues/rest',
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -154,5 +184,12 @@ export const Networking = {
     getPatientProgress,
     toggleExercises,
     getPatientPictures,
+  },
+  catalogues: {
+    getExerciseCategories,
+    getExercisesByCategory,
+    getSeries,
+    getRepetitions,
+    getRest,
   },
 };

@@ -63,6 +63,7 @@ const SignupView = ({
           placeholder="Selecciona una opción"
           selectedIndex={genderSelectedIndex}
           onSelect={didChangeGender}
+          keys={["Femenino", "Masculino"]}
           value={genderSelectedValue}
         />
         <TextInput
