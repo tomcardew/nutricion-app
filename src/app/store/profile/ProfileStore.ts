@@ -1,16 +1,20 @@
-import {AlertMessage} from '../../../components/Layout/BaseLayoutView';
 import {makeAutoObservable} from 'mobx';
-import {AlertType} from '../../../components/Alert/AlertPopup';
-import {AlertActionType} from '../../../components/Alert/AlertAction';
+import {Asset} from 'react-native-image-picker';
+import {AlertActionType, AlertMessage, AlertType} from '../../../models/Common';
+import AdministratorServices from '../../../services/administrator';
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;
+  public loading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  public showAlert = (onLogout: () => void = () => {}) => {
+  public showAlert = (
+    onLogout: () => void = () => {},
+    onChangeProfilePicture: (source: 'camera' | 'library') => void = () => {},
+  ) => {
     this.alert = {
       title: 'Editar perfil',
       message: 'Selecciona qué acción deseas tomar',
@@ -19,6 +23,7 @@ export class ProfileStore {
       actions: [
         {
           label: 'Cambiar foto de perfil',
+          onClick: () => this.showChangeProfilePicture(onChangeProfilePicture),
         },
         {
           label: 'Cerrar sesión',
@@ -50,6 +55,47 @@ export class ProfileStore {
         },
       ],
     };
+  };
+
+  public showChangeProfilePicture = (
+    onChooseSource: (source: 'camera' | 'library') => void = () => {},
+  ) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Cambiar foto de perfil',
+      message: 'Elige la foto que deseas utilizar',
+      showIcon: false,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: 'Tomar una foto',
+          type: AlertActionType.Action,
+          onClick: () => onChooseSource('camera'),
+        },
+        {
+          label: 'Elegir una foto de tu biblioteca',
+          type: AlertActionType.Action,
+          onClick: () => onChooseSource('library'),
+        },
+        {
+          label: 'Cancelar',
+        },
+      ],
+    };
+  };
+
+  public changeProfilePicture = async (token: string, asset: Asset) => {
+    this.loading = true;
+    const data = await AdministratorServices.changeProfilePicture(token, asset);
+    this.loading = false;
+    return data;
+  };
+
+  public getProfile = async (token: string) => {
+    this.loading = true;
+    const data = await AdministratorServices.getProfile(token);
+    this.loading = false;
+    return data;
   };
 
   public dismiss = () => {

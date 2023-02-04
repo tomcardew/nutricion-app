@@ -7,6 +7,7 @@ import ProfilePicture from '../../../../../../components/Images/ProfilePicture';
 import {parseDate, nameToFirstLetters} from '../../../../../../utils/Utils';
 
 import {default as theme} from '../../../../../../../custom-theme.json';
+import Environment from '../../../../../../constants/Environment';
 
 // import ImageColors from 'react-native-image-colors';
 
@@ -50,7 +51,11 @@ const ProfileView = ({
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
         <View style={styles.imageContainer}>
-          <Image style={[styles.cover, {backgroundColor: state.coverColor}]} />
+          <Image
+            source={require('../../../../../../../public/assets/gradient-bg.png')}
+            style={[styles.cover]}
+            resizeMode="stretch"
+          />
           <ProfilePicture
             style={styles.profilePicture}
             fallback={`${nameToFirstLetters(fullname)}`}
@@ -87,12 +92,11 @@ const styles = StyleSheet.create({
   },
   cover: {
     width: Dimensions.get('screen').width + 2,
-    height: 150,
+    height: 200,
     marginTop: -21,
-    // opacity: 0.5,
   },
   profilePicture: {
-    marginTop: -100,
+    marginTop: -150,
   },
   name: {
     color: 'black',

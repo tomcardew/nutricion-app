@@ -39,14 +39,7 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
         refreshing={viewModel.patientsStore.refreshing}
         onRefresh={onRefresh}
         data={viewModel.patientsStore.preparedPictures}
-        onShowPreview={url =>
-          setPreviewUrl(
-            url.replace(
-              'http://localhost:4000',
-              Environment.URL + ':' + Environment.PORT,
-            ),
-          )
-        }
+        onShowPreview={url => setPreviewUrl(url)}
       />
     </BaseLayoutView>
   );

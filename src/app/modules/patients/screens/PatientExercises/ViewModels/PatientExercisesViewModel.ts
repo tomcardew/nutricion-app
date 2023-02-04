@@ -82,7 +82,6 @@ class PatientExercisesViewModel {
   };
 
   dismissAlert = () => {
-    console.log(this.patientsStore.alert);
     if (this.patientsStore.alert?.type == AlertType.Success) {
       this.patientsStore.clearExercises();
       this.navigation.goBack();

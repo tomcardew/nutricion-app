@@ -62,3 +62,11 @@ export const replaceLocalhost = (url: string) => {
   const host = Environment.URL + ':' + Environment.PORT;
   return url.replace('http://localhost:4000', host);
 };
+
+export const uriToFileType = (uri: string) => {
+  const parts = uri.split('.');
+  if (parts.length > 0) {
+    return parts[parts.length - 1];
+  }
+  return null;
+};

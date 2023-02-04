@@ -251,8 +251,6 @@ export class PatientsStore {
           error: data.error,
         };
       }
-    } else {
-      console.log('Cant save');
     }
   };
 

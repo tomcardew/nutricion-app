@@ -25,6 +25,7 @@ export class RequestData {
     public params?: string,
     public query?: string,
     public body?: ObjectType,
+    public formData?: FormData,
   ) {
     this.url = service.url;
     this.path = service.path;
@@ -33,6 +34,7 @@ export class RequestData {
     this.params = params;
     this.query = query;
     this.body = body;
+    this.formData = formData;
   }
 
   get fullPath() {
@@ -56,14 +58,44 @@ export class RequestData {
     return this;
   }
 
+  setFormData(data: FormData) {
+    this.formData = data;
+    return this;
+  }
+
   async request() {
+    if (this.formData) {
+      return await this.requestFormData();
+    }
+    return await this.requestBody();
+  }
+
+  private async requestBody() {
     try {
       const result = await fetch(this.fullPath, {
         method: this.method,
         body: JSON.stringify(this.body),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: this.token ?? 'asas',
+          Authorization: this.token ?? '',
+        },
+      });
+      return await result.json();
+    } catch (error) {
+      return {
+        code: 0,
+        message: error,
+      };
+    }
+  }
+
+  private async requestFormData() {
+    try {
+      const result = await fetch(this.fullPath, {
+        method: this.method,
+        body: this.formData,
+        headers: {
+          Authorization: this.token ?? '',
         },
       });
       return await result.json();
@@ -112,6 +144,12 @@ const passwordRecovery: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getProfile: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin',
+  method: RequestMethod.GET,
+};
+
 const getPatients: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients',
@@ -146,6 +184,12 @@ const postPatientExercise: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/set-exercise',
   method: RequestMethod.POST,
+};
+
+const changeProfilePicture: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/changeProfilePicture',
+  method: RequestMethod.PATCH,
 };
 
 const getExerciseCategories: NetworkingConfig = {
@@ -185,12 +229,14 @@ export const Networking = {
     passwordRecovery,
   },
   administrator: {
+    getProfile,
     getPatients,
     getPatientById,
     getPatientProgress,
     toggleExercises,
     getPatientPictures,
     postPatientExercise,
+    changeProfilePicture,
   },
   catalogues: {
     getExerciseCategories,

@@ -1,27 +1,16 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {makeAutoObservable, action} from 'mobx';
-import {makePersistable} from 'mobx-persist-store';
-
-export interface UserData {
-  idUsuario: string;
-  nombre: string;
-  fechaNacimiento: Date;
-  email: string;
-  urlFoto?: string;
-  genero: string;
-  esAdministrador: boolean;
-  tempToken?: string;
-  activo: boolean;
-  seccion_ejercicios: boolean;
-}
+import {makePersistable, stopPersisting} from 'mobx-persist-store';
+import {Profile} from '../../models/Profile';
 
 export class AuthStore {
   public hydrating: boolean = true;
 
   public token: string | null = null;
-  public user: UserData | null = null;
+  public user: Profile | null = null;
 
   constructor() {
+    stopPersisting(this);
     makeAutoObservable(this);
     makePersistable(this, {
       name: 'auth',
@@ -41,11 +30,11 @@ export class AuthStore {
   }
 
   public setToken = (token: string) => {
-    console.log(`Setting token ${token}`);
     this.token = token;
   };
 
-  public setUser = (user: UserData) => {
+  public setUser = (user: Profile) => {
+    this.user = null;
     this.user = user;
   };
 

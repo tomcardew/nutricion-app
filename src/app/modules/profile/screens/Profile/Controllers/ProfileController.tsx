@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import ProfileView from '../Views/ProfileView';
@@ -9,11 +9,15 @@ interface Props {
 }
 
 const ProfileController = observer(({viewModel}: Props) => {
+  useEffect(() => {
+    viewModel.load();
+  }, []);
+
   return (
     <BaseLayoutView
       hideHeader
-      loadingMessage="Iniciando sesión..."
-      loading={false}
+      loadingMessage="Cargando..."
+      loading={viewModel.profileStore.loading}
       alert={viewModel.profileStore.alert}
       showBackButton={false}
       onAlertDismiss={viewModel.dismissAlert}>
