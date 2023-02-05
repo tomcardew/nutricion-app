@@ -5,6 +5,8 @@ import {
   View,
   StatusBar,
   ScrollView,
+  TouchableOpacity,
+  TouchableNativeFeedback,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
@@ -27,9 +29,11 @@ interface Props {
   backgroundColor?: string;
   color?: string;
   overlay?: JSX.Element;
+  actionButtonView?: JSX.Element;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
+  onActionButtonPress?: () => void;
 }
 
 const BaseLayoutView = ({
@@ -47,11 +51,20 @@ const BaseLayoutView = ({
   backgroundColor = theme['color-primary-600'],
   color = 'white',
   overlay,
+  actionButtonView,
   onBackAction = () => {},
   onAlertDismiss = () => {},
+  onActionButtonPress = () => {},
 }: Props) => {
   const content = () => (
     <View style={styles.content}>
+      {actionButtonView && (
+        <TouchableOpacity
+          style={styles.actionButtonContainer}
+          onPress={onActionButtonPress}>
+          {actionButtonView}
+        </TouchableOpacity>
+      )}
       <AlertPopup
         title={alert?.title}
         message={alert?.message}
@@ -123,6 +136,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  actionButtonContainer: {
+    position: 'absolute',
+    right: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 20,
+    zIndex: 100,
+    height: 60,
+    width: 60,
+    backgroundColor: theme['color-primary-500'],
+    borderRadius: 100,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 10,
+    elevation: 3,
   },
 });
 

@@ -3,6 +3,7 @@ import AdministratorServices from '../../../services/administrator';
 import {
   GalleryItems,
   Patient,
+  PatientExerciseListItem,
   PatientPicture,
   PatientProgress,
 } from '../../../models/Patients';
@@ -32,7 +33,11 @@ export class PatientsStore {
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
 
-  // PatientExercices
+  // PatientExercisesList
+  public currentDate: Date = new Date();
+  public patientExercises: PatientExerciseListItem[] = [];
+
+  // PatientExercises
   public categories_raw: Category[] = [];
   public currentCategory: IndexPath | undefined = undefined;
   public exercisesByCurrentCategory_raw: Exercise[] | null = null;
@@ -121,6 +126,26 @@ export class PatientsStore {
         this.rawPictures = data.data;
       }
     }
+  };
+
+  public getPatientExercises = async (token: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.getPatientExercises(
+        this.selectedPatientId,
+        token,
+        this.currentDate,
+      );
+      this.loading = false;
+      if (data.succes) {
+        this.patientExercises = data.data;
+      }
+    }
+  };
+
+  public cleanExercises = () => {
+    this.patientExercises = [];
+    this.currentDate = new Date();
   };
 
   public getExerciseCategories = async (token: string) => {

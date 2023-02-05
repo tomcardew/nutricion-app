@@ -1,4 +1,5 @@
 import {KeyValue} from '../utils/Utils';
+import {Category, ExerciseName, Serie, Repetition, Rest} from './Catalogues';
 
 export interface Patient {
   idUsuario: string;
@@ -59,4 +60,17 @@ export interface PatientExerciseBody {
   repeticiones: number;
   descansos: number;
   notas: string;
+}
+
+export interface PatientExerciseListItem {
+  id: number;
+  fecha_ejercicio: string;
+  completado: boolean;
+  Peso: string;
+  Notas: string;
+  Categoria_ejercicio: Category;
+  Nombre_ejercicio: ExerciseName;
+  Series: Serie;
+  Repeticiones: Repetition;
+  Descansos: Rest;
 }

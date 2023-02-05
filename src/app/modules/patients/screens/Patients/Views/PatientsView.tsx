@@ -38,7 +38,7 @@ const PatientsView = ({
         />
       )}
       <FlatList
-        data={data}
+        data={data.slice()}
         numColumns={3}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}

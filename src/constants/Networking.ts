@@ -178,6 +178,12 @@ const getPatientPictures: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getPatientExercises: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/exercises',
+  method: RequestMethod.GET,
+};
+
 const postPatientExercise: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/set-exercise',
@@ -233,6 +239,7 @@ export const Networking = {
     getPatientProgress,
     toggleExercises,
     getPatientPictures,
+    getPatientExercises,
     postPatientExercise,
     changeProfilePicture,
   },

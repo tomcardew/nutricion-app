@@ -41,6 +41,11 @@ export const dateToMonthYear = (date: Date) => {
   return `${MONTHS[_date.month()]} ${_date.year()}`;
 };
 
+export const dateToDayMonth = (date: Date) => {
+  const _date = moment(date);
+  return `${_date.date()} de ${MONTHS[_date.month()]}`;
+};
+
 export const distributeItems = (data: PatientPicture[]) => {
   let listA: PatientPicture[] = [];
   let listB: PatientPicture[] = [];

@@ -4,6 +4,7 @@ import {
   PatientController,
   PatientDataController,
   PatientExercisesListController,
+  PatientExercisesListViewModel,
   PatientsController,
   PatientsViewModel,
 } from '../app/modules/patients';
@@ -43,9 +44,10 @@ const PatientsRouter = () => {
     authStore,
     navigation,
   );
-  const patientExercisesListViewModel = new PatientExercisesViewModel(
+  const patientExercisesListViewModel = new PatientExercisesListViewModel(
     authStore,
     patientsStore,
+    navigation,
   );
   const patientExercisesViewModel = new PatientExercisesViewModel(
     authStore,

@@ -3,6 +3,7 @@ import {PatientExerciseBody} from '../models/Patients';
 import {Asset} from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import {uriToFileType} from '../utils/Utils';
+import moment from 'moment';
 
 const AdministratorServices = {
   getProfile: async (token: string) => {
@@ -80,6 +81,21 @@ const AdministratorServices = {
         token,
       );
       request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getPatientExercises: async (id: string, token: string, date: Date) => {
+    const _date = moment(date).utc(true).format('yyyy-MM-DD');
+    try {
+      const request = new RequestData(
+        Networking.administrator.getPatientExercises,
+        token,
+      );
+      request.setParams(`/${id}/${_date}`);
 
       const response = await request.request();
       return response;

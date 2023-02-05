@@ -71,7 +71,7 @@ const PatientView = ({
       )}
       <View style={styles.content}>
         <FlatList
-          data={options}
+          data={options.slice()}
           renderItem={item => (
             <MenuOptionView
               title={item.item.title}

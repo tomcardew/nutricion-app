@@ -26,7 +26,7 @@ const PatientDataView = ({data}: Props) => {
         </View>
       )}
       <FlatList
-        data={items}
+        data={items.slice()}
         renderItem={item => (
           <VerticalInfoCard title={item.item.key} content={item.item.value} />
         )}

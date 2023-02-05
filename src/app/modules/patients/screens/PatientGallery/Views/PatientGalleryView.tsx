@@ -29,7 +29,7 @@ const PatientGalleryView = ({
     <View style={styles.container}>
       {data.length == 0 && <EmptyView message="No hay fotos para mostrar" />}
       <FlatList
-        data={data}
+        data={data.slice()}
         renderItem={({item}) => (
           <PatientMonthCard
             month={`${dateToMonthYear(item.date)}`}
