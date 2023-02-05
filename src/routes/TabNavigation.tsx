@@ -27,7 +27,7 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      backBehavior="history"
+      backBehavior="none"
       screenOptions={{
         headerShown: false,
       }}>
