@@ -146,6 +146,19 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  getAllDates: async (token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.getAllDates,
+        token,
+      );
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;

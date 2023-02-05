@@ -9,15 +9,12 @@ import {ProfileController, ProfileViewModel} from '../app/modules/profile';
 
 import {default as theme} from '../../custom-theme.json';
 import PatientsRouter from './Patients';
+import ScheduleRouter from './Schedule';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const {registerStore, authStore, profileStore} = useStores();
-
-  const SignupScreen = () => (
-    <SignupController viewModel={new SignupViewModel(registerStore)} />
-  );
 
   const ProfileScreen = () => (
     <ProfileController
@@ -74,7 +71,7 @@ const TabNavigation = () => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={SignupScreen}
+        component={ScheduleRouter}
       />
     </Tab.Navigator>
   );

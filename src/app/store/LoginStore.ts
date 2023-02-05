@@ -1,6 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {AlertType} from '../../components/Alert/AlertPopup';
-import {AlertMessage} from '../../components/Layout/BaseLayoutView';
+import {AlertMessage, AlertType} from '../../models/Common';
 import AuthServices from '../../services/auth';
 import ErrorCatalogue from '../../utils/ErrorCatalogue';
 

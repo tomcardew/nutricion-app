@@ -3,6 +3,7 @@ export interface Profile {
   nombre: string;
   fechaNacimiento: Date;
   email: string;
+  contrasena?: string;
   urlFoto?: string;
   genero: string;
   esAdministrador: boolean;

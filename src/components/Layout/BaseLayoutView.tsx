@@ -30,6 +30,7 @@ interface Props {
   color?: string;
   overlay?: JSX.Element;
   actionButtonView?: JSX.Element;
+  rightAccessory?: JSX.Element;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
@@ -52,6 +53,7 @@ const BaseLayoutView = ({
   color = 'white',
   overlay,
   actionButtonView,
+  rightAccessory,
   onBackAction = () => {},
   onAlertDismiss = () => {},
   onActionButtonPress = () => {},
@@ -94,6 +96,7 @@ const BaseLayoutView = ({
             onBackAction={() => onBackAction()}
             backgroundColor={backgroundColor}
             color={color}
+            rightAccessory={rightAccessory}
           />
         </View>
       )}

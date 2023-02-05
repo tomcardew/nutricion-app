@@ -196,6 +196,12 @@ const changeProfilePicture: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getAllDates: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/dates',
+  method: RequestMethod.GET,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -242,6 +248,7 @@ export const Networking = {
     getPatientExercises,
     postPatientExercise,
     changeProfilePicture,
+    getAllDates,
   },
   catalogues: {
     getExerciseCategories,

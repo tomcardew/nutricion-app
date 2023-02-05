@@ -15,6 +15,7 @@ interface Props {
   showBackIcon?: boolean;
   color?: string;
   backgroundColor?: string;
+  rightAccessory?: JSX.Element;
   onBackAction?: () => void;
 }
 
@@ -26,6 +27,7 @@ const HeaderView = ({
   showBackIcon = false,
   color = 'white',
   backgroundColor = theme['color-primary-500'],
+  rightAccessory,
   onBackAction = () => {},
 }: Props) => {
   const renderBackAction = () => {
@@ -54,6 +56,7 @@ const HeaderView = ({
         )}
         style={{backgroundColor}}
         accessoryLeft={renderBackAction}
+        accessoryRight={rightAccessory}
       />
     </Layout>
   );
