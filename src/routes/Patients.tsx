@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   PatientController,
   PatientDataController,
+  PatientExercisesListController,
   PatientsController,
   PatientsViewModel,
 } from '../app/modules/patients';
@@ -42,6 +43,10 @@ const PatientsRouter = () => {
     authStore,
     navigation,
   );
+  const patientExercisesListViewModel = new PatientExercisesViewModel(
+    authStore,
+    patientsStore,
+  );
   const patientExercisesViewModel = new PatientExercisesViewModel(
     authStore,
     patientsStore,
@@ -61,6 +66,10 @@ const PatientsRouter = () => {
 
   const PatientGalleryScreen = () => (
     <PatientGalleryController viewModel={patientGalleryViewModel} />
+  );
+
+  const PatientExercisesListScreen = () => (
+    <PatientExercisesListController viewModel={patientExercisesListViewModel} />
   );
 
   const PatientExercisesScreen = () => (
@@ -84,6 +93,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.PatientGallery.toString()}
         component={PatientGalleryScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientExercisesList.toString()}
+        component={PatientExercisesListScreen}
       />
       <Stack.Screen
         name={ScreenNames.PatientExercises.toString()}

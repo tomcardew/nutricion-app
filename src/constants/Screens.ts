@@ -6,6 +6,7 @@ enum ScreenNames {
 	Patient,
 	PatientData,
 	PatientExercises,
+	PatientExercisesList,
 	PatientGallery,
 	Patients,
 	Profile,
