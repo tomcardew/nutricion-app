@@ -22,7 +22,11 @@ const ScheduleRouter = () => {
     scheduleStore,
   );
 
-  const addScheduleViewModel = new AddScheduleViewModel(navigation);
+  const addScheduleViewModel = new AddScheduleViewModel(
+    navigation,
+    authStore,
+    scheduleStore,
+  );
 
   const ScheduleScreen = () => (
     <ScheduleController viewModel={scheduleViewModel} />

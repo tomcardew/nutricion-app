@@ -40,7 +40,7 @@ const CalendarDay = ({data}: Props) => {
     const views = [];
     for (var i in data) {
       const item = data[i];
-      const date = moment(item.fecha_cita);
+      const date = moment.utc(item.fecha_cita);
       const startTime = date.hour();
       const startMinute = date.minute();
       views.push(

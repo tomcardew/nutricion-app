@@ -4,6 +4,7 @@ import {Asset} from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import {uriToFileType} from '../utils/Utils';
 import moment from 'moment';
+import {ScheduleDateBody} from '../models/Schedule';
 
 const AdministratorServices = {
   getProfile: async (token: string) => {
@@ -152,6 +153,25 @@ const AdministratorServices = {
         Networking.administrator.getAllDates,
         token,
       );
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postPatientDate: async (
+    id: string,
+    token: string,
+    data: ScheduleDateBody,
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.postPatientDate,
+        token,
+      );
+      request.setParams(`/${id}`);
+      request.setBody({...data});
 
       const response = await request.request();
       return response;

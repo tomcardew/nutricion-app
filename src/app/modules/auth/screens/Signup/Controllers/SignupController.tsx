@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SignupView from '../Views/SignupView';
 import {observer} from 'mobx-react';
 import SignupViewModel from '../ViewModels/SignupViewModel';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
+import {DatePickerModal} from '../../../../../../components/Inputs';
 
 interface Props {
   viewModel: SignupViewModel;
 }
 
 const SignupController = observer(({viewModel}: Props) => {
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
   return (
     <BaseLayoutView
       title="Registrarse"
@@ -16,6 +19,15 @@ const SignupController = observer(({viewModel}: Props) => {
       loading={viewModel.store.loading}
       loadingMessage="Creando tu cuenta..."
       onAlertDismiss={viewModel.dismissAlert}
+      overlay={
+        showDatePicker ? (
+          <DatePickerModal
+            mode="calendar"
+            onClose={() => setShowDatePicker(false)}
+            onSelectedDate={viewModel.didChangeDate}
+          />
+        ) : undefined
+      }
       onBackAction={viewModel.goBack}>
       <SignupView
         name={viewModel.store.name}
@@ -26,7 +38,7 @@ const SignupController = observer(({viewModel}: Props) => {
         password={viewModel.store.password}
         passwordConfirmation={viewModel.store.passwordConfirmation}
         didChangeName={viewModel.didChangeName}
-        didChangeDate={viewModel.didChangeDate}
+        didPressChangeDate={() => setShowDatePicker(true)}
         didChangeGender={viewModel.didChangeGender}
         didChangeEmail={viewModel.didChangeEmail}
         didChangePassword={viewModel.didChangePassword}

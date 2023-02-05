@@ -31,10 +31,12 @@ interface Props {
   overlay?: JSX.Element;
   actionButtonView?: JSX.Element;
   rightAccessory?: JSX.Element;
+  showDateSelector?: boolean;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
   onActionButtonPress?: () => void;
+  didChangeSelectedDate?: (date: Date) => void;
 }
 
 const BaseLayoutView = ({

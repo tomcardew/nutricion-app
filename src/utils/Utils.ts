@@ -18,6 +18,18 @@ export const MONTHS = [
   'Diciembre',
 ];
 
+export const DAYS = [
+  'Domingo',
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+];
+
+export const DAYS_SHORT = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
+
 export const parseDate = (date: Date) => {
   let month_number = date.getMonth();
   let month = MONTHS[month_number];

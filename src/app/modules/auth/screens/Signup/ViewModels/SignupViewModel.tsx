@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {RegisterStore} from '../../../../../store/RegisterStore';
 import {IndexPath} from '@ui-kitten/components';
+import moment from 'moment';
 
 class SignupViewModel {
   store: RegisterStore;
@@ -15,8 +16,9 @@ class SignupViewModel {
     this.store.setName(newValue);
   };
 
-  didChangeDate = (newValue: Date | undefined) => {
-    this.store.setBithdate(newValue);
+  didChangeDate = (newValue: Date | string | undefined) => {
+    const _date = moment(newValue, 'YYYY/MM/DD').toDate();
+    this.store.setBithdate(_date);
   };
 
   didChangeGender = (newValue: IndexPath | IndexPath[]) => {

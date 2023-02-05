@@ -202,6 +202,12 @@ const getAllDates: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const postPatientDate: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/set-date',
+  method: RequestMethod.POST,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -249,6 +255,7 @@ export const Networking = {
     postPatientExercise,
     changeProfilePicture,
     getAllDates,
+    postPatientDate,
   },
   catalogues: {
     getExerciseCategories,

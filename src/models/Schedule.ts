@@ -6,3 +6,8 @@ export interface ScheduleDate {
   lugar: string;
   Usuario?: Profile;
 }
+
+export interface ScheduleDateBody {
+  fecha_cita: string;
+  lugar: string;
+}
