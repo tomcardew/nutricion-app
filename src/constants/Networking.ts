@@ -1,6 +1,4 @@
 import Environment from './Environment';
-import RequestError from '../utils/RequestError';
-import {useStores} from '../../use-store';
 
 export enum RequestMethod {
   GET = 'GET',
