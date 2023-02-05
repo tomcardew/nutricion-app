@@ -1,6 +1,7 @@
 import moment from 'moment';
 import {PatientPicture} from '../models/Patients';
 import Environment from '../constants/Environment';
+import {default as theme} from '../../custom-theme.json';
 
 export const MONTHS = [
   'Enero',
@@ -75,3 +76,5 @@ export const uriToFileType = (uri: string) => {
   }
   return null;
 };
+
+export {theme};

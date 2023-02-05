@@ -26,6 +26,11 @@ class PatientExercisesListViewModel {
     this.navigation.navigate(ScreenNames.PatientExercises.toString());
   };
 
+  didChangeDate = (date: Date) => {
+    this.patientsStore.currentDate = date;
+    this.patientsStore.getPatientExercises(this.authStore.token ?? '');
+  };
+
   goBack = () => {
     this.navigation.goBack();
   };

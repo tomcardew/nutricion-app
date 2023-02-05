@@ -34,6 +34,7 @@ const PatientExercisesListController = observer(({viewModel}: Props) => {
       <PatientExercisesListView
         data={viewModel.patientsStore.patientExercises}
         currentDate={viewModel.patientsStore.currentDate}
+        didChangeDate={viewModel.didChangeDate}
       />
     </BaseLayoutView>
   );

@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: 100,
     marginLeft: 0,
+    marginTop: 5,
+    marginBottom: 5,
   },
   categoryLabel: {
     backgroundColor: theme['color-primary-100'],

@@ -1,28 +1,39 @@
-import moment from 'moment';
 import React from 'react';
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
-import {dateToDayMonth} from '../../../../../../utils/Utils';
-import {default as theme} from '../../../../../../../custom-theme.json';
 import PatientExerciseItemView from './PatientExerciseItemView';
+import HorizontalDateSelector from '../../../../../../components/HorizontalDateSelector';
 
 interface Props {
   data: PatientExerciseListItem[];
   currentDate: Date;
+  didChangeDate: (date: Date) => void;
 }
 
-const PatientExercisesListView = ({data, currentDate}: Props) => {
+const PatientExercisesListView = ({
+  data,
+  currentDate,
+  didChangeDate = () => {},
+}: Props) => {
   const renderItem = (item: PatientExerciseListItem) => (
     <PatientExerciseItemView item={item} />
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{dateToDayMonth(currentDate)}</Text>
+      <HorizontalDateSelector
+        style={styles.dateContainer}
+        value={currentDate}
+        didChangeDate={didChangeDate}
+      />
       <FlatList
-        style={{width: '100%'}}
-        contentContainerStyle={{paddingLeft: 10, paddingVertical: 20}}
+        style={{width: '100%', marginTop: 10}}
+        contentContainerStyle={{
+          paddingLeft: 10,
+          paddingVertical: 20,
+          paddingBottom: 150,
+        }}
         data={data.slice()}
         renderItem={({item}) => renderItem(item)}
         keyExtractor={item => `patient-exercises-item-${item.id}`}
@@ -39,12 +50,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
     width: Dimensions.get('window').width,
   },
-  title: {
-    fontSize: 18,
-    textTransform: 'uppercase',
-    color: theme['color-primary-700'],
-    fontWeight: '600',
-    marginTop: 15,
+  dateContainer: {
+    marginTop: 10,
+    width: Dimensions.get('window').width - 40,
   },
 });
 
