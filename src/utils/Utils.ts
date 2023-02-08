@@ -89,4 +89,11 @@ export const uriToFileType = (uri: string) => {
   return null;
 };
 
+export const dateToScrollHeight = (date: Date) => {
+  const _date = moment(date);
+  const hours = _date.hour() * 100;
+  const minutes = (_date.minutes() * 100) / 60;
+  return hours + minutes - 10;
+};
+
 export {theme};
