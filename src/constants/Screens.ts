@@ -5,6 +5,7 @@ enum ScreenNames {
 	Signup,
 	Patient,
 	PatientData,
+	PatientDataEditor,
 	PatientExercises,
 	PatientExercisesList,
 	PatientGallery,

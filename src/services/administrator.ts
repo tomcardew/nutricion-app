@@ -1,5 +1,5 @@
 import {Networking, RequestData} from '../constants/Networking';
-import {PatientExerciseBody} from '../models/Patients';
+import {PatientExerciseBody, PatientProgressBody} from '../models/Patients';
 import {Asset} from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import {uriToFileType} from '../utils/Utils';
@@ -54,6 +54,25 @@ const AdministratorServices = {
         token,
       );
       request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postPatientProgress: async (
+    id: string,
+    token: string,
+    data: PatientProgressBody,
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.postPatientProgress,
+        token,
+      );
+      request.setParams(`/${id}`);
+      request.setBody({...data});
 
       const response = await request.request();
       return response;

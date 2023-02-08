@@ -17,6 +17,8 @@ import PatientGalleryViewModel from '../app/modules/patients/screens/PatientGall
 import {useNavigation} from '@react-navigation/native';
 import PatientExercisesViewModel from '../app/modules/patients/screens/PatientExercises/ViewModels/PatientExercisesViewModel';
 import PatientExercisesController from '../app/modules/patients/screens/PatientExercises/Controllers/PatientExercisesController';
+import PatientDataEditorViewModel from '../app/modules/patients/screens/PatientDataEditor/ViewModels/PatientDataEditorViewModel';
+import PatientDataEditorController from '../app/modules/patients/screens/PatientDataEditor/Controllers/PatientDataEditorController';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +37,11 @@ const PatientsRouter = () => {
     navigation,
   );
   const patientDataViewModel = new PatientDataViewModel(
+    authStore,
+    patientsStore,
+    navigation,
+  );
+  const patientDataEditorViewModel = new PatientDataEditorViewModel(
     authStore,
     patientsStore,
     navigation,
@@ -66,6 +73,10 @@ const PatientsRouter = () => {
     <PatientDataController viewModel={patientDataViewModel} />
   );
 
+  const PatientDataEditorScreen = () => (
+    <PatientDataEditorController viewModel={patientDataEditorViewModel} />
+  );
+
   const PatientGalleryScreen = () => (
     <PatientGalleryController viewModel={patientGalleryViewModel} />
   );
@@ -91,6 +102,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.PatientData.toString()}
         component={PatientDataScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientDataEditor.toString()}
+        component={PatientDataEditorScreen}
       />
       <Stack.Screen
         name={ScreenNames.PatientGallery.toString()}

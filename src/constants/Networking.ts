@@ -166,6 +166,12 @@ const getPatientProgress: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const postPatientProgress: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/progress',
+  method: RequestMethod.POST,
+};
+
 const toggleExercises: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/activate-exercises',
@@ -255,6 +261,7 @@ export const Networking = {
     getPatients,
     getPatientById,
     getPatientProgress,
+    postPatientProgress,
     toggleExercises,
     getPatientPictures,
     getPatientExercises,

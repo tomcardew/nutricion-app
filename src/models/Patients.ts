@@ -26,6 +26,15 @@ export interface PatientProgress {
   fecha_registro: string;
 }
 
+export interface PatientProgressBody {
+  peso: string;
+  imc: string;
+  grasa_corporal: string;
+  cintura: string;
+  abdomen: string;
+  cadera: string;
+}
+
 export function patientProgressToKeyValues(data: any) {
   if (!data) {
     return [];

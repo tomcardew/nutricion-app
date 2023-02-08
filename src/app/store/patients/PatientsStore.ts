@@ -52,6 +52,14 @@ export class PatientsStore {
   public weight: string = '';
   public note: string = '';
 
+  // PatientDataEditor
+  public data_weight: string = '';
+  public data_imc: string = '';
+  public data_bodyFat: string = '';
+  public data_waist: string = '';
+  public data_abdomen: string = '';
+  public data_hip: string = '';
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -99,6 +107,44 @@ export class PatientsStore {
       } else {
         this.patientProgress = null;
         // TODO: Show error alert
+      }
+    }
+  };
+
+  public savePatientProgress = async (token: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.postPatientProgress(
+        this.selectedPatientId,
+        token,
+        {
+          peso: this.data_weight + ' kg',
+          imc: this.data_imc,
+          abdomen: this.data_abdomen,
+          cadera: this.data_hip,
+          cintura: this.data_waist,
+          grasa_corporal: this.data_bodyFat + ' %',
+        },
+      );
+      this.loading = false;
+      console.log(data);
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: 'Operación exitosa',
+          message: 'El progreso ha sido guardado correctamente',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'El preogreso no pudo ser guardado correctamente',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
       }
     }
   };
@@ -500,6 +546,20 @@ export class PatientsStore {
       this.currentRest &&
       this.weight &&
       this.note
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  get canSavePatientProgress() {
+    if (
+      this.data_weight &&
+      this.data_imc &&
+      this.data_bodyFat &&
+      this.data_waist &&
+      this.data_abdomen &&
+      this.data_hip
     ) {
       return true;
     }

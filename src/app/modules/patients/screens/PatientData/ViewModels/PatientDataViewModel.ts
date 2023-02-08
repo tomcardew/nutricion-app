@@ -1,17 +1,12 @@
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {AlertMessage} from '../../../../../../components/Layout/BaseLayoutView';
+import ScreenNames from '../../../../../../constants/Screens';
+import {AlertMessage} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/patients/PatientsStore';
 
 class PatientDataViewModel {
   authStore: AuthStore;
   patientsStore: PatientsStore;
-  navigation: NavigationProp<ReactNavigation.RootParamList>;
-  route: any;
+  navigation: any;
 
   alert: AlertMessage | null = null;
 
@@ -23,11 +18,14 @@ class PatientDataViewModel {
     this.authStore = authStore;
     this.patientsStore = patientsStore;
     this.navigation = navigation;
-    this.route = useRoute();
   }
 
   load = async () => {
     await this.patientsStore.getPatientProgress(this.authStore.token ?? '');
+  };
+
+  didPressEditData = () => {
+    this.navigation.navigate(ScreenNames.PatientDataEditor.toString());
   };
 
   goBack = () => {
