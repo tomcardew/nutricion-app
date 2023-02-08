@@ -47,6 +47,7 @@ class PatientDataEditorViewModel {
 
   dismissAlert = () => {
     if (this.patientsStore.alert?.type === AlertType.Success) {
+      this.patientsStore.cleanPatientProgress();
       this.goBack();
     }
     this.patientsStore.alert = null;

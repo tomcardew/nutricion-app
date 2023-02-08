@@ -149,6 +149,15 @@ export class PatientsStore {
     }
   };
 
+  public cleanPatientProgress = () => {
+    this.data_weight = '';
+    this.data_imc = '';
+    this.data_bodyFat = '';
+    this.data_waist = '';
+    this.data_abdomen = '';
+    this.data_hip = '';
+  };
+
   public toggleExercises = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
