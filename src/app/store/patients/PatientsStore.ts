@@ -104,6 +104,13 @@ export class PatientsStore {
       this.loading = false;
       if (data.success && data.data) {
         this.patientProgress = data.data;
+        this.data_weight = this.patientProgress?.peso.split(' ')[0] ?? '';
+        this.data_imc = this.patientProgress?.imc ?? '';
+        this.data_bodyFat =
+          this.patientProgress?.grasa_corporal.split(' ')[0] ?? '';
+        this.data_waist = this.patientProgress?.cintura ?? '';
+        this.data_abdomen = this.patientProgress?.abdomen ?? '';
+        this.data_hip = this.patientProgress?.cadera ?? '';
       } else {
         this.patientProgress = null;
         // TODO: Show error alert
