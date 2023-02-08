@@ -3,9 +3,8 @@ import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import PatientGalleryViewModel from '../ViewModels/PatientGalleryViewModel';
 import PatientGalleryView from '../Views/PatientGalleryView';
-import {GalleryItems} from '../../../../../../models/Patients';
 import PreviewImage from '../Views/PreviewImage';
-import Environment from '../../../../../../constants/Environment';
+import {Icon} from '@ui-kitten/components';
 
 interface Props {
   viewModel: PatientGalleryViewModel;
@@ -16,6 +15,10 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
 
   useEffect(() => {
     viewModel.load();
+
+    return () => {
+      viewModel.patientsStore.clearPictures();
+    };
   }, []);
 
   const onRefresh = () => {
@@ -34,6 +37,16 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
           <PreviewImage url={previewUrl} onClose={() => setPreviewUrl('')} />
         ) : undefined
       }
+      actionButtonView={
+        <Icon
+          style={{width: 30, height: 30}}
+          fill="#FFF"
+          name="cloud-upload-outline"
+        />
+      }
+      alert={viewModel.patientsStore.alert}
+      onAlertDismiss={viewModel.dismissAlert}
+      onActionButtonPress={viewModel.didPressAddPicture}
       onBackAction={viewModel.goBack}>
       <PatientGalleryView
         refreshing={viewModel.patientsStore.refreshing}

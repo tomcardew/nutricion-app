@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Dimensions, RefreshControl} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {GalleryItems} from '../../../../../../models/Patients';
 import PatientMonthCard from './PatientMonthCard';
-import {Image} from '../../../../../../components/Images';
 import EmptyView from '../../../../../../components/EmptyView';
-import moment from 'moment';
 import {dateToMonthYear} from '../../../../../../utils/Utils';
 
 interface Props {
@@ -28,20 +26,23 @@ const PatientGalleryView = ({
   return (
     <View style={styles.container}>
       {data.length == 0 && <EmptyView message="No hay fotos para mostrar" />}
-      <FlatList
-        data={data.slice()}
-        renderItem={({item}) => (
-          <PatientMonthCard
-            month={`${dateToMonthYear(item.date)}`}
-            data={item.data}
-            onPress={handlePicturePress}
-          />
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        keyExtractor={item => `patient-gallery-${dateToMonthYear(item.date)}`}
-      />
+      {data.length > 0 && (
+        <FlatList
+          data={data.slice()}
+          contentContainerStyle={{paddingBottom: 150}}
+          renderItem={({item}) => (
+            <PatientMonthCard
+              month={`${dateToMonthYear(item.date)}`}
+              data={item.data}
+              onPress={handlePicturePress}
+            />
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          keyExtractor={item => `patient-gallery-${dateToMonthYear(item.date)}`}
+        />
+      )}
     </View>
   );
 };

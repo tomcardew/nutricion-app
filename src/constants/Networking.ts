@@ -208,6 +208,12 @@ const postPatientDate: NetworkingConfig = {
   method: RequestMethod.POST,
 };
 
+const postPatientActivityPicture: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/upload-activity-picture',
+  method: RequestMethod.POST,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -256,6 +262,7 @@ export const Networking = {
     changeProfilePicture,
     getAllDates,
     postPatientDate,
+    postPatientActivityPicture,
   },
   catalogues: {
     getExerciseCategories,

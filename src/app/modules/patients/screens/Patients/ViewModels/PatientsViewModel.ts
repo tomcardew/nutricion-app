@@ -1,8 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
-import {AlertMessage} from '../../../../../../components/Layout/BaseLayoutView';
 import ScreenNames from '../../../../../../constants/Screens';
 import {PatientsStore} from '../../../../../store/patients/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
+import {AlertMessage} from '../../../../../../models/Common';
 
 class PatientsViewModel {
   authStore: AuthStore;
@@ -28,6 +27,10 @@ class PatientsViewModel {
   goToPatient = (id: string) => {
     this.patientsStore.setSelectedPatientWith(id);
     this.navigation.navigate(ScreenNames.Patient.toString());
+  };
+
+  didChangeQuery = (query: string) => {
+    this.patientsStore.setQuery(query);
   };
 }
 

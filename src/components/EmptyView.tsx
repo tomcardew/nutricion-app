@@ -1,9 +1,18 @@
 import React from 'react';
-import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
 interface Props {
   message?: string;
   relodable?: boolean;
+  style?: StyleProp<ViewStyle>;
 
   onReload?: () => void;
 }
@@ -11,10 +20,11 @@ interface Props {
 const EmptyView = ({
   message = 'Sin datos',
   relodable,
+  style,
   onReload = () => {},
 }: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Image
         style={styles.image}
         source={require('../../public/assets/empty.png')}

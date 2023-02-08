@@ -10,7 +10,7 @@ interface Props {
   query: string;
   data: Patient[];
   onPatientPress?: (id: string) => void;
-  didChangeQuery?: () => void;
+  didChangeQuery?: (q: string) => void;
   onReload?: () => void;
 }
 
@@ -27,10 +27,8 @@ const PatientsView = ({
 
   return (
     <View style={styles.content}>
-      {data.length > 0 && (
-        <SearchBar value={query} onChangeText={didChangeQuery} />
-      )}
-      {data.length == 0 && (
+      <SearchBar value={query} onChangeText={didChangeQuery} />
+      {data.length == 0 && query === '' && (
         <EmptyView
           relodable
           message="No hay pacientes registrados"

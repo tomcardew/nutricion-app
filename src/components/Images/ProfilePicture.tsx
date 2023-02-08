@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Image from './Image';
-import FastImage from 'react-native-fast-image';
 
 interface Props {
   url?: string;

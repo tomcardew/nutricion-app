@@ -4,6 +4,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import PatientExerciseItemView from './PatientExerciseItemView';
 import HorizontalDateSelector from '../../../../../../components/HorizontalDateSelector';
+import EmptyView from '../../../../../../components/EmptyView';
 
 interface Props {
   data: PatientExerciseListItem[];
@@ -27,6 +28,12 @@ const PatientExercisesListView = ({
         value={currentDate}
         didChangeDate={didChangeDate}
       />
+      {data.length === 0 && (
+        <EmptyView
+          style={styles.emptyView}
+          message="El paciente no tiene ejercicios para este día"
+        />
+      )}
       <FlatList
         style={{width: '100%', marginTop: 10}}
         contentContainerStyle={{
@@ -53,6 +60,9 @@ const styles = StyleSheet.create({
   dateContainer: {
     marginTop: 10,
     width: Dimensions.get('window').width - 40,
+  },
+  emptyView: {
+    marginTop: 30,
   },
 });
 

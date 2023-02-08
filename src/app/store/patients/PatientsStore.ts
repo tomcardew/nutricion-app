@@ -17,13 +17,14 @@ import {
 } from '../../../models/Catalogues';
 import CataloguesServices from '../../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertMessage, AlertType} from '../../../models/Common';
+import {AlertActionType, AlertMessage, AlertType} from '../../../models/Common';
+import {Asset} from 'react-native-image-picker';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
   public loading: boolean = true;
   public refreshing: boolean = false;
-  public patients: Patient[] = [];
+  public patients_raw: Patient[] = [];
   public query: string = '';
 
   public selectedPatient: Patient | null = null;
@@ -59,7 +60,13 @@ export class PatientsStore {
     this.loading = true;
     const patients = await AdministratorServices.getPatients(token ?? '');
     this.loading = false;
-    this.patients = patients.data;
+    if (patients.success) {
+      this.patients_raw = patients.data;
+    }
+  };
+
+  public setQuery = (query: string) => {
+    this.query = query;
   };
 
   public getPatientById = async (token: string) => {
@@ -126,6 +133,10 @@ export class PatientsStore {
         this.rawPictures = data.data;
       }
     }
+  };
+
+  public clearPictures = () => {
+    this.rawPictures = [];
   };
 
   public getPatientExercises = async (token: string) => {
@@ -296,6 +307,64 @@ export class PatientsStore {
 
   public setSelectedPatientWith(id: string) {
     this.selectedPatientId = id;
+  }
+
+  public postPatientActivityPicture = async (token: string, asset: Asset) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.postPatientActivityPicture(
+        this.selectedPatientId,
+        token,
+        asset,
+      );
+      this.loading = false;
+      if (data.success) {
+        return data;
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'No se pudo subir la imagen correctamente',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
+      }
+    }
+    return null;
+  };
+
+  public showPostActivityPicture = (
+    onChooseSource: (source: 'camera' | 'library') => void = () => {},
+  ) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Subir fotografía',
+      message: 'Elige la foto que deseas utilizar',
+      showIcon: false,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: 'Tomar una foto',
+          type: AlertActionType.Action,
+          onClick: () => onChooseSource('camera'),
+        },
+        {
+          label: 'Elegir una foto de tu biblioteca',
+          type: AlertActionType.Action,
+          onClick: () => onChooseSource('library'),
+        },
+        {
+          label: 'Cancelar',
+        },
+      ],
+    };
+  };
+
+  get patients() {
+    return this.patients_raw.filter(patient =>
+      patient.nombre.includes(this.query),
+    );
   }
 
   get preparedPictures() {
