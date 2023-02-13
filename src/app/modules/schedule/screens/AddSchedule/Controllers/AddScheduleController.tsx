@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
-import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import AddScheduleViewModel from '../ViewModels/AddScheduleViewModel';
 import AddScheduleView from '../Views/AddScheduleView';
+import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import {DatePickerModal} from '../../../../../../components/Inputs';
 
 interface Props {

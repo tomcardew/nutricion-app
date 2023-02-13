@@ -11,6 +11,10 @@ interface Props {
 const PatientController = observer(({viewModel}: Props) => {
   useEffect(() => {
     viewModel.load();
+
+    return () => {
+      viewModel.unload();
+    };
   }, []);
 
   return (

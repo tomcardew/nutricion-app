@@ -33,6 +33,10 @@ const Router = observer(() => {
     />
   );
 
+  const TabNavigationScreen = () => (
+    <TabNavigation isAdmin={authStore.user?.esAdministrador} />
+  );
+
   return (
     <Stack.Navigator
       initialRouteName={
@@ -61,7 +65,7 @@ const Router = observer(() => {
       ) : (
         <Stack.Screen
           name={ScreenNames.Dashboard.toString()}
-          component={TabNavigation}
+          component={TabNavigationScreen}
         />
       )}
     </Stack.Navigator>

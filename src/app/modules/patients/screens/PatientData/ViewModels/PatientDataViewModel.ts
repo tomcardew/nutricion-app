@@ -1,7 +1,7 @@
 import ScreenNames from '../../../../../../constants/Screens';
 import {AlertMessage} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 
 class PatientDataViewModel {
   authStore: AuthStore;

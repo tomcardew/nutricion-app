@@ -4,21 +4,38 @@ import {Icon} from '@ui-kitten/components';
 
 import {useStores} from '../../use-store';
 
-import {SignupController, SignupViewModel} from '../app/modules/auth';
-import {ProfileController, ProfileViewModel} from '../app/modules/profile';
+import {
+  ProfileController as AdminProfileController,
+  ProfileViewModel as AdminProfileViewModel,
+} from '../app/modules/profile';
+import {
+  ProfileController as PatientProfileController,
+  ProfileViewModel as PatientProfileViewModel,
+} from '../app/modules/patient-profile';
 
 import {default as theme} from '../../custom-theme.json';
 import PatientsRouter from './Patients';
 import ScheduleRouter from './Schedule';
+import {observer} from 'mobx-react';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = () => {
-  const {registerStore, authStore, profileStore} = useStores();
+interface Props {
+  isAdmin?: boolean;
+}
 
-  const ProfileScreen = () => (
-    <ProfileController
-      viewModel={new ProfileViewModel(authStore, profileStore)}
+const TabNavigation = observer(({isAdmin = true}: Props) => {
+  const {authStore, profileStore} = useStores();
+
+  const AdminProfileScreen = () => (
+    <AdminProfileController
+      viewModel={new AdminProfileViewModel(authStore, profileStore)}
+    />
+  );
+
+  const PatientProfileScreen = () => (
+    <PatientProfileController
+      viewModel={new PatientProfileViewModel(authStore, profileStore)}
     />
   );
 
@@ -41,17 +58,17 @@ const TabNavigation = () => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={ProfileScreen}
+        component={isAdmin ? AdminProfileScreen : PatientProfileScreen}
       />
       <Tab.Screen
         name="pacients"
         options={{
-          tabBarLabel: 'Pacientes',
+          tabBarLabel: isAdmin ? 'Pacientes' : 'Ejercicios',
           tabBarIcon: ({color, size}) => (
             <Icon
               style={{width: size, height: size}}
               fill={color}
-              name="people-outline"
+              name={isAdmin ? 'people-outline' : 'list-outline'}
             />
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
@@ -75,6 +92,6 @@ const TabNavigation = () => {
       />
     </Tab.Navigator>
   );
-};
+});
 
 export default TabNavigation;

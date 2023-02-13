@@ -1,12 +1,12 @@
 import {makeAutoObservable} from 'mobx';
-import AdministratorServices from '../../../services/administrator';
+import AdministratorServices from '../../services/administrator';
 import {
   GalleryItems,
   Patient,
   PatientExerciseListItem,
   PatientPicture,
   PatientProgress,
-} from '../../../models/Patients';
+} from '../../models/Patients';
 import moment from 'moment';
 import {
   Category,
@@ -14,10 +14,10 @@ import {
   Repetition,
   Rest,
   Serie,
-} from '../../../models/Catalogues';
-import CataloguesServices from '../../../services/catalogues';
+} from '../../models/Catalogues';
+import CataloguesServices from '../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertActionType, AlertMessage, AlertType} from '../../../models/Common';
+import {AlertActionType, AlertMessage, AlertType} from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 
 export class PatientsStore {
@@ -453,6 +453,9 @@ export class PatientsStore {
       }
     });
     lists = lists.reverse();
+    lists.forEach(item => {
+      item.data = item.data.reverse();
+    });
     return lists;
   }
 

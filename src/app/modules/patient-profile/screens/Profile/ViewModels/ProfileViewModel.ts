@@ -1,10 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import {
+  Asset,
   launchCamera,
   launchImageLibrary,
-  Asset,
 } from 'react-native-image-picker';
-import {AlertMessage, UserType} from '../../../../../../models/Common';
+import {UserType} from '../../../../../../models/Common';
 import {Logger} from '../../../../../../utils/Utils';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ProfileStore} from '../../../../../store/ProfileStore';
@@ -13,24 +13,18 @@ class ProfileViewModel {
   authStore: AuthStore;
   profileStore: ProfileStore;
   navigation: any;
-  isAdmin: boolean;
-
-  alert: AlertMessage | null = null;
 
   constructor(authStore: AuthStore, profileStore: ProfileStore) {
+    this.navigation = useNavigation();
     this.authStore = authStore;
     this.profileStore = profileStore;
-    this.navigation = useNavigation();
-    this.isAdmin = this.authStore.user?.esAdministrador ?? false;
   }
 
   load = async () => {
-    Logger.warn('Loading profile...');
     const data = await this.profileStore.getProfile(
       this.authStore.token ?? '',
-      this.isAdmin ? UserType.Admin : UserType.Patient,
+      UserType.Patient,
     );
-    Logger.success('Retreived profile:', data);
     this.authStore.setUser(data.data.profile);
   };
 
@@ -74,12 +68,12 @@ class ProfileViewModel {
     const data = await this.profileStore.changeProfilePicture(
       this.authStore.token ?? '',
       asset,
-      this.isAdmin ? UserType.Admin : UserType.Patient,
+      UserType.Patient,
     );
     if (data.success) {
       const data = await this.profileStore.getProfile(
         this.authStore.token ?? '',
-        this.isAdmin ? UserType.Admin : UserType.Patient,
+        UserType.Patient,
       );
       this.authStore.setUser(data.data.profile);
     }
@@ -87,6 +81,10 @@ class ProfileViewModel {
 
   dismissAlert = () => {
     this.profileStore.dismiss();
+  };
+
+  goBack = () => {
+    this.navigation.goBack();
   };
 }
 

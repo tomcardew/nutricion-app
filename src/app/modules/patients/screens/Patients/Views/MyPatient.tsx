@@ -6,8 +6,8 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { Patient } from '../../../../../../models/Patients';
-import { Image } from '../../../../../../components/Images';
+import {Patient} from '../../../../../../models/Patients';
+import {Image} from '../../../../../../components/Images';
 
 interface Props {
   data: Patient;

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
-import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import ScheduleViewModel from '../ViewModels/ScheduleViewModel';
 import ScheduleView from '../Views/ScheduleView';
 import {Icon} from '@ui-kitten/components';
 import {Text, TouchableOpacity} from 'react-native';
+import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 
 interface Props {
   viewModel: ScheduleViewModel;

@@ -1,5 +1,5 @@
 import ScreenNames from '../../../../../../constants/Screens';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {AlertMessage} from '../../../../../../models/Common';
 

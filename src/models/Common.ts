@@ -25,6 +25,11 @@ export enum AlertActionType {
   Action,
 }
 
+export enum UserType {
+  Admin,
+  Patient,
+}
+
 export interface AlertAction {
   label: string;
   type?: AlertActionType;

@@ -1,14 +1,14 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {IndexPath} from '@ui-kitten/components';
 import {
   DatePicker,
   Selector,
   TextInput,
 } from '../../../../../../components/Inputs';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {ActionButton} from '../../../../../../components/Buttons';
 import Separator from '../../../../../../components/Separator';
-import {IndexPath} from '@ui-kitten/components';
+import {ActionButton} from '../../../../../../components/Buttons';
 
 interface Props {
   patients: string[];

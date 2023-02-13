@@ -1,6 +1,6 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 import ScreenNames from '../../../../../../constants/Screens';
 
 class PatientExercisesListViewModel {

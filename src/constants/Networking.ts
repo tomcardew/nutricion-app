@@ -1,3 +1,4 @@
+import {Logger} from '../utils/Utils';
 import Environment from './Environment';
 
 export enum RequestMethod {
@@ -62,13 +63,25 @@ export class RequestData {
   }
 
   async request() {
-    if (this.formData) {
-      return await this.requestFormData();
+    Logger.info('Requesting endpoint', this.fullPath);
+    const data = this.formData
+      ? await this.requestFormData()
+      : await this.requestBody();
+    if (data.error) {
+      Logger.error(
+        'Request to endpoint',
+        this.fullPath,
+        ' failed:',
+        data.error,
+      );
+    } else {
+      Logger.success('Request to endpoint', this.fullPath, 'was successful');
     }
-    return await this.requestBody();
+    return data;
   }
 
   private async requestBody() {
+    this.body && Logger.warn(this.body);
     try {
       const result = await fetch(this.fullPath, {
         method: this.method,
@@ -81,13 +94,16 @@ export class RequestData {
       return await result.json();
     } catch (error) {
       return {
-        code: 0,
-        message: error,
+        error: {
+          code: 0,
+          message: error,
+        },
       };
     }
   }
 
   private async requestFormData() {
+    this.formData && Logger.debug(this.formData);
     try {
       const result = await fetch(this.fullPath, {
         method: this.method,
@@ -97,10 +113,12 @@ export class RequestData {
         },
       });
       return await result.json();
-    } catch (error) {
+    } catch (error: any) {
       return {
-        code: 0,
-        message: error,
+        error: {
+          code: 0,
+          message: {...error},
+        },
       };
     }
   }
@@ -250,6 +268,18 @@ const getRest: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getPatientProfile: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient',
+  method: RequestMethod.GET,
+};
+
+const changePatientProfilePicture: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/changeProfilePicture',
+  method: RequestMethod.PATCH,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -277,5 +307,9 @@ export const Networking = {
     getSeries,
     getRepetitions,
     getRest,
+  },
+  patient: {
+    getPatientProfile,
+    changePatientProfilePicture,
   },
 };

@@ -1,3 +1,5 @@
+import {PatientProgress} from './Patients';
+
 export interface Profile {
   idUsuario: string;
   nombre: string;
@@ -10,4 +12,5 @@ export interface Profile {
   tempToken?: string;
   activo: boolean;
   seccion_ejercicios: boolean;
+  Datos?: PatientProgress[];
 }

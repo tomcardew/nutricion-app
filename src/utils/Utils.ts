@@ -2,6 +2,7 @@ import moment from 'moment';
 import {PatientPicture} from '../models/Patients';
 import Environment from '../constants/Environment';
 import {default as theme} from '../../custom-theme.json';
+import {consoleTransport, logger} from 'react-native-logs';
 
 export const MONTHS = [
   'Enero',
@@ -95,5 +96,35 @@ export const dateToScrollHeight = (date: Date) => {
   const minutes = (_date.minutes() * 100) / 60;
   return hours + minutes - 10;
 };
+
+const loggerConfig = {
+  levels: {
+    debug: 0,
+    success: 1,
+    info: 2,
+    warn: 3,
+    error: 4,
+  },
+  severity: 'debug',
+  transport: consoleTransport,
+  transportOptions: {
+    colors: {
+      success: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellow',
+      error: 'redBright',
+    },
+    fileName: `log_{date-today}`,
+  },
+  async: true,
+  dateFormat: 'time',
+  printLevel: false,
+  printDate: true,
+  enabled: true,
+};
+
+export const Logger = logger.createLogger<
+  'debug' | 'success' | 'info' | 'warn' | 'error'
+>(loggerConfig);
 
 export {theme};

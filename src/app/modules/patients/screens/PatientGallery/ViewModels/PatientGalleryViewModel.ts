@@ -5,7 +5,7 @@ import {
 } from 'react-native-image-picker';
 import {AlertMessage} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 
 class PatientGalleryViewModel {
   authStore: AuthStore;

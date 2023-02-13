@@ -1,7 +1,14 @@
 import {makeAutoObservable} from 'mobx';
 import {Asset} from 'react-native-image-picker';
-import {AlertActionType, AlertMessage, AlertType} from '../../../models/Common';
-import AdministratorServices from '../../../services/administrator';
+import {
+  AlertActionType,
+  AlertMessage,
+  AlertType,
+  UserType,
+} from '../../models/Common';
+import AdministratorServices from '../../services/administrator';
+import CommonServices from '../../services/common';
+import {Logger} from '../../utils/Utils';
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;
@@ -84,18 +91,26 @@ export class ProfileStore {
     };
   };
 
-  public changeProfilePicture = async (token: string, asset: Asset) => {
+  public changeProfilePicture = async (
+    token: string,
+    asset: Asset,
+    type: UserType,
+  ) => {
     this.loading = true;
-    const data = await AdministratorServices.changeProfilePicture(token, asset);
+    const data = await CommonServices.changeProfilePicture(token, asset, type);
     this.loading = false;
     return data;
   };
 
-  public getProfile = async (token: string) => {
+  public getProfile = async (token: string, type: UserType) => {
     this.loading = true;
-    const data = await AdministratorServices.getProfile(token);
+    const data = await CommonServices.getProfile(token, type);
     this.loading = false;
-    return data;
+    if (data.success) {
+      return data;
+    } else {
+      return null;
+    }
   };
 
   public dismiss = () => {

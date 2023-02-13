@@ -3,6 +3,8 @@ enum ScreenNames {
 	ForgotPassword,
 	Login,
 	Signup,
+	PatientProgress,
+	Profile,
 	Patient,
 	PatientData,
 	PatientDataEditor,

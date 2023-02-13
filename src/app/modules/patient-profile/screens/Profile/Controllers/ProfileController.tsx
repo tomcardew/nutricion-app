@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
-import ProfileView from '../Views/ProfileView';
-import ProfileViewModel from '../ViewModels/ProfileViewModel';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
+import ProfileViewModel from '../ViewModels/ProfileViewModel';
+import ProfileView from '../Views/ProfileView';
 import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
@@ -11,22 +11,21 @@ interface Props {
 
 const ProfileController = observer(({viewModel}: Props) => {
   useEffect(() => {
-    Logger.warn('AdminProfileController.tsx:14');
+    Logger.warn('PatientProfileController.tsx:14');
     viewModel.load();
   }, []);
 
   return (
     <BaseLayoutView
       hideHeader
-      loadingMessage="Cargando..."
+      backgroundColor="red"
       loading={viewModel.profileStore.loading}
+      loadingMessage="Cargando..."
       alert={viewModel.profileStore.alert}
-      showBackButton={false}
-      onAlertDismiss={viewModel.dismissAlert}>
+      onAlertDismiss={viewModel.dismissAlert}
+      onBackAction={viewModel.goBack}>
       <ProfileView
-        fullname={viewModel.authStore.user?.nombre || ''}
-        cover="https://alianzapronutricion.org/wp-content/uploads/2020/10/epigenetica-y-nutricion-1.png"
-        profilePicture={viewModel.authStore.user?.urlFoto}
+        profile={viewModel.authStore.user}
         onEditProfilePress={viewModel.showEditingOptions}
       />
     </BaseLayoutView>

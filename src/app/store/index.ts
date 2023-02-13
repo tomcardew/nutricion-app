@@ -1,9 +1,9 @@
 import {createContext} from 'react';
 import {LoginStore} from './LoginStore';
 import {RegisterStore} from './RegisterStore';
-import {ProfileStore} from './profile/ProfileStore';
+import {ProfileStore} from './ProfileStore';
 import {AuthStore} from './AuthStore';
-import {PatientsStore} from './patients/PatientsStore';
+import {PatientsStore} from './PatientsStore';
 import {ScheduleStore} from './ScheduleStore';
 
 export const rootStoreContext = createContext({

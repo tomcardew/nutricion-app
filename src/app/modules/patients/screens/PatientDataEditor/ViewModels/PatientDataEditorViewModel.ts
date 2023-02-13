@@ -1,6 +1,6 @@
 import {AlertType} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 
 class PatientDataEditorViewModel {
   authStore: AuthStore;

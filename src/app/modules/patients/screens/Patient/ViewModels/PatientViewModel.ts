@@ -1,8 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
-import {AlertMessage} from '../../../../../../components/Layout/BaseLayoutView';
-import {PatientsStore} from '../../../../../store/patients/PatientsStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
 import ScreenNames from '../../../../../../constants/Screens';
+import {AlertMessage} from '../../../../../../models/Common';
 
 class PatientViewModel {
   authStore: AuthStore;
@@ -23,6 +22,10 @@ class PatientViewModel {
 
   load = async () => {
     await this.patientsStore.getPatientById(this.authStore.token ?? '');
+  };
+
+  unload = () => {
+    this.patientsStore.selectedPatient = null;
   };
 
   navigateTo = (screen: ScreenNames, props?: any) => {
