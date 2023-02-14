@@ -1,16 +1,15 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
-import PatientExercisesListViewModel from '../ViewModels/PatientExercisesListViewModel';
-import PatientExercisesListView from '../Views/PatientExercisesListView';
-import {Text} from 'react-native';
+import AdminExercisesListViewModel from '../ViewModels/AdminExercisesListViewModel';
+import AdminExercisesListView from '../Views/AdminExercisesListView';
 import {Icon} from '@ui-kitten/components';
 
 interface Props {
-  viewModel: PatientExercisesListViewModel;
+  viewModel: AdminExercisesListViewModel;
 }
 
-const PatientExercisesListController = observer(({viewModel}: Props) => {
+const AdminExercisesListController = observer(({viewModel}: Props) => {
   useEffect(() => {
     viewModel.load();
 
@@ -31,8 +30,8 @@ const PatientExercisesListController = observer(({viewModel}: Props) => {
       }
       onActionButtonPress={viewModel.goToAddExercise}
       onBackAction={viewModel.goBack}>
-      <PatientExercisesListView
-        data={viewModel.patientsStore.patientExercises}
+      <AdminExercisesListView
+        data={viewModel.patientsStore.AdminExercises}
         currentDate={viewModel.patientsStore.currentDate}
         didChangeDate={viewModel.didChangeDate}
       />
@@ -40,4 +39,4 @@ const PatientExercisesListController = observer(({viewModel}: Props) => {
   );
 });
 
-export default PatientExercisesListController;
+export default AdminExercisesListController;

@@ -34,11 +34,11 @@ export class PatientsStore {
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
 
-  // PatientExercisesList
+  // AdminExercisesList
   public currentDate: Date = new Date();
-  public patientExercises: PatientExerciseListItem[] = [];
+  public AdminExercises: PatientExerciseListItem[] = [];
 
-  // PatientExercises
+  // AdminExercises
   public categories_raw: Category[] = [];
   public currentCategory: IndexPath | undefined = undefined;
   public exercisesByCurrentCategory_raw: Exercise[] | null = null;
@@ -201,23 +201,23 @@ export class PatientsStore {
     this.rawPictures = [];
   };
 
-  public getPatientExercises = async (token: string) => {
+  public getAdminExercises = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
-      const data = await AdministratorServices.getPatientExercises(
+      const data = await AdministratorServices.getAdminExercises(
         this.selectedPatientId,
         token,
         this.currentDate,
       );
       this.loading = false;
       if (data.succes) {
-        this.patientExercises = data.data;
+        this.AdminExercises = data.data;
       }
     }
   };
 
   public cleanExercises = () => {
-    this.patientExercises = [];
+    this.AdminExercises = [];
     this.currentDate = new Date();
   };
 

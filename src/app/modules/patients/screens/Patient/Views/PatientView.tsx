@@ -38,7 +38,7 @@ const PatientView = ({
     },
     {
       title: 'Programar Ejercicios',
-      screen: ScreenNames.PatientExercisesList,
+      screen: ScreenNames.AdminExercisesList,
     },
     {
       title: 'Activar/Desactivar Ejercicios',

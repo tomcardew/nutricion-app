@@ -37,7 +37,7 @@ interface Props {
   onSaveExercise?: () => void;
 }
 
-const PatientExercisesView = ({
+const AdminExercisesView = ({
   categories,
   exercises,
   series,
@@ -161,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientExercisesView;
+export default AdminExercisesView;

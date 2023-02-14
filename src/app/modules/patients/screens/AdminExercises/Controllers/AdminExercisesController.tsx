@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
-import PatientExercisesViewModel from '../ViewModels/PatientExercisesViewModel';
-import PatientExercisesView from '../Views/PatientExercisesView';
+import AdminExercisesViewModel from '../ViewModels/AdminExercisesViewModel';
+import AdminExercisesView from '../Views/AdminExercisesView';
 import ScreenNames from '../../../../../../constants/Screens';
 
 interface Props {
-  viewModel: PatientExercisesViewModel;
+  viewModel: AdminExercisesViewModel;
 }
 
-const PatientExercisesController = observer(({viewModel}: Props) => {
+const AdminExercisesController = observer(({viewModel}: Props) => {
   useEffect(() => {
     viewModel.load();
 
@@ -27,7 +27,7 @@ const PatientExercisesController = observer(({viewModel}: Props) => {
       alert={viewModel.patientsStore.alert}
       onAlertDismiss={viewModel.dismissAlert}
       onBackAction={viewModel.goBack}>
-      <PatientExercisesView
+      <AdminExercisesView
         categories={viewModel.patientsStore.categories}
         exercises={viewModel.patientsStore.exercises}
         series={viewModel.patientsStore.series}
@@ -61,4 +61,4 @@ const PatientExercisesController = observer(({viewModel}: Props) => {
   );
 });
 
-export default PatientExercisesController;
+export default AdminExercisesController;

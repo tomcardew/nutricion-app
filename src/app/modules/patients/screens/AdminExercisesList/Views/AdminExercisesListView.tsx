@@ -12,7 +12,7 @@ interface Props {
   didChangeDate: (date: Date) => void;
 }
 
-const PatientExercisesListView = ({
+const AdminExercisesListView = ({
   data,
   currentDate,
   didChangeDate = () => {},
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientExercisesListView;
+export default AdminExercisesListView;

@@ -202,7 +202,7 @@ const getPatientPictures: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
-const getPatientExercises: NetworkingConfig = {
+const getAdminExercises: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/exercises',
   method: RequestMethod.GET,
@@ -294,7 +294,7 @@ export const Networking = {
     postPatientProgress,
     toggleExercises,
     getPatientPictures,
-    getPatientExercises,
+    getAdminExercises,
     postPatientExercise,
     changeProfilePicture,
     getAllDates,

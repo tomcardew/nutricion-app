@@ -3,8 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   PatientController,
   PatientDataController,
-  PatientExercisesListController,
-  PatientExercisesListViewModel,
+  AdminExercisesListController,
+  AdminExercisesListViewModel,
   PatientsController,
   PatientsViewModel,
 } from '../app/modules/patients';
@@ -15,8 +15,8 @@ import PatientDataViewModel from '../app/modules/patients/screens/PatientData/Vi
 import PatientGalleryController from '../app/modules/patients/screens/PatientGallery/Controllers/PatientGalleryController';
 import PatientGalleryViewModel from '../app/modules/patients/screens/PatientGallery/ViewModels/PatientGalleryViewModel';
 import {useNavigation} from '@react-navigation/native';
-import PatientExercisesViewModel from '../app/modules/patients/screens/PatientExercises/ViewModels/PatientExercisesViewModel';
-import PatientExercisesController from '../app/modules/patients/screens/PatientExercises/Controllers/PatientExercisesController';
+import AdminExercisesViewModel from '../app/modules/patients/screens/AdminExercises/ViewModels/AdminExercisesViewModel';
+import AdminExercisesController from '../app/modules/patients/screens/AdminExercises/Controllers/AdminExercisesController';
 import PatientDataEditorViewModel from '../app/modules/patients/screens/PatientDataEditor/ViewModels/PatientDataEditorViewModel';
 import PatientDataEditorController from '../app/modules/patients/screens/PatientDataEditor/Controllers/PatientDataEditorController';
 
@@ -51,12 +51,12 @@ const PatientsRouter = () => {
     authStore,
     navigation,
   );
-  const patientExercisesListViewModel = new PatientExercisesListViewModel(
+  const AdminExercisesListViewModel = new AdminExercisesListViewModel(
     authStore,
     patientsStore,
     navigation,
   );
-  const patientExercisesViewModel = new PatientExercisesViewModel(
+  const AdminExercisesViewModel = new AdminExercisesViewModel(
     authStore,
     patientsStore,
   );
@@ -81,12 +81,12 @@ const PatientsRouter = () => {
     <PatientGalleryController viewModel={patientGalleryViewModel} />
   );
 
-  const PatientExercisesListScreen = () => (
-    <PatientExercisesListController viewModel={patientExercisesListViewModel} />
+  const AdminExercisesListScreen = () => (
+    <AdminExercisesListController viewModel={AdminExercisesListViewModel} />
   );
 
-  const PatientExercisesScreen = () => (
-    <PatientExercisesController viewModel={patientExercisesViewModel} />
+  const AdminExercisesScreen = () => (
+    <AdminExercisesController viewModel={AdminExercisesViewModel} />
   );
 
   return (
@@ -112,12 +112,12 @@ const PatientsRouter = () => {
         component={PatientGalleryScreen}
       />
       <Stack.Screen
-        name={ScreenNames.PatientExercisesList.toString()}
-        component={PatientExercisesListScreen}
+        name={ScreenNames.AdminExercisesList.toString()}
+        component={AdminExercisesListScreen}
       />
       <Stack.Screen
-        name={ScreenNames.PatientExercises.toString()}
-        component={PatientExercisesScreen}
+        name={ScreenNames.AdminExercises.toString()}
+        component={AdminExercisesScreen}
       />
     </Stack.Navigator>
   );

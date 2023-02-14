@@ -3,7 +3,7 @@ import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 import ScreenNames from '../../../../../../constants/Screens';
 
-class PatientExercisesListViewModel {
+class AdminExercisesListViewModel {
   navigation: any;
   authStore: AuthStore;
   patientsStore: PatientsStore;
@@ -19,16 +19,16 @@ class PatientExercisesListViewModel {
   }
 
   load = async () => {
-    await this.patientsStore.getPatientExercises(this.authStore.token ?? '');
+    await this.patientsStore.getAdminExercises(this.authStore.token ?? '');
   };
 
   goToAddExercise = () => {
-    this.navigation.navigate(ScreenNames.PatientExercises.toString());
+    this.navigation.navigate(ScreenNames.AdminExercises.toString());
   };
 
   didChangeDate = (date: Date) => {
     this.patientsStore.currentDate = date;
-    this.patientsStore.getPatientExercises(this.authStore.token ?? '');
+    this.patientsStore.getAdminExercises(this.authStore.token ?? '');
   };
 
   goBack = () => {
@@ -36,4 +36,4 @@ class PatientExercisesListViewModel {
   };
 }
 
-export default PatientExercisesListViewModel;
+export default AdminExercisesListViewModel;

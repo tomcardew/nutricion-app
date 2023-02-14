@@ -4,7 +4,7 @@ import {AlertType} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 
-class PatientExercisesViewModel {
+class AdminExercisesViewModel {
   authStore: AuthStore;
   patientsStore: PatientsStore;
   navigation: NavigationProp<ReactNavigation.RootParamList>;
@@ -99,4 +99,4 @@ class PatientExercisesViewModel {
   };
 }
 
-export default PatientExercisesViewModel;
+export default AdminExercisesViewModel;

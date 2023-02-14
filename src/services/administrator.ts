@@ -108,11 +108,11 @@ const AdministratorServices = {
       console.log(error);
     }
   },
-  getPatientExercises: async (id: string, token: string, date: Date) => {
+  getAdminExercises: async (id: string, token: string, date: Date) => {
     const _date = moment(date).utc(true).format('yyyy-MM-DD');
     try {
       const request = new RequestData(
-        Networking.administrator.getPatientExercises,
+        Networking.administrator.getAdminExercises,
         token,
       );
       request.setParams(`/${id}/${_date}`);

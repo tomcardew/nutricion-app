@@ -5,6 +5,7 @@ import {ProfileStore} from './ProfileStore';
 import {AuthStore} from './AuthStore';
 import {PatientsStore} from './PatientsStore';
 import {ScheduleStore} from './ScheduleStore';
+import {PatientExercisesStore} from './PatientExercisesStore';
 
 export const rootStoreContext = createContext({
   loginStore: new LoginStore(),
@@ -13,4 +14,5 @@ export const rootStoreContext = createContext({
   authStore: new AuthStore(),
   patientsStore: new PatientsStore(),
   scheduleStore: new ScheduleStore(),
+  patientExercisesStore: new PatientExercisesStore(),
 });

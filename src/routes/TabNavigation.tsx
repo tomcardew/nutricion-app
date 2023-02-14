@@ -9,6 +9,7 @@ import PatientsRouter from './Patients';
 import ScheduleRouter from './Schedule';
 import {observer} from 'mobx-react';
 import ProfileRouter from './Profile';
+import ExercisesRouter from './Exercises';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +54,7 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={PatientsRouter}
+        component={isAdmin ? PatientsRouter : ExercisesRouter}
       />
       <Tab.Screen
         name="dates"
