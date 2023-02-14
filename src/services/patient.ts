@@ -41,6 +41,34 @@ const PatientServices = {
       console.log(error);
     }
   },
+  getPatientExercises: async (token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.getPatientExercises,
+        token,
+      );
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  markExerciseAsCompleted: async (id: number, token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.markExerciseAsCompleted,
+        token,
+      );
+
+      request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;

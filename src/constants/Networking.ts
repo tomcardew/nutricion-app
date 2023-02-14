@@ -280,6 +280,18 @@ const changePatientProfilePicture: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getPatientExercises: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/exercises',
+  method: RequestMethod.GET,
+};
+
+const markExerciseAsCompleted: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/exercises/mark-exercise-as-completed',
+  method: RequestMethod.PATCH,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -311,5 +323,7 @@ export const Networking = {
   patient: {
     getPatientProfile,
     changePatientProfilePicture,
+    getPatientExercises,
+    markExerciseAsCompleted,
   },
 };

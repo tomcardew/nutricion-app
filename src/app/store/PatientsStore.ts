@@ -19,6 +19,7 @@ import CataloguesServices from '../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
 import {AlertActionType, AlertMessage, AlertType} from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
+import PatientServices from '../../services/patient';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -214,6 +215,49 @@ export class PatientsStore {
         this.AdminExercises = data.data;
       }
     }
+  };
+
+  public getPatientExercises = async (token: string, date: Date) => {
+    this.loading = true;
+    this.currentDate = date;
+    const data = await PatientServices.getPatientExercises(token);
+    this.loading = false;
+    if (data.success) {
+      this.AdminExercises = data.data.filter((item: any) =>
+        moment(item.fecha_ejercicio).isSame(moment(this.currentDate), 'day'),
+      );
+    }
+  };
+
+  public showExerciseCompletionAlert = (token: string, id: number) => {
+    this.alert = {
+      title: 'Completar ejercicio',
+      message: '¿Deseas marcar este ejercicio como completado?',
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: 'Si, completar',
+          onClick: async () => {
+            const success = await this.markExerciseAsCompleted(token, id);
+            if (success) {
+              this.alert = null;
+              this.getPatientExercises(token, this.currentDate);
+            }
+          },
+        },
+        {
+          label: 'Cancelar',
+        },
+      ],
+    };
+  };
+
+  public markExerciseAsCompleted = async (token: string, id: number) => {
+    this.loading = true;
+    const data = await PatientServices.markExerciseAsCompleted(id, token);
+    this.loading = false;
+    return data.success;
   };
 
   public cleanExercises = () => {

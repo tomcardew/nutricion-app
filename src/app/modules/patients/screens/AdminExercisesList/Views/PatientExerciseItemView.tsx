@@ -1,18 +1,25 @@
 import {Icon} from '@ui-kitten/components';
 import React from 'react';
 import {default as theme} from '../../../../../../../custom-theme.json';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
 
 interface Props {
   item: PatientExerciseListItem;
+  onPress?: () => void;
 }
 
-const PatientExerciseItemView = ({item}: Props) => {
+const PatientExerciseItemView = ({item, onPress = () => {}}: Props) => {
   const completed = item.completado;
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.dataContainer}>
         <View style={styles.categoryContainer}>
           <Text style={styles.categoryLabel} numberOfLines={1}>
@@ -45,7 +52,7 @@ const PatientExerciseItemView = ({item}: Props) => {
           name={completed ? 'checkmark-outline' : 'clock-outline'}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

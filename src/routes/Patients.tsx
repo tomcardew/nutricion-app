@@ -4,9 +4,10 @@ import {
   PatientController,
   PatientDataController,
   AdminExercisesListController,
-  AdminExercisesListViewModel,
   PatientsController,
   PatientsViewModel,
+  AdminExercisesListViewModel,
+  AdminExercisesViewModel,
 } from '../app/modules/patients';
 import ScreenNames from '../constants/Screens';
 import {useStores} from '../../use-store';
@@ -15,7 +16,6 @@ import PatientDataViewModel from '../app/modules/patients/screens/PatientData/Vi
 import PatientGalleryController from '../app/modules/patients/screens/PatientGallery/Controllers/PatientGalleryController';
 import PatientGalleryViewModel from '../app/modules/patients/screens/PatientGallery/ViewModels/PatientGalleryViewModel';
 import {useNavigation} from '@react-navigation/native';
-import AdminExercisesViewModel from '../app/modules/patients/screens/AdminExercises/ViewModels/AdminExercisesViewModel';
 import AdminExercisesController from '../app/modules/patients/screens/AdminExercises/Controllers/AdminExercisesController';
 import PatientDataEditorViewModel from '../app/modules/patients/screens/PatientDataEditor/ViewModels/PatientDataEditorViewModel';
 import PatientDataEditorController from '../app/modules/patients/screens/PatientDataEditor/Controllers/PatientDataEditorController';
@@ -51,12 +51,12 @@ const PatientsRouter = () => {
     authStore,
     navigation,
   );
-  const AdminExercisesListViewModel = new AdminExercisesListViewModel(
+  const adminExercisesListViewModel = new AdminExercisesListViewModel(
     authStore,
     patientsStore,
     navigation,
   );
-  const AdminExercisesViewModel = new AdminExercisesViewModel(
+  const adminExercisesViewModel = new AdminExercisesViewModel(
     authStore,
     patientsStore,
   );
@@ -82,11 +82,11 @@ const PatientsRouter = () => {
   );
 
   const AdminExercisesListScreen = () => (
-    <AdminExercisesListController viewModel={AdminExercisesListViewModel} />
+    <AdminExercisesListController viewModel={adminExercisesListViewModel} />
   );
 
   const AdminExercisesScreen = () => (
-    <AdminExercisesController viewModel={AdminExercisesViewModel} />
+    <AdminExercisesController viewModel={adminExercisesViewModel} />
   );
 
   return (

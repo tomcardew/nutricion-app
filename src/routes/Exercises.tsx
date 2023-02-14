@@ -11,13 +11,13 @@ import {
 const Stack = createNativeStackNavigator();
 
 const ExercisesRouter = () => {
-  const {patientExercisesStore, authStore} = useStores();
+  const {patientsStore, authStore} = useStores();
   const navigation = useNavigation();
 
   const patientExercisesViewModel = new PatientExercisesViewModel(
     navigation,
     authStore,
-    patientExercisesStore,
+    patientsStore,
   );
 
   const PatientExercisesScreen = () => (
