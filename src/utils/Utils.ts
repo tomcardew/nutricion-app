@@ -60,6 +60,13 @@ export const dateToDayMonth = (date: Date) => {
   return `${_date.date()} de ${MONTHS[_date.month()]}`;
 };
 
+export const dateToDayMonthSmall = (date: Date) => {
+  const _date = moment(date);
+  const day = _date.date();
+  const month = `${_date.month() + 1}`.padStart(2, '0');
+  return `${day}/${month}`;
+};
+
 export const distributeItems = (data: PatientPicture[]) => {
   let listA: PatientPicture[] = [];
   let listB: PatientPicture[] = [];

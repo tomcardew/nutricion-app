@@ -11,11 +11,16 @@ interface Props {
 const PatientProgressController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
-      title="PatientProgress"
+      title="Tu Progreso"
       loading={false}
       loadingMessage="Cargando..."
+      disableScrollBar
       onBackAction={viewModel.goBack}>
-      <PatientProgressView />
+      <PatientProgressView
+        data={viewModel.authStore.dataset}
+        refreshing={viewModel.profileStore.loading}
+        onRefresh={viewModel.load}
+      />
     </BaseLayoutView>
   );
 });

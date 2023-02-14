@@ -21,10 +21,16 @@ const ProfileView = ({
   onEditProfilePress = () => {},
   didPressGoToProgress = () => {},
 }: Props) => {
-  const weight = profile && profile.Datos ? profile.Datos[0].peso : '';
+  const weight =
+    profile && profile.Datos
+      ? profile.Datos[profile.Datos.length - 1].peso
+      : '';
   const bodyFat =
-    profile && profile.Datos ? profile.Datos[0].grasa_corporal : '';
-  const imc = profile && profile.Datos ? profile.Datos[0].imc : '';
+    profile && profile.Datos
+      ? profile.Datos[profile.Datos.length - 1].grasa_corporal
+      : '';
+  const imc =
+    profile && profile.Datos ? profile.Datos[profile.Datos.length - 1].imc : '';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -39,7 +45,7 @@ const ProfileView = ({
             onEditProfilePress={onEditProfilePress}
           />
           <ProfileWeightCard
-            weight={weight.substring(0, weight.length - 2)}
+            weight={weight.substring(0, weight.length - 2).trim()}
             style={{
               marginTop: -100,
               width: Dimensions.get('window').width - 40,

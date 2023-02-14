@@ -6,9 +6,8 @@ import {
   AlertType,
   UserType,
 } from '../../models/Common';
-import AdministratorServices from '../../services/administrator';
+import {profileDataToGraphData} from '../../models/Profile';
 import CommonServices from '../../services/common';
-import {Logger} from '../../utils/Utils';
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;

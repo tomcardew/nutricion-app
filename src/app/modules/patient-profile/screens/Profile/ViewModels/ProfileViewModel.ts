@@ -8,6 +8,7 @@ import {UserType} from '../../../../../../models/Common';
 import {Logger} from '../../../../../../utils/Utils';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ProfileStore} from '../../../../../store/ProfileStore';
+import ScreenNames from '../../../../../../constants/Screens';
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -81,6 +82,10 @@ class ProfileViewModel {
 
   dismissAlert = () => {
     this.profileStore.dismiss();
+  };
+
+  goToProgress = () => {
+    this.navigation.navigate(ScreenNames.PatientProgress.toString());
   };
 
   goBack = () => {

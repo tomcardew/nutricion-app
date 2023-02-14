@@ -27,6 +27,7 @@ const ProfileController = observer(({viewModel}: Props) => {
       <ProfileView
         profile={viewModel.authStore.user}
         onEditProfilePress={viewModel.showEditingOptions}
+        didPressGoToProgress={viewModel.goToProgress}
       />
     </BaseLayoutView>
   );

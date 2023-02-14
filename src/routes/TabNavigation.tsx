@@ -1,22 +1,14 @@
-import React from 'react';
+import React, {Profiler} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from '@ui-kitten/components';
 
 import {useStores} from '../../use-store';
 
-import {
-  ProfileController as AdminProfileController,
-  ProfileViewModel as AdminProfileViewModel,
-} from '../app/modules/profile';
-import {
-  ProfileController as PatientProfileController,
-  ProfileViewModel as PatientProfileViewModel,
-} from '../app/modules/patient-profile';
-
 import {default as theme} from '../../custom-theme.json';
 import PatientsRouter from './Patients';
 import ScheduleRouter from './Schedule';
 import {observer} from 'mobx-react';
+import ProfileRouter from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,19 +17,7 @@ interface Props {
 }
 
 const TabNavigation = observer(({isAdmin = true}: Props) => {
-  const {authStore, profileStore} = useStores();
-
-  const AdminProfileScreen = () => (
-    <AdminProfileController
-      viewModel={new AdminProfileViewModel(authStore, profileStore)}
-    />
-  );
-
-  const PatientProfileScreen = () => (
-    <PatientProfileController
-      viewModel={new PatientProfileViewModel(authStore, profileStore)}
-    />
-  );
+  const ProfileScreens = () => <ProfileRouter isAdmin={isAdmin} />;
 
   return (
     <Tab.Navigator
@@ -58,7 +38,7 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
           ),
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
-        component={isAdmin ? AdminProfileScreen : PatientProfileScreen}
+        component={ProfileScreens}
       />
       <Tab.Screen
         name="pacients"
