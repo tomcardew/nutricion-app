@@ -40,7 +40,7 @@ const ProfileView = ({
             fullname={profile?.nombre}
             email={profile?.email}
             type="small"
-            date={date}
+            // date={date}
             url={profile?.urlFoto}
             onEditProfilePress={onEditProfilePress}
           />

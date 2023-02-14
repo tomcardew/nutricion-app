@@ -42,7 +42,7 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
         component={ProfileScreens}
       />
       <Tab.Screen
-        name="pacients"
+        name="patients"
         options={{
           tabBarLabel: isAdmin ? 'Pacientes' : 'Ejercicios',
           tabBarIcon: ({color, size}) => (
@@ -71,6 +71,23 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
         }}
         component={ScheduleRouter}
       />
+      {!isAdmin && (
+        <Tab.Screen
+          name="gallery"
+          options={{
+            tabBarLabel: 'Galería',
+            tabBarIcon: ({color, size}) => (
+              <Icon
+                style={{width: size, height: size}}
+                fill={color}
+                name="image-outline"
+              />
+            ),
+            tabBarActiveTintColor: theme['color-primary-600'],
+          }}
+          component={ScheduleRouter}
+        />
+      )}
     </Tab.Navigator>
   );
 });

@@ -26,6 +26,7 @@ const DataItem = ({name, value}: DataItemProps) => (
 const ProfileSummaryCard = ({weight, bodyFat, imc, style}: Props) => {
   return (
     <SimpleCard
+      title="Resumen"
       style={[style, {justifyContent: 'center', alignItems: 'center'}]}>
       <View style={styles.container}>
         <View style={styles.column}>
