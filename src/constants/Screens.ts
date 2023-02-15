@@ -4,6 +4,7 @@ enum ScreenNames {
   Login,
   Signup,
   PatientExercises,
+  Gallery,
   PatientProgress,
   Profile,
   AdminExercises,

@@ -104,11 +104,11 @@ const AlertPopup = ({
               <Text style={styles.title}>{title}</Text>
             </View>
             <Text style={styles.message}>{message}</Text>
-            {error && (
+            {/* {error && (
               <Text style={styles.error}>
                 {error.message} ({error.code})
               </Text>
-            )}
+            )} */}
           </View>
           <View
             style={[

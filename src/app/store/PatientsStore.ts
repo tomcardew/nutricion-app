@@ -198,6 +198,15 @@ export class PatientsStore {
     }
   };
 
+  public getActivityPictures = async (token: string, refreshing: boolean) => {
+    refreshing ? (this.refreshing = true) : (this.loading = true);
+    const data = await PatientServices.getActivityPictures(token);
+    refreshing ? (this.refreshing = false) : (this.loading = false);
+    if (data.success) {
+      this.rawPictures = data.data;
+    }
+  };
+
   public clearPictures = () => {
     this.rawPictures = [];
   };
@@ -438,6 +447,25 @@ export class PatientsStore {
       }
     }
     return null;
+  };
+
+  public postActivityPicture = async (token: string, asset: Asset) => {
+    this.loading = true;
+    const data = await PatientServices.postActivityPicture(token, asset);
+    this.loading = false;
+    if (data.success) {
+      return data;
+    } else {
+      this.alert = {
+        type: AlertType.Error,
+        title: 'Ocurrió un error',
+        message: 'No se pudo subir la imagen correctamente',
+        showIcon: true,
+        actions: [{label: 'Cerrar'}],
+        error: data.error,
+      };
+      return null;
+    }
   };
 
   public showPostActivityPicture = (

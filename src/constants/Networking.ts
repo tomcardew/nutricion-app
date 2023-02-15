@@ -292,6 +292,18 @@ const markExerciseAsCompleted: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getActivityPictures: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/activity-pictures',
+  method: RequestMethod.GET,
+};
+
+const postActivityPicture: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/upload-activity-picture',
+  method: RequestMethod.POST,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -325,5 +337,7 @@ export const Networking = {
     changePatientProfilePicture,
     getPatientExercises,
     markExerciseAsCompleted,
+    getActivityPictures,
+    postActivityPicture,
   },
 };

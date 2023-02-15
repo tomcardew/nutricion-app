@@ -69,6 +69,43 @@ const PatientServices = {
       console.log(error);
     }
   },
+  getActivityPictures: async (token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.getActivityPictures,
+        token,
+      );
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postActivityPicture: async (token: string, asset: Asset) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.postActivityPicture,
+        token,
+      );
+
+      let formData = new FormData();
+      const file = {
+        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? '.jpg')}`,
+        type: asset.type,
+        size: asset.fileSize,
+        uri: asset.uri,
+      };
+      formData.append('file', file);
+
+      request.setFormData(formData);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;
