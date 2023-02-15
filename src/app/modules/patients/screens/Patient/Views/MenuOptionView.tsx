@@ -1,12 +1,6 @@
 import {Icon, Toggle} from '@ui-kitten/components';
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
 
 interface Props {
   title: string;

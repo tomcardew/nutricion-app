@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, FlatList, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {VerticalInfoCard} from '../../../../../../components/Cards';
 import {
   PatientProgress,

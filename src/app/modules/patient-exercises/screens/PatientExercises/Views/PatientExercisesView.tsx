@@ -5,7 +5,6 @@ import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import HorizontalDateSelector from '../../../../../../components/HorizontalDateSelector';
 import EmptyView from '../../../../../../components/EmptyView';
 import PatientExerciseItemView from '../../../../patients/screens/AdminExercisesList/Views/PatientExerciseItemView';
-import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
   data: PatientExerciseListItem[];

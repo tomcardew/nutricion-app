@@ -3,7 +3,12 @@ import React, {useRef, useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
 import AlertActionButton from './AlertAction';
 import {default as theme} from '../../../custom-theme.json';
-import {AlertAction, AlertType, ErrorMessage} from '../../models/Common';
+import {
+  AlertAction,
+  AlertMessage,
+  AlertType,
+  ErrorMessage,
+} from '../../models/Common';
 
 interface Props {
   title?: string;
@@ -65,10 +70,24 @@ const AlertPopup = ({
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const [show, setShow] = useState(false);
+  const [data, setData] = useState<AlertMessage>({
+    title: '',
+    actions: [],
+    message: '',
+    showIcon: false,
+    type: AlertType.Info,
+  });
 
   useEffect(() => {
     if (title) {
       setShow(true);
+      setData({
+        title: title!,
+        actions: actions!,
+        message: message!,
+        showIcon: showIcon,
+        type: type,
+      });
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 200,
@@ -81,9 +100,20 @@ const AlertPopup = ({
         useNativeDriver: false,
       }).start(() => {
         setShow(false);
+        cleanState();
       });
     }
   }, [title]);
+
+  const cleanState = () => {
+    setData({
+      title: '',
+      actions: [],
+      message: '',
+      showIcon: false,
+      type: AlertType.Info,
+    });
+  };
 
   const handleActionClick = (action: AlertAction) => {
     if (action.onClick) action.onClick();
@@ -96,41 +126,40 @@ const AlertPopup = ({
         <View style={styles.container}>
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
-              {showIcon && (
+              {data.showIcon && (
                 <View style={styles.icon}>
-                  <IconView type={type} />
+                  <IconView type={data.type} />
                 </View>
               )}
-              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.title}>{data.title}</Text>
             </View>
-            <Text style={styles.message}>{message}</Text>
-            {/* {error && (
-              <Text style={styles.error}>
-                {error.message} ({error.code})
-              </Text>
-            )} */}
+            <Text style={styles.message}>{data.message}</Text>
           </View>
           <View
             style={[
               styles.actionContainer,
-              actions && actions.length > 2
+              data.actions && data.actions.length > 2
                 ? styles.actionContainerColumn
                 : styles.actionContainerRow,
               {
                 height:
-                  actions && actions.length > 2 ? 40 * actions.length : 40,
+                  data.actions && data.actions.length > 2
+                    ? 40 * data.actions.length
+                    : 40,
               },
             ]}>
-            {actions &&
-              actions.map((action, index) => (
+            {data.actions &&
+              data.actions.map((action, index) => (
                 <AlertActionButton
                   label={action.label}
                   type={action.type}
                   onClick={() => {
                     handleActionClick(action);
                   }}
-                  isFirstTwo={actions && actions.length < 3 && index == 0}
-                  key={Math.random()}
+                  isFirstTwo={
+                    data.actions && data.actions.length < 3 && index == 0
+                  }
+                  key={`alert-action-button-${index}`}
                 />
               ))}
           </View>

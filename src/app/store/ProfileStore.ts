@@ -6,7 +6,6 @@ import {
   AlertType,
   UserType,
 } from '../../models/Common';
-import {profileDataToGraphData} from '../../models/Profile';
 import CommonServices from '../../services/common';
 
 export class ProfileStore {
@@ -38,6 +37,7 @@ export class ProfileStore {
         },
         {
           label: 'Cancelar',
+          type: AlertActionType.Cancel,
         },
       ],
     };
@@ -58,6 +58,7 @@ export class ProfileStore {
         },
         {
           label: 'Cancelar',
+          type: AlertActionType.Cancel,
         },
       ],
     };
@@ -85,6 +86,7 @@ export class ProfileStore {
         },
         {
           label: 'Cancelar',
+          type: AlertActionType.Cancel,
         },
       ],
     };

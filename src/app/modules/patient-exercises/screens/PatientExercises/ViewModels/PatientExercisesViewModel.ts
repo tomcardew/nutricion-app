@@ -1,5 +1,4 @@
 import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientExercisesStore} from '../../../../../store/PatientExercisesStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 
 class PatientExercisesViewModel {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import CalendarDay from '../../../../../../components/Calendar/CalendarDay';
 import HorizontalDateSelector from '../../../../../../components/HorizontalDateSelector';
 import {ScheduleDate} from '../../../../../../models/Schedule';

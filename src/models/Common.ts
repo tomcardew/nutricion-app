@@ -23,6 +23,7 @@ export enum AlertActionType {
   Normal,
   Destructive,
   Action,
+  Cancel,
 }
 
 export enum UserType {

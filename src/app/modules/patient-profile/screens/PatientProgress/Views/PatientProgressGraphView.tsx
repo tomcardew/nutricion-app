@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {BarChart, LineChart} from 'react-native-chart-kit';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import {LineChart} from 'react-native-chart-kit';
 import {theme} from '../../../../../../utils/Utils';
 
 export interface GraphData {

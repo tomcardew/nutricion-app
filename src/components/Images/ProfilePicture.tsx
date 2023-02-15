@@ -98,7 +98,7 @@ const ProfilePicture = ({
             <Icon
               style={{width: 26, height: 26, marginRight: 20}}
               fill={theme['color-primary-800']}
-              name="edit-outline"
+              name="more-vertical-outline"
             />
           </TouchableOpacity>
         </View>

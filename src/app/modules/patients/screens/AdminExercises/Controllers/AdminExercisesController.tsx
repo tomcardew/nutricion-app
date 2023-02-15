@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import AdminExercisesViewModel from '../ViewModels/AdminExercisesViewModel';
 import AdminExercisesView from '../Views/AdminExercisesView';
-import ScreenNames from '../../../../../../constants/Screens';
 
 interface Props {
   viewModel: AdminExercisesViewModel;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import PatientExerciseItemView from './PatientExerciseItemView';

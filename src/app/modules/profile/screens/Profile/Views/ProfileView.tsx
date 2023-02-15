@@ -1,13 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Dimensions, Image, Text} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {PlainButton} from '../../../../../../components/Buttons';
 import {ProfilePicture} from '../../../../../../components/Images';
-import {
-  nameToFirstLetters,
-  parseDate,
-  theme,
-} from '../../../../../../utils/Utils';
+import {nameToFirstLetters, theme} from '../../../../../../utils/Utils';
 
 interface Props {
   fullname: string;

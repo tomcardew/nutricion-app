@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Text, StyleSheet, Pressable} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
 import {AlertAction, AlertActionType} from '../../models/Common';
 
@@ -20,6 +20,8 @@ const AlertActionButton = ({
             ? styles.labelAction
             : type == AlertActionType.Destructive
             ? styles.labelDestructive
+            : type == AlertActionType.Cancel
+            ? styles.labelCancel
             : null,
         ]}>
         {label}
@@ -54,6 +56,11 @@ const styles = StyleSheet.create({
   labelDestructive: {
     fontWeight: '600',
     color: '#CC0000',
+  },
+  labelCancel: {
+    color: 'black',
+    fontWeight: '400',
+    opacity: 0.9,
   },
 });
 

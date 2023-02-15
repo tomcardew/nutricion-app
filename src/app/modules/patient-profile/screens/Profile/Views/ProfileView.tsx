@@ -1,10 +1,9 @@
 import React from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
-import {Image, ProfilePicture} from '../../../../../../components/Images';
+import {ProfilePicture} from '../../../../../../components/Images';
 import {Profile} from '../../../../../../models/Profile';
 import ProfileSummaryCard from './ProfileSummaryCard';
 import ProfileWeightCard from './ProfileWeightCard';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {PlainButton} from '../../../../../../components/Buttons';
 
 interface Props {

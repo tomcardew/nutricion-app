@@ -6,13 +6,12 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
-  TouchableNativeFeedback,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
 import AlertPopup from '../Alert/AlertPopup';
-import {AlertMessage, AlertType, ErrorMessage} from '../../models/Common';
+import {AlertMessage, AlertType} from '../../models/Common';
 
 interface Props {
   title?: string;
