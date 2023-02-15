@@ -7,6 +7,7 @@ enum ScreenNames {
   Gallery,
   PatientProgress,
   Profile,
+  PatientSchedule,
   AdminExercises,
   AdminExercisesList,
   Patient,

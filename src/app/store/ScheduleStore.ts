@@ -5,6 +5,7 @@ import {AlertMessage, AlertType} from '../../models/Common';
 import {Profile} from '../../models/Profile';
 import {ScheduleDate} from '../../models/Schedule';
 import AdministratorServices from '../../services/administrator';
+import PatientServices from '../../services/patient';
 
 export class ScheduleStore {
   public alert: AlertMessage | null = null;
@@ -27,6 +28,15 @@ export class ScheduleStore {
   public getAllDates = async (token: string) => {
     this.loading = true;
     const data = await AdministratorServices.getAllDates(token);
+    this.loading = false;
+    if (data.success) {
+      this.dates_raw = data.data;
+    }
+  };
+
+  public getDates = async (token: string) => {
+    this.loading = true;
+    const data = await PatientServices.getDates(token);
     this.loading = false;
     if (data.success) {
       this.dates_raw = data.data;
@@ -90,7 +100,7 @@ export class ScheduleStore {
     const date = moment(this.currentDate);
     const dates = this.dates_raw.filter(item => {
       const scheduleTime = moment(item.fecha_cita);
-      return scheduleTime.isSame(date, 'day') && item.Usuario;
+      return scheduleTime.isSame(date, 'day');
     });
     return dates;
   }

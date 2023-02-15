@@ -304,6 +304,12 @@ const postActivityPicture: NetworkingConfig = {
   method: RequestMethod.POST,
 };
 
+const getDates: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/dates',
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -339,5 +345,6 @@ export const Networking = {
     markExerciseAsCompleted,
     getActivityPictures,
     postActivityPicture,
+    getDates,
   },
 };
