@@ -254,9 +254,11 @@ export class PatientsStore {
               this.getPatientExercises(token, this.currentDate);
             }
           },
+          type: AlertActionType.Action,
         },
         {
           label: 'Cancelar',
+          type: AlertActionType.Cancel,
         },
       ],
     };
@@ -490,6 +492,7 @@ export class PatientsStore {
         },
         {
           label: 'Cancelar',
+          type: AlertActionType.Cancel,
         },
       ],
     };
