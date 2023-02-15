@@ -1,9 +1,8 @@
 import {makeAutoObservable} from 'mobx';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertMessage} from '../../components/Layout/BaseLayoutView';
-import {AlertType} from '../../components/Alert/AlertPopup';
 import AuthServices from '../../services/auth';
 import ErrorCatalogue from '../../utils/ErrorCatalogue';
+import {AlertMessage, AlertType} from '../../models/Common';
 
 export class RegisterStore {
   public name: string = '';

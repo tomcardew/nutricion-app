@@ -1,5 +1,4 @@
 import {PatientProgress} from './Patients';
-import {GraphData} from '../app/modules/patient-profile/screens/PatientProgress/Views/PatientProgressGraphView';
 import {dateToDayMonthSmall} from '../utils/Utils';
 import moment from 'moment';
 

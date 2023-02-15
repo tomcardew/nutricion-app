@@ -5,7 +5,6 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {UserType} from '../../../../../../models/Common';
-import {Logger} from '../../../../../../utils/Utils';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ProfileStore} from '../../../../../store/ProfileStore';
 import ScreenNames from '../../../../../../constants/Screens';

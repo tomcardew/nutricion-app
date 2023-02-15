@@ -1,9 +1,6 @@
-import React, {Profiler} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from '@ui-kitten/components';
-
-import {useStores} from '../../use-store';
-
 import {default as theme} from '../../custom-theme.json';
 import PatientsRouter from './Patients';
 import ScheduleRouter from './Schedule';

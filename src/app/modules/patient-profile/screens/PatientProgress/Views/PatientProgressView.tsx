@@ -1,4 +1,3 @@
-import {Text} from '@ui-kitten/components';
 import React from 'react';
 import {StyleSheet, View, Dimensions, FlatList} from 'react-native';
 import {RefreshControl} from 'react-native-gesture-handler';

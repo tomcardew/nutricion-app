@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
-import {default as theme} from '../../../custom-theme.json';
+import {View, Text, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 
 interface Props {
   title?: string;

@@ -1,8 +1,6 @@
 import AdministratorServices from './administrator';
 import PatientServices from './patient';
-import {Logger} from '../utils/Utils';
 import {UserType} from '../models/Common';
-import {Use} from 'react-native-svg';
 import {Asset} from 'react-native-image-picker';
 
 const CommonServices = {

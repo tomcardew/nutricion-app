@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import ScheduleViewModel from '../ViewModels/ScheduleViewModel';
 import ScheduleView from '../Views/ScheduleView';
 import {Icon} from '@ui-kitten/components';
-import {Text, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 
 interface Props {

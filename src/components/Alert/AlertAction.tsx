@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Text, StyleSheet, Pressable} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
 import {AlertAction, AlertActionType} from '../../models/Common';
 

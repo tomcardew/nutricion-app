@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Image} from '../../../../../../components/Images';
 import {Icon} from '@ui-kitten/components';

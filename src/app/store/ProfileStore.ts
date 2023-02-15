@@ -6,7 +6,6 @@ import {
   AlertType,
   UserType,
 } from '../../models/Common';
-import {profileDataToGraphData} from '../../models/Profile';
 import CommonServices from '../../services/common';
 
 export class ProfileStore {
