@@ -19,7 +19,10 @@ const PatientExerciseItemView = ({item, onPress = () => {}}: Props) => {
   const completed = item.completado;
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      disabled={item.completado}
+      style={styles.container}
+      onPress={onPress}>
       <View style={styles.dataContainer}>
         <View style={styles.categoryContainer}>
           <Text style={styles.categoryLabel} numberOfLines={1}>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: Dimensions.get('window').width - 20,
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 10,
     marginBottom: 10,
     borderRadius: 5,
     shadowColor: 'black',
@@ -106,7 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: 100,
     marginLeft: 0,
-    marginTop: 5,
     marginBottom: 5,
   },
   categoryLabel: {
