@@ -5,9 +5,10 @@ import {
   TopNavigation,
   Icon,
   TopNavigationAction,
-  Text,
 } from '@ui-kitten/components';
 import {default as theme} from '../../../custom-theme.json';
+import Text from '../Text';
+import {FontWeight} from '../../models/Common';
 
 interface Props {
   title?: string;
@@ -46,7 +47,7 @@ const HeaderView = ({
         alignment="center"
         title={props => (
           <View>
-            <Text {...props} style={[styles.title, {color}]}>
+            <Text weight={FontWeight.SemiBold} style={[styles.title, {color}]}>
               {title}
             </Text>
             {subtitle && (
@@ -69,12 +70,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '700',
     textAlign: 'center',
+    marginBottom: -5,
   },
   subtitle: {
     fontSize: 14,
-    fontWeight: '500',
     textAlign: 'center',
   },
 });

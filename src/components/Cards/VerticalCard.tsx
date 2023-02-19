@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
+import {FontWeight} from '../../models/Common';
+import Text from '../Text';
 
 interface Props {
   title: string;
@@ -10,8 +12,12 @@ interface Props {
 const VerticalInfoCard = ({title, content}: Props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title.toUpperCase()}</Text>
-      <Text style={styles.content}>{content}</Text>
+      <Text weight={FontWeight.SemiBold} style={styles.title}>
+        {title.toUpperCase()}
+      </Text>
+      <Text weight={FontWeight.Medium} style={styles.content}>
+        {content}
+      </Text>
     </View>
   );
 };
@@ -28,16 +34,14 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
   },
   title: {
-    fontWeight: '700',
     color: theme['color-primary-700'],
     fontSize: 13,
-    marginBottom: 5,
+    marginBottom: 0,
   },
   content: {
     fontSize: 18,
     fontWeight: '400',
     color: 'black',
-    lineHeight: 18,
   },
 });
 

@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Text} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ActionButton} from '../../../../../../components/Buttons';
 import {TextInput} from '../../../../../../components/Inputs';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   email: string;
@@ -18,7 +20,7 @@ const ForgotPasswordView = ({
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.description}>
+        <Text weight={FontWeight.Medium} style={styles.description}>
           No te preocupes. Para continuar, ingresa el correo electrónico con el
           que te registraste.
         </Text>
@@ -50,10 +52,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   description: {
-    fontWeight: '600',
     color: '#333',
     fontSize: 15,
     marginBottom: 30,
+    textAlign: 'justify',
   },
   button: {
     marginTop: 10,

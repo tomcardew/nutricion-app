@@ -1,8 +1,9 @@
-import {Text} from '@ui-kitten/components';
 import moment from 'moment';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {FontWeight} from '../../models/Common';
 import {ScheduleDate} from '../../models/Schedule';
+import Text from '../Text';
 
 interface Props {
   data: ScheduleDate;
@@ -20,9 +21,15 @@ const CalendarItem = ({data}: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.time}>{dateTime()}</Text>
-      <Text style={styles.person}>{data.Usuario?.nombre}</Text>
-      <Text style={styles.place}>{data.lugar}</Text>
+      <Text weight={FontWeight.SemiBold} style={styles.time}>
+        {dateTime()}
+      </Text>
+      <Text weight={FontWeight.Medium} style={styles.person}>
+        {data.Usuario?.nombre}
+      </Text>
+      <Text weight={FontWeight.SemiBold} style={styles.place}>
+        {data.lugar}
+      </Text>
     </View>
   );
 };
@@ -37,18 +44,17 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     opacity: 0.5,
-    fontWeight: '700',
   },
   person: {
     fontSize: 16,
-    fontWeight: '500',
+    color: 'black',
   },
   place: {
     fontSize: 14,
-    fontWeight: '700',
     bottom: 10,
     left: 10,
     position: 'absolute',
+    color: 'black',
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {IndexPath, Select, SelectItem} from '@ui-kitten/components';
+import Text from '../Text';
 
 interface Props {
   label?: string;

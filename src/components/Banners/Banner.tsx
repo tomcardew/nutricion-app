@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Dimensions,
-} from 'react-native';
-import {Layout, Text} from '@ui-kitten/components';
+import {StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
+import {Layout} from '@ui-kitten/components';
 import Image from '../Images/Image';
+import Text from '../Text';
+import {FontWeight} from '../../models/Common';
 
 interface Props {
   imageUrl?: string;
@@ -19,7 +16,9 @@ const Banner = ({imageUrl = '', title = '', style}: Props) => {
   return (
     <Layout style={[styles.container, style]} level="3">
       <Image style={styles.image} source={{uri: imageUrl}} />
-      <Text style={styles.text}>{title}</Text>
+      <Text weight={FontWeight.SemiBold} style={styles.text}>
+        {title}
+      </Text>
     </Layout>
   );
 };
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     alignItems: 'center',
-    // position: 'relative',
     backgroundColor: 'black',
   },
   image: {
@@ -44,7 +42,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   text: {
-    fontWeight: '700',
     fontSize: 28,
     color: 'white',
     textAlign: 'center',

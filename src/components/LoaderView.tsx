@@ -1,14 +1,16 @@
-import { Spinner } from '@ui-kitten/components';
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, StyleSheet, Animated } from 'react-native';
-import { default as theme } from '../../custom-theme.json';
+import {Spinner} from '@ui-kitten/components';
+import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Animated} from 'react-native';
+import {default as theme} from '../../custom-theme.json';
+import {FontWeight} from '../models/Common';
+import Text from './Text';
 
 interface Props {
   animating?: boolean;
   message?: string;
 }
 
-const LoaderView = ({ message, animating }: Props) => {
+const LoaderView = ({message, animating}: Props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const [show, setShow] = useState(false);
@@ -34,9 +36,11 @@ const LoaderView = ({ message, animating }: Props) => {
 
   if (show)
     return (
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <Animated.View style={[styles.container, {opacity: fadeAnim}]}>
         <Spinner size="giant" />
-        <Text style={styles.text}>{message}</Text>
+        <Text weight={FontWeight.Medium} style={styles.text}>
+          {message}
+        </Text>
       </Animated.View>
     );
 

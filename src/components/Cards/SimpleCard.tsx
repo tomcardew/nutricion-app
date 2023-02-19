@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {FontWeight} from '../../models/Common';
+import Text from '../Text';
 
 interface Props {
   title?: string;
@@ -13,7 +15,9 @@ const SimpleCard = ({title, children, style, contentStyle}: Props) => {
     <View style={[styles.container, style]}>
       {title && (
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <Text weight={FontWeight.Bold} style={styles.title}>
+            {title}
+          </Text>
         </View>
       )}
       <View style={[styles.content, contentStyle]}>{children}</View>
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontWeight: '600',
     textTransform: 'uppercase',
     fontSize: 15,
   },

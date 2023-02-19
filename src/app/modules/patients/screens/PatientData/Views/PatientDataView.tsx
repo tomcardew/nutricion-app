@@ -1,11 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, FlatList, Text} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import {VerticalInfoCard} from '../../../../../../components/Cards';
 import {
   PatientProgress,
   patientProgressToKeyValues,
 } from '../../../../../../models/Patients';
 import EmptyView from '../../../../../../components/EmptyView';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   data: PatientProgress | null;
@@ -19,7 +21,7 @@ const PatientDataView = ({data}: Props) => {
       {items.length == 0 && <EmptyView message="No hay datos registrados" />}
       {data && (
         <View style={styles.lastUpdateContainer}>
-          <Text>Última actualización</Text>
+          <Text weight={FontWeight.Medium}>Última actualización</Text>
           <Text style={styles.lastUpdateContent}>
             {new Date(data.fecha_registro).toLocaleString('es')}
           </Text>
@@ -51,7 +53,6 @@ const styles = StyleSheet.create({
   lastUpdateContent: {
     fontSize: 14,
     color: 'black',
-    fontWeight: '600',
   },
 });
 

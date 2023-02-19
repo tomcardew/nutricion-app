@@ -1,8 +1,10 @@
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
+import {FontWeight} from '../../models/Common';
 import {ScheduleDate} from '../../models/Schedule';
 import {theme} from '../../utils/Utils';
+import Text from '../Text';
 import CalendarItem from './CalendarItem';
 
 interface Props {
@@ -27,7 +29,10 @@ const CalendarDay = ({data}: Props) => {
     for (var i = 0; i < 24; i++) {
       const isAm = i < 12;
       views.push(
-        <Text style={styles.hourItem} key={`schedule-dates-hour-${i}`}>
+        <Text
+          weight={FontWeight.Light}
+          style={styles.hourItem}
+          key={`schedule-dates-hour-${i}`}>
           {`${i < 13 ? i : i - 12}`.padStart(2, '0') +
             `:00 ${isAm ? 'AM' : 'PM'}`}
         </Text>,

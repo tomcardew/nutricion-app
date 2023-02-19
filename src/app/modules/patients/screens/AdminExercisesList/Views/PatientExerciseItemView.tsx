@@ -1,14 +1,10 @@
 import {Icon} from '@ui-kitten/components';
 import React from 'react';
 import {default as theme} from '../../../../../../../custom-theme.json';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   item: PatientExerciseListItem;
@@ -25,18 +21,24 @@ const PatientExerciseItemView = ({item, onPress = () => {}}: Props) => {
       onPress={onPress}>
       <View style={styles.dataContainer}>
         <View style={styles.categoryContainer}>
-          <Text style={styles.categoryLabel} numberOfLines={1}>
+          <Text
+            weight={FontWeight.SemiBold}
+            style={styles.categoryLabel}
+            numberOfLines={1}>
             {item.Categoria_ejercicio.categoria}
           </Text>
         </View>
-        <Text numberOfLines={2} style={styles.text}>
+        <Text weight={FontWeight.Bold} numberOfLines={2} style={styles.text}>
           {item.Nombre_ejercicio.nombre_ejercicio}
         </Text>
         <Text numberOfLines={1} style={styles.dataText}>
           {item.Peso} - {item.Series.series} Series -{' '}
           {item.Repeticiones.repeticiones} - {item.Descansos.descansos} desc.
         </Text>
-        <Text numberOfLines={1} style={styles.noteText}>
+        <Text
+          weight={FontWeight.Light}
+          numberOfLines={1}
+          style={styles.noteText}>
           Nota: {item.Notas}
         </Text>
       </View>
@@ -104,10 +106,8 @@ const styles = StyleSheet.create({
     width: 22,
   },
   categoryContainer: {
-    // backgroundColor: '#f0f0f0',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    width: 100,
     marginLeft: 0,
     marginBottom: 5,
   },

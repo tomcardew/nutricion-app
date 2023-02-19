@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 import {theme} from '../../../../../../utils/Utils';
 
 interface Props {
@@ -15,8 +17,12 @@ const ProfileWeightCard = ({weight, style}: Props) => {
       style={[style, {justifyContent: 'center', alignItems: 'center'}]}>
       <View style={styles.circleOutside}>
         <View style={styles.circleInside}>
-          <Text style={styles.title}>{weight ?? '--'}</Text>
-          <Text style={styles.indicator}>kg</Text>
+          <Text weight={FontWeight.Bold} style={styles.title}>
+            {weight ?? '--'}
+          </Text>
+          <Text weight={FontWeight.SemiBold} style={styles.indicator}>
+            kg
+          </Text>
         </View>
       </View>
     </SimpleCard>
@@ -48,14 +54,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 65,
     color: theme['color-primary-700'],
-    fontWeight: '600',
   },
   indicator: {
     position: 'absolute',
     bottom: 20,
     fontSize: 18,
     color: theme['color-primary-500'],
-    fontWeight: '600',
   },
 });
 

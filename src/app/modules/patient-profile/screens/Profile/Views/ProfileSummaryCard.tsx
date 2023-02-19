@@ -1,7 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 import Separator from '../../../../../../components/Separator';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 import {theme} from '../../../../../../utils/Utils';
 
 interface Props {
@@ -18,7 +20,9 @@ interface DataItemProps {
 
 const DataItem = ({name, value}: DataItemProps) => (
   <View style={styles.itemContainer}>
-    <Text style={styles.value}>{value ?? '--'}</Text>
+    <Text weight={FontWeight.SemiBold} style={styles.value}>
+      {value ?? '--'}
+    </Text>
     <Text style={styles.key}>{name}</Text>
   </View>
 );
@@ -67,7 +71,6 @@ const styles = StyleSheet.create({
     color: theme['color-primary-600'],
     textAlign: 'center',
     fontSize: 17,
-    fontWeight: '500',
   },
   key: {
     color: 'black',

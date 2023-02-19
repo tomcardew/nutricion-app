@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import {Patient} from '../../../../../../models/Patients';
 import {Image} from '../../../../../../components/Images';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   data: Patient;
@@ -32,7 +28,7 @@ const MyPatient = ({data, onPress = () => {}}: Props) => {
               : `https://ui-avatars.com/api/?name=${nombre}&size=200&background=e5f9bb`,
           }}
         />
-        <Text style={styles.name} numberOfLines={1}>
+        <Text weight={FontWeight.Medium} style={styles.name} numberOfLines={2}>
           {nombre}
         </Text>
       </View>
@@ -60,8 +56,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     marginVertical: 10,
-    fontWeight: '500',
     textAlign: 'center',
+    height: 40,
   },
 });
 

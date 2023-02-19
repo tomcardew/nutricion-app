@@ -1,7 +1,8 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
-import {AlertAction, AlertActionType} from '../../models/Common';
+import {AlertAction, AlertActionType, FontWeight} from '../../models/Common';
+import Text from '../Text';
 
 const AlertActionButton = ({
   label,
@@ -14,6 +15,11 @@ const AlertActionButton = ({
       style={[styles.container, isFirstTwo ? styles.rightBorder : null]}
       onPress={onClick}>
       <Text
+        weight={
+          type == AlertActionType.Cancel
+            ? FontWeight.Regular
+            : FontWeight.Medium
+        }
         style={[
           styles.label,
           type == AlertActionType.Action
@@ -50,16 +56,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
   },
-  labelAction: {
-    fontWeight: '600',
-  },
+  labelAction: {},
   labelDestructive: {
-    fontWeight: '600',
     color: '#CC0000',
   },
   labelCancel: {
     color: 'black',
-    fontWeight: '400',
     opacity: 0.9,
   },
 });

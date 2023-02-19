@@ -1,7 +1,9 @@
 import moment from 'moment';
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {FontWeight} from '../../models/Common';
 import {theme} from '../../utils/Utils';
+import Text from '../Text';
 
 interface Props {
   date?: Date;
@@ -16,7 +18,7 @@ const DatePicker = ({date, hideTime, label, onPress = () => {}}: Props) => {
     <TouchableOpacity onPress={onPress}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.container}>
-        <Text style={styles.text}>
+        <Text weight={FontWeight.SemiBold} style={styles.text}>
           {moment(date).format(hideTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm')}
         </Text>
       </View>

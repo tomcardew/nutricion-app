@@ -38,3 +38,24 @@ export interface AlertAction {
 
   onClick?: () => void;
 }
+
+export enum FontWeight {
+  Black = 'Black',
+  BlackItalic = 'BlackItalic',
+  Bold = 'Bold',
+  BoldItalic = 'BoldItalic',
+  ExtraBold = 'ExtraBold',
+  ExtraBoldItalic = 'ExtraBoldItalic',
+  ExtraLight = 'ExtraLight',
+  ExtraLightItalic = 'ExtraLightItalic',
+  Italic = 'Italic',
+  Light = 'Light',
+  LightItalic = 'LightItalic',
+  Medium = 'Medium',
+  MediumItalic = 'MediumItalic',
+  Regular = 'Regular',
+  SemiBold = 'SemiBold',
+  SemiBoldItalic = 'SemiBoldItalic',
+  Thin = 'Thin',
+  ThinItalic = 'ThinItalic',
+}

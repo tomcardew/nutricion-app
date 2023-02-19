@@ -4,12 +4,13 @@ import React from 'react';
 import {
   StyleProp,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
+import {FontWeight} from '../models/Common';
 import {dateToDayMonth, theme} from '../utils/Utils';
+import Text from './Text';
 
 interface Props {
   value: Date;
@@ -54,7 +55,9 @@ const HorizontalDateSelector = ({
   return (
     <View style={[styles.container, style]}>
       <BackIcon />
-      <Text style={styles.date}>{dateToDayMonth(value)}</Text>
+      <Text weight={FontWeight.SemiBold} style={styles.date}>
+        {dateToDayMonth(value)}
+      </Text>
       <ForwardIcon />
     </View>
   );

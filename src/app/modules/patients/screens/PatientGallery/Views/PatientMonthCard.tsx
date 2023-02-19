@@ -1,9 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {PatientPicture} from '../../../../../../models/Patients';
 import Thumbnail from '../../../../../../components/Thumbnail';
 import {default as theme} from '../../../../../../../custom-theme.json';
 import {distributeItems, replaceLocalhost} from '../../../../../../utils/Utils';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   month: string;
@@ -20,7 +22,9 @@ const PatientMonthCard = ({month, data, onPress = () => {}}: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.month}>{month}</Text>
+      <Text weight={FontWeight.Bold} style={styles.month}>
+        {month}
+      </Text>
       <View style={styles.pictureContainers}>
         <View style={styles.column}>
           {listA.map(item => (
@@ -83,7 +87,6 @@ const styles = StyleSheet.create({
     height: (Dimensions.get('window').width - 20) / 3,
   },
   month: {
-    fontWeight: '600',
     color: theme['color-primary-900'],
     textAlign: 'left',
     width: '100%',

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Text,
   StyleSheet,
   View,
   Image,
@@ -8,6 +7,8 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import {FontWeight} from '../models/Common';
+import Text from './Text';
 
 interface Props {
   message?: string;
@@ -27,14 +28,16 @@ const EmptyView = ({
     <View style={[styles.container, style]}>
       <Image
         style={styles.image}
-        source={require('../../public/assets/empty.png')}
+        source={require('../../public/assets/icons/empty.png')}
       />
-      <Text style={styles.text}>{message}</Text>
+      <Text weight={FontWeight.Medium} style={styles.text}>
+        {message}
+      </Text>
       {relodable && (
         <TouchableOpacity onPress={onReload}>
           <Image
             style={styles.reload}
-            source={require('../../public/assets/retry.png')}
+            source={require('../../public/assets/icons/retry.png')}
           />
         </TouchableOpacity>
       )}

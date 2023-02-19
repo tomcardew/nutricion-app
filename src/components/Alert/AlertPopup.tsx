@@ -1,6 +1,6 @@
 import {Icon} from '@ui-kitten/components';
 import React, {useRef, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
+import {View, StyleSheet, Dimensions, Animated} from 'react-native';
 import AlertActionButton from './AlertAction';
 import {default as theme} from '../../../custom-theme.json';
 import {
@@ -8,7 +8,9 @@ import {
   AlertMessage,
   AlertType,
   ErrorMessage,
+  FontWeight,
 } from '../../models/Common';
+import Text from '../Text';
 
 interface Props {
   title?: string;
@@ -131,7 +133,9 @@ const AlertPopup = ({
                   <IconView type={data.type} />
                 </View>
               )}
-              <Text style={styles.title}>{data.title}</Text>
+              <Text weight={FontWeight.SemiBold} style={styles.title}>
+                {data.title}
+              </Text>
             </View>
             <Text style={styles.message}>{data.message}</Text>
           </View>

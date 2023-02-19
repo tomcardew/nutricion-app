@@ -1,6 +1,8 @@
 import {Icon, Toggle} from '@ui-kitten/components';
 import React from 'react';
-import {StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import Text from '../../../../../../components/Text';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   title: string;
@@ -19,7 +21,9 @@ const MenuOptionView = ({
     style={styles.container}
     disabled={type == 'toggle'}
     onPress={onPress}>
-    <Text style={styles.text}>{title}</Text>
+    <Text weight={FontWeight.Medium} style={styles.text}>
+      {title}
+    </Text>
     {type == 'menu' && (
       <Icon name="arrow-ios-forward-outline" fill="#000" style={styles.icon} />
     )}
@@ -43,13 +47,13 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     color: 'black',
-    fontWeight: '500',
+    lineHeight: 20,
   },
   icon: {
     width: 20,
     height: 20,
     position: 'absolute',
-    top: -20,
+    top: -17,
     left: Dimensions.get('window').width - 50,
   },
   toggle: {

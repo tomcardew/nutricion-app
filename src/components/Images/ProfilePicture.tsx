@@ -6,11 +6,12 @@ import {
   StyleProp,
   ViewStyle,
   Dimensions,
-  Text,
   TouchableOpacity,
 } from 'react-native';
+import {FontWeight} from '../../models/Common';
 import {parseDate, theme} from '../../utils/Utils';
 import {PlainButton} from '../Buttons';
+import Text from '../Text';
 import Image from './Image';
 
 interface Props {
@@ -43,7 +44,7 @@ const ProfilePicture = ({
     return (
       <View style={styles.content}>
         <Image
-          source={require('../../../public/assets/gradient-bg.png')}
+          source={require('../../../public/assets/icons/gradient-bg.png')}
           style={[styles.cover]}
           resizeMode="stretch"
         />
@@ -57,8 +58,16 @@ const ProfilePicture = ({
         />
         {!hideData && (
           <View style={styles.pictureBottomContainer}>
-            {date && <Text style={styles.date}>{dateString}</Text>}
-            {fullname && <Text style={styles.name}>{fullname}</Text>}
+            {date && (
+              <Text weight={FontWeight.Medium} style={styles.date}>
+                {dateString}
+              </Text>
+            )}
+            {fullname && (
+              <Text weight={FontWeight.SemiBold} style={styles.name}>
+                {fullname}
+              </Text>
+            )}
             <PlainButton title="Editar perfil" onPress={onEditProfilePress} />
           </View>
         )}
@@ -70,7 +79,7 @@ const ProfilePicture = ({
     return (
       <View style={styles.content}>
         <Image
-          source={require('../../../public/assets/gradient-bg.png')}
+          source={require('../../../public/assets/icons/gradient-bg.png')}
           style={[styles.cover, {height: 160}]}
           resizeMode="stretch"
         />
@@ -85,8 +94,16 @@ const ProfilePicture = ({
           />
           {!hideData && (
             <View style={[styles.smallContainer, , {flex: 1}]}>
-              {fullname && <Text style={styles.fullname}>{fullname}</Text>}
-              {email && <Text style={styles.email}>{email}</Text>}
+              {fullname && (
+                <Text weight={FontWeight.SemiBold} style={styles.fullname}>
+                  {fullname}
+                </Text>
+              )}
+              {email && (
+                <Text weight={FontWeight.Medium} style={styles.email}>
+                  {email}
+                </Text>
+              )}
               {date && (
                 <Text style={[styles.date, {marginTop: 0}]}>{dateString}</Text>
               )}

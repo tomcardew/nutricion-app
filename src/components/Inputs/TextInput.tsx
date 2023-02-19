@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@ui-kitten/components';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {KeyboardTypeOptions} from 'react-native';
+import Text from '../Text';
 
 interface Props {
   label?: string;
