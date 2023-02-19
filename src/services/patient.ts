@@ -116,6 +116,16 @@ const PatientServices = {
       console.log(error);
     }
   },
+  getDiet: async (token: string) => {
+    try {
+      const request = new RequestData(Networking.patient.getDiet, token);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;

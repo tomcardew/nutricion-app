@@ -5,6 +5,8 @@ import {Profile} from '../../../../../../models/Profile';
 import ProfileSummaryCard from './ProfileSummaryCard';
 import ProfileWeightCard from './ProfileWeightCard';
 import {PlainButton} from '../../../../../../components/Buttons';
+import SimpleCard from '../../../../../../components/Cards/SimpleCard';
+import ProfileDietCard from './ProfileDietCard';
 
 interface Props {
   profile?: Profile | null;
@@ -12,6 +14,7 @@ interface Props {
 
   onEditProfilePress?: () => void;
   didPressGoToProgress?: () => void;
+  didPressSeeDiet?: () => void;
 }
 
 const ProfileView = ({
@@ -19,6 +22,7 @@ const ProfileView = ({
   date = new Date(),
   onEditProfilePress = () => {},
   didPressGoToProgress = () => {},
+  didPressSeeDiet = () => {},
 }: Props) => {
   const weight =
     profile && profile.Datos
@@ -58,11 +62,14 @@ const ProfileView = ({
               marginTop: 20,
               width: Dimensions.get('window').width - 40,
             }}
+            onSeeAllPress={didPressGoToProgress}
           />
-          <PlainButton
-            style={{marginTop: 20}}
-            title="Ver todo el progreso"
-            onPress={didPressGoToProgress}
+          <ProfileDietCard
+            onSeeDietPress={didPressSeeDiet}
+            style={{
+              marginTop: 20,
+              width: Dimensions.get('window').width - 40,
+            }}
           />
         </View>
       )}

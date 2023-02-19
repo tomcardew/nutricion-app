@@ -133,7 +133,7 @@ const AlertPopup = ({
                   <IconView type={data.type} />
                 </View>
               )}
-              <Text weight={FontWeight.SemiBold} style={styles.title}>
+              <Text weight={FontWeight.Bold} style={styles.title}>
                 {data.title}
               </Text>
             </View>
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   innerContainer: {
-    padding: 15,
+    padding: 18,
   },
   actionContainer: {
     display: 'flex',
@@ -215,18 +215,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontWeight: '500',
     color: 'black',
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 10,
   },
   message: {
-    fontSize: 16,
+    fontSize: 15,
     marginBottom: 0,
     textAlign: 'center',
     color: 'black',
-    fontWeight: '400',
   },
   icon: {
     width: '100%',

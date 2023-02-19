@@ -7,10 +7,13 @@ import {
   UserType,
 } from '../../models/Common';
 import CommonServices from '../../services/common';
+import PatientServices from '../../services/patient';
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;
   public loading: boolean = false;
+
+  public dietUrl: string | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -112,6 +115,33 @@ export class ProfileStore {
     } else {
       return null;
     }
+  };
+
+  public getDiet = async (token: string) => {
+    this.dietUrl = undefined;
+    this.loading = true;
+    const data = await PatientServices.getDiet(token);
+    this.loading = false;
+    if (data.success) {
+      this.dietUrl = data.data[0].url;
+    }
+  };
+
+  public showDietError = (onRetry?: () => void) => {
+    this.alert = {
+      title: 'No se pudo abrir el documento',
+      message:
+        'Intenta más tarde y, si el problema persite, contacta con soporte.',
+      type: AlertType.Error,
+      showIcon: true,
+      actions: [
+        {
+          label: 'Reintentar',
+          type: AlertActionType.Normal,
+          onClick: onRetry,
+        },
+      ],
+    };
   };
 
   public dismiss = () => {

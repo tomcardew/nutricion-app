@@ -11,6 +11,7 @@ interface Props {
   bodyFat?: string;
   imc?: string;
   style?: StyleProp<ViewStyle>;
+  onSeeAllPress?: () => void;
 }
 
 interface DataItemProps {
@@ -27,10 +28,18 @@ const DataItem = ({name, value}: DataItemProps) => (
   </View>
 );
 
-const ProfileSummaryCard = ({weight, bodyFat, imc, style}: Props) => {
+const ProfileSummaryCard = ({
+  weight,
+  bodyFat,
+  imc,
+  style,
+  onSeeAllPress = () => {},
+}: Props) => {
   return (
     <SimpleCard
-      title="Resumen"
+      title="Progreso"
+      actionTitle="Ver todo"
+      onActionPress={onSeeAllPress}
       style={[style, {justifyContent: 'center', alignItems: 'center'}]}>
       <View style={styles.container}>
         <View style={styles.column}>

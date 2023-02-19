@@ -12,6 +12,8 @@ import {
   PatientProgressViewModel,
   ProfileController as PatientProfileController,
   ProfileViewModel as PatientProfileViewModel,
+  PatientDietController,
+  PatientDietViewModel,
 } from '../app/modules/patient-profile';
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +42,12 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
     profileStore,
   );
 
+  const patientDietViewModel = new PatientDietViewModel(
+    navigation,
+    authStore,
+    profileStore,
+  );
+
   const AdminProfileScreen = () => (
     <AdminProfileController viewModel={adminProfileViewModel} />
   );
@@ -50,6 +58,10 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
 
   const PatientProgressScreen = () => (
     <PatientProgressController viewModel={patientProgressProfileViewModel} />
+  );
+
+  const PatientDietScreen = () => (
+    <PatientDietController viewModel={patientDietViewModel} />
   );
 
   const initialScreen = isAdmin
@@ -71,6 +83,10 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
       <Stack.Screen
         name={ScreenNames.PatientProgress.toString()}
         component={PatientProgressScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientDiet.toString()}
+        component={PatientDietScreen}
       />
     </Stack.Navigator>
   );

@@ -310,6 +310,12 @@ const getDates: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getDiet: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/diet',
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -346,5 +352,6 @@ export const Networking = {
     getActivityPictures,
     postActivityPicture,
     getDates,
+    getDiet,
   },
 };
