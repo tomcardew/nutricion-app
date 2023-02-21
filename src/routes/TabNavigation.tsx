@@ -14,9 +14,10 @@ const Tab = createBottomTabNavigator();
 
 interface Props {
   isAdmin?: boolean;
+  exercisesEnabled?: boolean;
 }
 
-const TabNavigation = observer(({isAdmin = true}: Props) => {
+const TabNavigation = observer(({isAdmin = true, exercisesEnabled = false}: Props) => {
   const ProfileScreens = () => <ProfileRouter isAdmin={isAdmin} />;
 
   return (
@@ -40,7 +41,7 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
         }}
         component={ProfileScreens}
       />
-      <Tab.Screen
+      {isAdmin || exercisesEnabled && <Tab.Screen
         name="patients"
         options={{
           tabBarLabel: isAdmin ? 'Pacientes' : 'Ejercicios',
@@ -54,7 +55,7 @@ const TabNavigation = observer(({isAdmin = true}: Props) => {
           tabBarActiveTintColor: theme['color-primary-600'],
         }}
         component={isAdmin ? PatientsRouter : ExercisesRouter}
-      />
+      />}
       <Tab.Screen
         name="dates"
         options={{

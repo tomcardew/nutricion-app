@@ -6634,6 +6634,11 @@ react-native-vector-icons@^9.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
+react-native-zoom-reanimated@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-zoom-reanimated/-/react-native-zoom-reanimated-1.1.2.tgz#b35691e3561b8feb69b12621092fb51dbc083e9a"
+  integrity sha512-pwlav+zJBDHZHa/7baS4F27qmD7nholpV1nw5lVoTvGSrfTwtRMKMGbAz69ZvPumI/gDdlyg/em+vkxjcpPfdQ==
+
 react-native@0.70.4:
   version "0.70.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.4.tgz#f2a3a7996431a47a45ce1f5097352c5721417516"

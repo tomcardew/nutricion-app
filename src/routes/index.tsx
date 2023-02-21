@@ -34,7 +34,7 @@ const Router = observer(() => {
   );
 
   const TabNavigationScreen = () => (
-    <TabNavigation isAdmin={authStore.user?.esAdministrador} />
+    <TabNavigation isAdmin={authStore.user?.esAdministrador} exercisesEnabled={authStore.user?.seccion_ejercicios} />
   );
 
   return (

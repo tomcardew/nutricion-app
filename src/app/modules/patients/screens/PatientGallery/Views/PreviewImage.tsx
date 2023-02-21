@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
 import {Image} from '../../../../../../components/Images';
 import {Icon} from '@ui-kitten/components';
+import Zoom from 'react-native-zoom-reanimated';
 
 interface PreviewProps {
   url: string;
@@ -14,7 +15,13 @@ const PreviewImage = ({url, onClose = () => {}}: PreviewProps) => {
       <TouchableOpacity style={styles.closeContainer} onPress={onClose}>
         <Icon style={styles.closeIcon} fill="#000" name="close" />
       </TouchableOpacity>
-      <Image style={styles.preview} resizeMode="contain" source={{uri: url}} />
+      <Zoom>
+        <Image
+          style={styles.preview}
+          resizeMode="contain"
+          source={{uri: url}}
+        />
+      </Zoom>
     </View>
   );
 };
@@ -30,7 +37,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   preview: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: '100%',
   },
   closeContainer: {

@@ -64,13 +64,13 @@ const ProfileView = ({
             }}
             onSeeAllPress={didPressGoToProgress}
           />
-          <ProfileDietCard
+          {profile.seccion_ejercicios && <ProfileDietCard
             onSeeDietPress={didPressSeeDiet}
             style={{
               marginTop: 20,
               width: Dimensions.get('window').width - 40,
             }}
-          />
+          />}
         </View>
       )}
     </ScrollView>
