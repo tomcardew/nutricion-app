@@ -24,7 +24,7 @@ const Router = observer(() => {
   );
 
   const SignupScreen = () => (
-    <SignupController viewModel={new SignupViewModel(registerStore)} />
+    <SignupController viewModel={new SignupViewModel(registerStore, authStore)} />
   );
 
   const ForgotPasswordScreen = () => (

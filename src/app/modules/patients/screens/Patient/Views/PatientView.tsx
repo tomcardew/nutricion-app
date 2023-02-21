@@ -10,19 +10,22 @@ interface Props {
   data: Patient | null;
   onNavigateTo?: (screen: ScreenNames, props?: any) => void;
   onToggleExercises?: () => void;
+  onToggleAccess?: (newValue: boolean) => void;
 }
 
 interface MenuOption {
   title: string;
   screen?: ScreenNames;
   props?: any;
-  type?: 'menu' | 'toggle';
+  type?: 'menu' | 'toggle' | 'separator';
+  style?: 'regular' | 'destructive';
 }
 
 const PatientView = ({
   data,
-  onNavigateTo = (screen: ScreenNames) => {},
+  onNavigateTo = () => {},
   onToggleExercises = () => {},
+  onToggleAccess = () => {},
 }: Props) => {
   const options: MenuOption[] = [
     {
@@ -43,14 +46,36 @@ const PatientView = ({
     {
       title: 'Activar/Desactivar Ejercicios',
       type: 'toggle',
+      props: {
+        isToggleExercises: true,
+      },
+    },
+    {
+      title: '',
+      type: 'separator',
+    },
+    {
+      title: data?.activo ? 'Desactivar acceso' : 'Activar acceso',
+      type: 'menu',
+      style: data?.activo ? 'destructive' : 'regular',
+      props: {
+        isChangeAccess: true,
+        newValue: !(data?.activo ?? false),
+      },
+    },
+    {
+      title: '',
+      type: 'separator',
     },
   ];
 
   const onItemPressed = (item: MenuOption) => {
     if (item.screen) {
       onNavigateTo(item.screen ?? ScreenNames.Login, item.props);
-    } else if (item.type == 'toggle') {
+    } else if (item.props.isToggleExercises) {
       onToggleExercises();
+    } else if (item.props.isChangeAccess) {
+      onToggleAccess(item.props.newValue ?? true);
     }
   };
 
@@ -76,13 +101,20 @@ const PatientView = ({
             <MenuOptionView
               title={item.item.title}
               type={item.item.type}
-              active={data?.seccion_ejercicios}
+              style={item.item.style}
+              active={
+                item.item.props && item.item.props.isToggleExercises
+                  ? data?.seccion_ejercicios
+                  : undefined
+              }
               onPress={() => {
                 onItemPressed(item.item);
               }}
             />
           )}
-          keyExtractor={item => `patient-menu-option-${item.title}`}
+          keyExtractor={(item, index) =>
+            `patient-menu-option-${item.title}-${index}`
+          }
         />
       </View>
     </View>

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme['color-primary-600'],
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '400',
   },
   labelAction: {},

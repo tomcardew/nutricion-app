@@ -28,15 +28,15 @@ const PatientsView = ({
   return (
     <View style={styles.content}>
       <SearchBar value={query} onChangeText={didChangeQuery} />
-      {data.length == 0 && query === '' && (
-        <EmptyView
-          relodable
-          message="No hay pacientes registrados"
-          onReload={onReload}
-        />
-      )}
       <FlatList
         data={data.slice()}
+        ListEmptyComponent={
+          <EmptyView
+            relodable
+            message="No hay pacientes registrados"
+            onReload={onReload}
+          />
+        }
         numColumns={3}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}

@@ -25,15 +25,17 @@ const ProfileView = ({
   didPressSeeDiet = () => {},
 }: Props) => {
   const weight =
-    profile && profile.Datos
+    profile && profile.Datos && profile.Datos.length > 0
       ? profile.Datos[profile.Datos.length - 1].peso
-      : '';
+      : '--';
   const bodyFat =
-    profile && profile.Datos
+    profile && profile.Datos && profile.Datos.length > 0
       ? profile.Datos[profile.Datos.length - 1].grasa_corporal
-      : '';
+      : '--';
   const imc =
-    profile && profile.Datos ? profile.Datos[profile.Datos.length - 1].imc : '';
+    profile && profile.Datos && profile.Datos.length > 0
+      ? profile.Datos[profile.Datos.length - 1].imc
+      : '--';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -48,7 +50,11 @@ const ProfileView = ({
             onEditProfilePress={onEditProfilePress}
           />
           <ProfileWeightCard
-            weight={weight.substring(0, weight.length - 2).trim()}
+            weight={
+              weight !== '--'
+                ? weight.substring(0, weight.length - 2).trim()
+                : undefined
+            }
             style={{
               marginTop: -100,
               width: Dimensions.get('window').width - 40,
@@ -64,13 +70,15 @@ const ProfileView = ({
             }}
             onSeeAllPress={didPressGoToProgress}
           />
-          {profile.seccion_ejercicios && <ProfileDietCard
-            onSeeDietPress={didPressSeeDiet}
-            style={{
-              marginTop: 20,
-              width: Dimensions.get('window').width - 40,
-            }}
-          />}
+          {profile.seccion_ejercicios && (
+            <ProfileDietCard
+              onSeeDietPress={didPressSeeDiet}
+              style={{
+                marginTop: 20,
+                width: Dimensions.get('window').width - 40,
+              }}
+            />
+          )}
         </View>
       )}
     </ScrollView>

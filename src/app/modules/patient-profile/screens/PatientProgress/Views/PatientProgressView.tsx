@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Dimensions, FlatList} from 'react-native';
 import {RefreshControl} from 'react-native-gesture-handler';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
+import EmptyView from '../../../../../../components/EmptyView';
 import PatientProgressGraphView, {GraphData} from './PatientProgressGraphView';
 
 export interface ProgressDataSetElement {
@@ -33,6 +34,7 @@ const PatientProgressView = ({
       <FlatList
         data={data.slice()}
         renderItem={renderItem}
+        ListEmptyComponent={EmptyView}
         contentContainerStyle={styles.content}
         keyExtractor={item => `patient-progress-graph-${item.title}`}
         refreshControl={

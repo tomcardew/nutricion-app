@@ -25,24 +25,22 @@ const GalleryView = ({
 
   return (
     <View style={styles.container}>
-      {data.length == 0 && <EmptyView message="No hay fotos para mostrar" />}
-      {data.length > 0 && (
-        <FlatList
-          data={data.slice()}
-          contentContainerStyle={{paddingBottom: 140}}
-          renderItem={({item}) => (
-            <PatientMonthCard
-              month={`${dateToMonthYear(item.date)}`}
-              data={item.data}
-              onPress={handlePicturePress}
-            />
-          )}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          keyExtractor={item => `patient-gallery-${dateToMonthYear(item.date)}`}
-        />
-      )}
+      <FlatList
+        data={data.slice()}
+        ListEmptyComponent={<EmptyView message="No hay fotos para mostrar" />}
+        contentContainerStyle={{paddingBottom: 140}}
+        renderItem={({item}) => (
+          <PatientMonthCard
+            month={`${dateToMonthYear(item.date)}`}
+            data={item.data}
+            onPress={handlePicturePress}
+          />
+        )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        keyExtractor={item => `patient-gallery-${dateToMonthYear(item.date)}`}
+      />
     </View>
   );
 };

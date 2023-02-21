@@ -18,7 +18,6 @@ const PatientDataView = ({data}: Props) => {
 
   return (
     <View style={styles.container}>
-      {items.length == 0 && <EmptyView message="No hay datos registrados" />}
       {data && (
         <View style={styles.lastUpdateContainer}>
           <Text weight={FontWeight.Medium}>Última actualización</Text>
@@ -29,6 +28,7 @@ const PatientDataView = ({data}: Props) => {
       )}
       <FlatList
         data={items.slice()}
+        ListEmptyComponent={<EmptyView message="No hay datos registrados" />}
         renderItem={item => (
           <VerticalInfoCard title={item.item.key} content={item.item.value} />
         )}

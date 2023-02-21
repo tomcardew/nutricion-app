@@ -28,14 +28,14 @@ const AdminExercisesListView = ({
         value={currentDate}
         didChangeDate={didChangeDate}
       />
-      {data.length === 0 && (
-        <EmptyView
-          style={styles.emptyView}
-          message="El paciente no tiene ejercicios para este día"
-        />
-      )}
       <FlatList
         style={{width: '100%', marginTop: 10}}
+        ListEmptyComponent={
+          <EmptyView
+            style={styles.emptyView}
+            message="El paciente no tiene ejercicios para este día"
+          />
+        }
         contentContainerStyle={{
           paddingLeft: 10,
           paddingVertical: 20,

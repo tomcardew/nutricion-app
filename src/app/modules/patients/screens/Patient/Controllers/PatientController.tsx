@@ -27,14 +27,15 @@ const PatientController = observer(({viewModel}: Props) => {
       subtitle={viewModel.patientsStore.selectedPatient?.email}
       loadingMessage="Cargando..."
       loading={viewModel.patientsStore.loading}
-      alert={null}
+      alert={viewModel.patientsStore.alert}
       disableScrollBar
       showBackButton
-      onAlertDismiss={() => {}}
+      onAlertDismiss={viewModel.dismissAlert}
       onBackAction={viewModel.goBack}>
       <PatientView
         data={viewModel.patientsStore.selectedPatient}
         onToggleExercises={viewModel.toggleExercises}
+        onToggleAccess={viewModel.toggleAccess}
         onNavigateTo={viewModel.navigateTo}
       />
     </BaseLayoutView>

@@ -1,37 +1,64 @@
 import {Icon, Toggle} from '@ui-kitten/components';
-import React from 'react';
-import {StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Dimensions, TouchableOpacity, View} from 'react-native';
 import Text from '../../../../../../components/Text';
 import {FontWeight} from '../../../../../../models/Common';
+import {theme} from '../../../../../../utils/Utils';
 
 interface Props {
   title: string;
   onPress?: () => void;
-  type?: 'menu' | 'toggle';
+  type?: 'menu' | 'toggle' | 'separator';
+  style?: 'regular' | 'destructive';
   active?: boolean;
 }
 
 const MenuOptionView = ({
   title,
   type = 'menu',
+  style = 'regular',
   active,
   onPress = () => {},
-}: Props) => (
-  <TouchableOpacity
-    style={styles.container}
-    disabled={type == 'toggle'}
-    onPress={onPress}>
-    <Text weight={FontWeight.Medium} style={styles.text}>
-      {title}
-    </Text>
-    {type == 'menu' && (
-      <Icon name="arrow-ios-forward-outline" fill="#000" style={styles.icon} />
-    )}
-    {type == 'toggle' && (
-      <Toggle style={styles.toggle} checked={active} onChange={onPress} />
-    )}
-  </TouchableOpacity>
-);
+}: Props) => {
+  const [innerActive, setInnerActive] = useState(false);
+  useEffect(() => {
+    setInnerActive(active ?? false);
+  }, [active]);
+  return (
+    <TouchableOpacity
+      style={[styles.container, type == 'separator' && styles.separator]}
+      disabled={type != 'menu'}
+      onPress={onPress}>
+      {type != 'separator' && (
+        <Text
+          weight={style == 'regular' ? FontWeight.Medium : FontWeight.SemiBold}
+          style={[
+            styles.text,
+            style == 'destructive' && styles.textDestructive,
+          ]}>
+          {title}
+        </Text>
+      )}
+      {type == 'menu' && (
+        <Icon
+          name="arrow-ios-forward-outline"
+          fill="#000"
+          style={styles.icon}
+        />
+      )}
+      {type == 'toggle' && (
+        <Toggle
+          style={styles.toggle}
+          checked={innerActive}
+          onChange={() => {
+            setInnerActive(!innerActive);
+            onPress();
+          }}
+        />
+      )}
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -44,10 +71,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 20,
   },
+  separator: {
+    height: 10,
+    backgroundColor: '#eee',
+  },
   text: {
     fontSize: 17,
     color: 'black',
     lineHeight: 20,
+  },
+  textDestructive: {
+    color: theme['color-danger-500'],
   },
   icon: {
     width: 20,

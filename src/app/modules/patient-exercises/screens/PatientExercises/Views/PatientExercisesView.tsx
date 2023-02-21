@@ -33,12 +33,6 @@ const PatientExercisesView = ({
         value={currentDate}
         didChangeDate={didChangeDate}
       />
-      {data.length === 0 && (
-        <EmptyView
-          style={styles.emptyView}
-          message="No tienes ejercicios para este día"
-        />
-      )}
       <FlatList
         style={{width: '100%', marginTop: 10}}
         contentContainerStyle={{
@@ -46,6 +40,12 @@ const PatientExercisesView = ({
           paddingVertical: 20,
           paddingBottom: 150,
         }}
+        ListEmptyComponent={
+          <EmptyView
+            style={styles.emptyView}
+            message="No tienes ejercicios para este día"
+          />
+        }
         data={data.slice()}
         renderItem={({item}) => renderItem(item)}
         keyExtractor={item => `patient-exercises-item-${item.id}`}

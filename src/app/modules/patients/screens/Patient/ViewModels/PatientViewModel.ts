@@ -2,6 +2,7 @@ import {PatientsStore} from '../../../../../store/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
 import ScreenNames from '../../../../../../constants/Screens';
 import {AlertMessage} from '../../../../../../models/Common';
+import {Logger} from '../../../../../../utils/Utils';
 
 class PatientViewModel {
   authStore: AuthStore;
@@ -34,6 +35,22 @@ class PatientViewModel {
 
   toggleExercises = async () => {
     await this.patientsStore.toggleExercises(this.authStore.token ?? '');
+  };
+
+  toggleAccess = async (toValue: boolean) => {
+    if (toValue) {
+      this.patientsStore.showToggleEnableAccessAlert(() => {
+        Logger.warn('Should toggle user access');
+      });
+    } else {
+      this.patientsStore.showToggleDisableAccessAlert(() => {
+        Logger.warn('Should toggle user access');
+      });
+    }
+  };
+
+  dismissAlert = () => {
+    this.patientsStore.alert = null;
   };
 
   goBack = () => {

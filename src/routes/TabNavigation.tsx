@@ -17,79 +17,83 @@ interface Props {
   exercisesEnabled?: boolean;
 }
 
-const TabNavigation = observer(({isAdmin = true, exercisesEnabled = false}: Props) => {
-  const ProfileScreens = () => <ProfileRouter isAdmin={isAdmin} />;
+const TabNavigation = observer(
+  ({isAdmin = true, exercisesEnabled = false}: Props) => {
+    const ProfileScreens = () => <ProfileRouter isAdmin={isAdmin} />;
 
-  return (
-    <Tab.Navigator
-      backBehavior="none"
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Tab.Screen
-        name="profile"
-        options={{
-          tabBarLabel: 'Perfil',
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              style={{width: size, height: size}}
-              fill={color}
-              name="home-outline"
-            />
-          ),
-          tabBarActiveTintColor: theme['color-primary-600'],
-        }}
-        component={ProfileScreens}
-      />
-      {isAdmin || exercisesEnabled && <Tab.Screen
-        name="patients"
-        options={{
-          tabBarLabel: isAdmin ? 'Pacientes' : 'Ejercicios',
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              style={{width: size, height: size}}
-              fill={color}
-              name={isAdmin ? 'people-outline' : 'list-outline'}
-            />
-          ),
-          tabBarActiveTintColor: theme['color-primary-600'],
-        }}
-        component={isAdmin ? PatientsRouter : ExercisesRouter}
-      />}
-      <Tab.Screen
-        name="dates"
-        options={{
-          tabBarLabel: 'Citas',
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              style={{width: size, height: size}}
-              fill={color}
-              name="calendar-outline"
-            />
-          ),
-          tabBarActiveTintColor: theme['color-primary-600'],
-        }}
-        component={isAdmin ? ScheduleRouter : PatientScheduleRouter}
-      />
-      {!isAdmin && (
+    return (
+      <Tab.Navigator
+        backBehavior="none"
+        screenOptions={{
+          headerShown: false,
+        }}>
         <Tab.Screen
-          name="gallery"
+          name="profile"
           options={{
-            tabBarLabel: 'Galería',
+            tabBarLabel: 'Perfil',
             tabBarIcon: ({color, size}) => (
               <Icon
                 style={{width: size, height: size}}
                 fill={color}
-                name="image-outline"
+                name="home-outline"
               />
             ),
             tabBarActiveTintColor: theme['color-primary-600'],
           }}
-          component={GalleryRouter}
+          component={ProfileScreens}
         />
-      )}
-    </Tab.Navigator>
-  );
-});
+        {(isAdmin || exercisesEnabled) && (
+          <Tab.Screen
+            name="patients"
+            options={{
+              tabBarLabel: isAdmin ? 'Pacientes' : 'Ejercicios',
+              tabBarIcon: ({color, size}) => (
+                <Icon
+                  style={{width: size, height: size}}
+                  fill={color}
+                  name={isAdmin ? 'people-outline' : 'list-outline'}
+                />
+              ),
+              tabBarActiveTintColor: theme['color-primary-600'],
+            }}
+            component={isAdmin ? PatientsRouter : ExercisesRouter}
+          />
+        )}
+        <Tab.Screen
+          name="dates"
+          options={{
+            tabBarLabel: 'Citas',
+            tabBarIcon: ({color, size}) => (
+              <Icon
+                style={{width: size, height: size}}
+                fill={color}
+                name="calendar-outline"
+              />
+            ),
+            tabBarActiveTintColor: theme['color-primary-600'],
+          }}
+          component={isAdmin ? ScheduleRouter : PatientScheduleRouter}
+        />
+        {!isAdmin && (
+          <Tab.Screen
+            name="gallery"
+            options={{
+              tabBarLabel: 'Galería',
+              tabBarIcon: ({color, size}) => (
+                <Icon
+                  style={{width: size, height: size}}
+                  fill={color}
+                  name="image-outline"
+                />
+              ),
+              tabBarActiveTintColor: theme['color-primary-600'],
+            }}
+            component={GalleryRouter}
+          />
+        )}
+      </Tab.Navigator>
+    );
+  },
+);
 
 export default TabNavigation;

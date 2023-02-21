@@ -498,6 +498,50 @@ export class PatientsStore {
     };
   };
 
+  public showToggleDisableAccessAlert = (onContinue: () => void) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Restringir acceso',
+      message:
+        '¿Estás seguro? El usuario perderá acceso a la aplicación hasta que lo reactives.',
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: 'Estoy seguro',
+          type: AlertActionType.Destructive,
+          onClick: onContinue,
+        },
+        {
+          label: 'Cancelar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
+  };
+
+  public showToggleEnableAccessAlert = (onContinue: () => void) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Activar acceso',
+      message:
+        '¿Estás seguro? El usuario podrá volver a iniciar sesión en su cuenta.',
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: 'Estoy seguro',
+          type: AlertActionType.Action,
+          onClick: onContinue,
+        },
+        {
+          label: 'Cancelar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
+  };
+
   get patients() {
     return this.patients_raw.filter(patient =>
       patient.nombre.includes(this.query),
