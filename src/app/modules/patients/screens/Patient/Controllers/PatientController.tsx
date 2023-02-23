@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import PatientViewModel from '../ViewModels/PatientViewModel';
 import PatientView from '../Views/PatientView';
+import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
   viewModel: PatientViewModel;
@@ -16,6 +17,12 @@ const PatientController = observer(({viewModel}: Props) => {
       viewModel.unload();
     };
   }, []);
+
+  useEffect(() => {
+    if (!viewModel.patientsStore.selectedPatientId) {
+      viewModel.goBack();
+    }
+  }, [viewModel.patientsStore.selectedPatientId]);
 
   return (
     <BaseLayoutView

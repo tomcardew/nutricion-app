@@ -8,6 +8,7 @@ import {theme} from '../../../../../../utils/Utils';
 interface Props {
   title: string;
   onPress?: () => void;
+  disabled?: boolean;
   type?: 'menu' | 'toggle' | 'separator';
   style?: 'regular' | 'destructive';
   active?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 const MenuOptionView = ({
   title,
+  disabled,
   type = 'menu',
   style = 'regular',
   active,
@@ -26,8 +28,8 @@ const MenuOptionView = ({
   }, [active]);
   return (
     <TouchableOpacity
-      style={[styles.container, type == 'separator' && styles.separator]}
-      disabled={type != 'menu'}
+      style={[styles.container, type == 'separator' && styles.separator, disabled && styles.disabled]}
+      disabled={type != 'menu' || disabled}
       onPress={onPress}>
       {type != 'separator' && (
         <Text
@@ -50,6 +52,7 @@ const MenuOptionView = ({
         <Toggle
           style={styles.toggle}
           checked={innerActive}
+          disabled={disabled}
           onChange={() => {
             setInnerActive(!innerActive);
             onPress();
@@ -94,6 +97,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: Dimensions.get('window').width - 70,
   },
+  disabled: {
+    opacity: 0.5
+  }
 });
 
 export default MenuOptionView;

@@ -7,6 +7,7 @@ import ProfileWeightCard from './ProfileWeightCard';
 import {PlainButton} from '../../../../../../components/Buttons';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 import ProfileDietCard from './ProfileDietCard';
+import ProfileStepsCard from './ProfileStepsCard';
 
 interface Props {
   profile?: Profile | null;
@@ -70,6 +71,12 @@ const ProfileView = ({
             }}
             onSeeAllPress={didPressGoToProgress}
           />
+          {/* <ProfileStepsCard
+            style={{
+              marginTop: 20,
+              width: Dimensions.get('window').width - 40,
+            }}
+          /> */}
           {profile.seccion_ejercicios && (
             <ProfileDietCard
               onSeeDietPress={didPressSeeDiet}

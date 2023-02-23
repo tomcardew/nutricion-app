@@ -20,9 +20,11 @@ import {IndexPath} from '@ui-kitten/components';
 import {AlertActionType, AlertMessage, AlertType} from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 import PatientServices from '../../services/patient';
+import {Logger} from '../../utils/Utils';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
+  public loaded: boolean = false;
   public loading: boolean = true;
   public refreshing: boolean = false;
   public patients_raw: Patient[] = [];
@@ -88,9 +90,11 @@ export class PatientsStore {
       this.loading = false;
       if (data.success) {
         this.selectedPatient = data.data;
+        this.loaded = true;
       } else {
         this.selectedPatient = null;
-        // TODO: Show error alert
+        this.selectedPatientId = null;
+        Logger.error('Error getting patient by Id', data);
       }
     }
   };
@@ -501,7 +505,7 @@ export class PatientsStore {
   public showToggleDisableAccessAlert = (onContinue: () => void) => {
     this.alert = null;
     this.alert = {
-      title: 'Restringir acceso',
+      title: 'Desactivar acceso',
       message:
         '¿Estás seguro? El usuario perderá acceso a la aplicación hasta que lo reactives.',
       showIcon: true,
@@ -540,6 +544,30 @@ export class PatientsStore {
         },
       ],
     };
+  };
+
+  public toggleAccess = async (token: string) => {
+    if (this.selectedPatient) {
+      this.loading = true;
+      const data = await AdministratorServices.toggleAccess(
+        this.selectedPatient.idUsuario,
+        token,
+      );
+      this.loading = false;
+      if (data.success) {
+        return data;
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'No se pudo completar la operación',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
+        return null;
+      }
+    }
   };
 
   get patients() {

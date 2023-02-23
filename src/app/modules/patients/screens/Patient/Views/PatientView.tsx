@@ -27,6 +27,7 @@ const PatientView = ({
   onToggleExercises = () => {},
   onToggleAccess = () => {},
 }: Props) => {
+  const patientIsActive = data?.activo ?? false;
   const options: MenuOption[] = [
     {
       title: 'Datos del paciente',
@@ -55,12 +56,12 @@ const PatientView = ({
       type: 'separator',
     },
     {
-      title: data?.activo ? 'Desactivar acceso' : 'Activar acceso',
+      title: patientIsActive ? 'Desactivar acceso' : 'Activar acceso',
       type: 'menu',
-      style: data?.activo ? 'destructive' : 'regular',
+      style: patientIsActive ? 'destructive' : 'regular',
       props: {
         isChangeAccess: true,
-        newValue: !(data?.activo ?? false),
+        newValue: !patientIsActive,
       },
     },
     {
@@ -102,6 +103,7 @@ const PatientView = ({
               title={item.item.title}
               type={item.item.type}
               style={item.item.style}
+              disabled={patientIsActive && !(item.item.props && item.item.props.isChangeAccess)}
               active={
                 item.item.props && item.item.props.isToggleExercises
                   ? data?.seccion_ejercicios

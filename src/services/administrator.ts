@@ -227,6 +227,20 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  toggleAccess: async (id: string, token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.changePatientStatus,
+        token,
+      );
+      request.setParams(`/${id}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;
