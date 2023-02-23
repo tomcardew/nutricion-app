@@ -42,7 +42,7 @@ const ProfilePicture = ({
   )} de ${date?.getFullYear()}`;
   const largeItem = () => {
     return (
-      <View style={styles.content}>
+      <View>
         <Image
           source={require('../../../public/assets/icons/gradient-bg.png')}
           style={[styles.cover]}
@@ -77,7 +77,7 @@ const ProfilePicture = ({
 
   const smallItem = () => {
     return (
-      <View style={styles.content}>
+      <View>
         <Image
           source={require('../../../public/assets/icons/gradient-bg.png')}
           style={[styles.cover, {height: 160}]}
@@ -125,12 +125,7 @@ const ProfilePicture = ({
 
   const tallItem = () => {
     return (
-      <View style={styles.content}>
-        <Image
-          source={require('../../../public/assets/icons/gradient-bg.png')}
-          style={[styles.cover, styles.coverTall]}
-          resizeMode="stretch"
-        />
+      <View style={styles.contentTall}>
         <Image
           style={[styles.item, styles.itemTall]}
           source={{
@@ -140,39 +135,43 @@ const ProfilePicture = ({
           }}
         />
         {!hideData && (
-          <View style={[styles.pictureBottomContainer, styles.pictureBottomContainerTall]}>
+          <View
+            style={[
+              styles.pictureBottomContainer,
+              styles.pictureBottomContainerTall,
+            ]}>
             {fullname && (
-              <Text weight={FontWeight.SemiBold} style={[styles.name, { marginBottom: -5 }]}>
+              <Text
+                weight={FontWeight.SemiBold}
+                style={[styles.name, {marginBottom: -5, color: 'white'}]}>
                 {fullname}
               </Text>
             )}
             {email && (
-              <Text weight={FontWeight.Medium} style={[styles.email]}>
+              <Text
+                weight={FontWeight.Medium}
+                style={[styles.email, {color: 'white'}]}>
                 {email}
               </Text>
             )}
           </View>
         )}
       </View>
-    )
-  }
+    );
+  };
 
   const renderItem = () => {
     switch (type) {
       case 'small':
-        return smallItem()
+        return smallItem();
       case 'large':
-        return largeItem()
+        return largeItem();
       case 'tall':
-        return tallItem()
+        return tallItem();
     }
-  }
+  };
 
-  return (
-    <View style={[styles.container, style]}>
-      {renderItem()}
-    </View>
-  );
+  return <View style={[styles.container, style]}>{renderItem()}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -180,7 +179,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  content: {},
+  contentTall: {
+    backgroundColor: theme['color-primary-600'],
+    width: Dimensions.get('screen').width,
+  },
   item: {
     height: 200,
     width: 200,
@@ -196,9 +198,10 @@ const styles = StyleSheet.create({
     top: 50,
   },
   itemTall: {
-    top: 0,
+    top: 10,
     height: 150,
     width: 150,
+    position: 'relative',
   },
   cover: {
     width: Dimensions.get('screen').width,
@@ -213,8 +216,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pictureBottomContainerTall: {
-    marginTop: -15,
-    marginBottom: 10
+    marginTop: 20,
+    marginBottom: 10,
   },
   name: {
     color: 'black',

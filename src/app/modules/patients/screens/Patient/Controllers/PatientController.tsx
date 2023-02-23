@@ -31,7 +31,8 @@ const PatientController = observer(({viewModel}: Props) => {
       loading={viewModel.patientsStore.loading}
       alert={viewModel.patientsStore.alert}
       disableScrollBar
-      showBackButton
+      contentUnderHeader
+      backgroundColor="transparent"
       onAlertDismiss={viewModel.dismissAlert}
       onBackAction={viewModel.goBack}>
       <PatientView

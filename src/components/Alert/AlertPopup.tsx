@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 10,
+    zIndex: 100,
   },
   container: {
     width: Dimensions.get('window').width * 0.75,

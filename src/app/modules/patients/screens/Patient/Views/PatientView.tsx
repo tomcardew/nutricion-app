@@ -72,6 +72,21 @@ const PatientView = ({
       title: '',
       type: 'separator',
     },
+    {
+      title: 'Datos del paciente',
+      screen: ScreenNames.PatientData,
+      props: {
+        patientId: data?.idUsuario,
+      },
+    },
+    {
+      title: 'Galería',
+      screen: ScreenNames.PatientGallery,
+    },
+    {
+      title: 'Programar Ejercicios',
+      screen: ScreenNames.AdminExercisesList,
+    },
   ];
 
   const onItemPressed = (item: MenuOption) => {
