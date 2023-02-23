@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import {Patient} from '../../../../../../models/Patients';
-import {Image, ProfilePicture} from '../../../../../../components/Images';
-import FastImage from 'react-native-fast-image';
+import {ProfilePicture} from '../../../../../../components/Images';
 import MenuOptionView from './MenuOptionView';
 import ScreenNames from '../../../../../../constants/Screens';
+import CommonBanner from '../../../../../../components/CommonBanner';
 
 interface Props {
   data: Patient | null;
@@ -72,21 +72,6 @@ const PatientView = ({
       title: '',
       type: 'separator',
     },
-    {
-      title: 'Datos del paciente',
-      screen: ScreenNames.PatientData,
-      props: {
-        patientId: data?.idUsuario,
-      },
-    },
-    {
-      title: 'Galería',
-      screen: ScreenNames.PatientGallery,
-    },
-    {
-      title: 'Programar Ejercicios',
-      screen: ScreenNames.AdminExercisesList,
-    },
   ];
 
   const onItemPressed = (item: MenuOption) => {
@@ -101,16 +86,32 @@ const PatientView = ({
 
   return (
     <View style={styles.container}>
-      <ProfilePicture type='tall' fullname={data?.nombre} email={data?.email} url={data?.urlFoto} fallback={data?.nombre} />
+      <ProfilePicture
+        type="tall"
+        fullname={data?.nombre}
+        email={data?.email}
+        url={data?.urlFoto}
+        fallback={data?.nombre}
+      />
+      {!patientIsActive && (
+        <CommonBanner
+          type="danger"
+          text="Este paciente no se encuentra activo"
+        />
+      )}
       <View style={styles.content}>
         <FlatList
+          contentContainerStyle={{paddingBottom: 60}}
           data={options.slice()}
           renderItem={item => (
             <MenuOptionView
               title={item.item.title}
               type={item.item.type}
               style={item.item.style}
-              disabled={!patientIsActive && !(item.item.props && item.item.props.isChangeAccess)}
+              disabled={
+                !patientIsActive &&
+                !(item.item.props && item.item.props.isChangeAccess)
+              }
               active={
                 item.item.props && item.item.props.isToggleExercises
                   ? data?.seccion_ejercicios

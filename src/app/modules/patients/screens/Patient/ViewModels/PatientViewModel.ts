@@ -26,6 +26,7 @@ class PatientViewModel {
 
   unload = () => {
     this.patientsStore.selectedPatient = null;
+    this.patientsStore.selectedPatientId = null;
   };
 
   navigateTo = (screen: ScreenNames, props?: any) => {
@@ -45,9 +46,9 @@ class PatientViewModel {
   };
 
   toggleAccessCall = async () => {
+    this.dismissAlert();
     await this.patientsStore.toggleAccess(this.authStore.token ?? '');
     await this.load();
-    this.dismissAlert()
   };
 
   dismissAlert = () => {
