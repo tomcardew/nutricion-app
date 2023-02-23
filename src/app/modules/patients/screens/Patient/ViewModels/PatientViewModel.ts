@@ -47,6 +47,7 @@ class PatientViewModel {
   toggleAccessCall = async () => {
     await this.patientsStore.toggleAccess(this.authStore.token ?? '');
     await this.load();
+    this.dismissAlert()
   };
 
   dismissAlert = () => {

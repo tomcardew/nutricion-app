@@ -15,7 +15,7 @@ import Text from '../Text';
 import Image from './Image';
 
 interface Props {
-  type?: 'large' | 'small';
+  type?: 'large' | 'small' | 'tall';
   url?: string;
   fallback?: string;
   fullname?: string;
@@ -123,9 +123,54 @@ const ProfilePicture = ({
     );
   };
 
+  const tallItem = () => {
+    return (
+      <View style={styles.content}>
+        <Image
+          source={require('../../../public/assets/icons/gradient-bg.png')}
+          style={[styles.cover, styles.coverTall]}
+          resizeMode="stretch"
+        />
+        <Image
+          style={[styles.item, styles.itemTall]}
+          source={{
+            uri: url
+              ? url
+              : `https://ui-avatars.com/api/?name=${fallback}&size=200&background=e5f9bb`,
+          }}
+        />
+        {!hideData && (
+          <View style={[styles.pictureBottomContainer, styles.pictureBottomContainerTall]}>
+            {fullname && (
+              <Text weight={FontWeight.SemiBold} style={[styles.name, { marginBottom: -5 }]}>
+                {fullname}
+              </Text>
+            )}
+            {email && (
+              <Text weight={FontWeight.Medium} style={[styles.email]}>
+                {email}
+              </Text>
+            )}
+          </View>
+        )}
+      </View>
+    )
+  }
+
+  const renderItem = () => {
+    switch (type) {
+      case 'small':
+        return smallItem()
+      case 'large':
+        return largeItem()
+      case 'tall':
+        return tallItem()
+    }
+  }
+
   return (
     <View style={[styles.container, style]}>
-      {type === 'large' ? largeItem() : smallItem()}
+      {renderItem()}
     </View>
   );
 };
@@ -150,14 +195,26 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
   },
+  itemTall: {
+    top: 0,
+    height: 150,
+    width: 150,
+  },
   cover: {
     width: Dimensions.get('screen').width,
     height: 200,
     marginBottom: 50,
   },
+  coverTall: {
+    height: 120,
+  },
   pictureBottomContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  pictureBottomContainerTall: {
+    marginTop: -15,
+    marginBottom: 10
   },
   name: {
     color: 'black',

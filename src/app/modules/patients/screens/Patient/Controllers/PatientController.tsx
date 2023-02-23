@@ -26,12 +26,7 @@ const PatientController = observer(({viewModel}: Props) => {
 
   return (
     <BaseLayoutView
-      title={
-        viewModel.patientsStore.selectedPatient
-          ? viewModel.patientsStore.selectedPatient.nombre
-          : 'Paciente'
-      }
-      subtitle={viewModel.patientsStore.selectedPatient?.email}
+      title=""
       loadingMessage="Cargando..."
       loading={viewModel.patientsStore.loading}
       alert={viewModel.patientsStore.alert}

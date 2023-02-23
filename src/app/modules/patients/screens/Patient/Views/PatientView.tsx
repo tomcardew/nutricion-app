@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import {Patient} from '../../../../../../models/Patients';
-import {Image} from '../../../../../../components/Images';
+import {Image, ProfilePicture} from '../../../../../../components/Images';
 import FastImage from 'react-native-fast-image';
 import MenuOptionView from './MenuOptionView';
 import ScreenNames from '../../../../../../constants/Screens';
@@ -45,6 +45,10 @@ const PatientView = ({
       screen: ScreenNames.AdminExercisesList,
     },
     {
+      title: '',
+      type: 'separator',
+    },
+    {
       title: 'Activar/Desactivar Ejercicios',
       type: 'toggle',
       props: {
@@ -82,19 +86,7 @@ const PatientView = ({
 
   return (
     <View style={styles.container}>
-      {data?.urlFoto && (
-        <Image
-          style={styles.image}
-          source={{
-            uri: data?.urlFoto
-              ? data?.urlFoto
-              : `https://ui-avatars.com/api/?name=${data?.nombre}&size=512&background=e5f9bb`,
-            cache: data?.urlFoto
-              ? FastImage.cacheControl.immutable
-              : FastImage.cacheControl.cacheOnly,
-          }}
-        />
-      )}
+      <ProfilePicture type='tall' fullname={data?.nombre} email={data?.email} url={data?.urlFoto} fallback={data?.nombre} />
       <View style={styles.content}>
         <FlatList
           data={options.slice()}
@@ -103,7 +95,7 @@ const PatientView = ({
               title={item.item.title}
               type={item.item.type}
               style={item.item.style}
-              disabled={patientIsActive && !(item.item.props && item.item.props.isChangeAccess)}
+              disabled={!patientIsActive && !(item.item.props && item.item.props.isChangeAccess)}
               active={
                 item.item.props && item.item.props.isToggleExercises
                   ? data?.seccion_ejercicios
