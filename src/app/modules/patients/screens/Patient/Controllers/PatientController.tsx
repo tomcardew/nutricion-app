@@ -18,12 +18,6 @@ const PatientController = observer(({viewModel}: Props) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!viewModel.patientsStore.selectedPatientId) {
-      viewModel.goBack();
-    }
-  }, [viewModel.patientsStore.selectedPatientId]);
-
   return (
     <BaseLayoutView
       title=""

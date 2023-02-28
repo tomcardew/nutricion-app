@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "manager": "node config/config.js",
-    "build-android": "cd android && ./gradlew assembleRelease"
+    "build-android": "cd android && ./gradlew assembleRelease",
+    "preprod-android": "npx react-native run-android --mode=release"
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.1",

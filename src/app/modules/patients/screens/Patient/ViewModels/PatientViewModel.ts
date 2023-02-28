@@ -26,7 +26,6 @@ class PatientViewModel {
 
   unload = () => {
     this.patientsStore.selectedPatient = null;
-    this.patientsStore.selectedPatientId = null;
   };
 
   navigateTo = (screen: ScreenNames, props?: any) => {
