@@ -12,7 +12,6 @@ import {observer} from 'mobx-react';
 import {Logger} from './src/utils/Utils';
 import SplashScreen from './src/components/SplashScreen';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
-import {Text, View} from 'react-native';
 import {FeatherIconsPack} from './src/components/FeatherIcons';
 
 configure({

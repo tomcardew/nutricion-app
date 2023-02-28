@@ -1,13 +1,19 @@
 import React from 'react';
-import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {ProfilePicture} from '../../../../../../components/Images';
 import {Profile} from '../../../../../../models/Profile';
 import ProfileSummaryCard from './ProfileSummaryCard';
 import ProfileWeightCard from './ProfileWeightCard';
-import {PlainButton} from '../../../../../../components/Buttons';
-import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 import ProfileDietCard from './ProfileDietCard';
-import ProfileStepsCard from './ProfileStepsCard';
+import Text from '../../../../../../components/Text';
+import Environment from '../../../../../../constants/Environment';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   profile?: Profile | null;
@@ -16,6 +22,7 @@ interface Props {
   onEditProfilePress?: () => void;
   didPressGoToProgress?: () => void;
   didPressSeeDiet?: () => void;
+  didPressSeeVersion?: () => void;
 }
 
 const ProfileView = ({
@@ -24,6 +31,7 @@ const ProfileView = ({
   onEditProfilePress = () => {},
   didPressGoToProgress = () => {},
   didPressSeeDiet = () => {},
+  didPressSeeVersion = () => {},
 }: Props) => {
   const weight =
     profile && profile.Datos && profile.Datos.length > 0
@@ -86,6 +94,11 @@ const ProfileView = ({
               }}
             />
           )}
+          <TouchableWithoutFeedback onPress={didPressSeeVersion}>
+            <Text weight={FontWeight.Medium} style={styles.versionNumber}>
+              Versión {Environment.VERSION}
+            </Text>
+          </TouchableWithoutFeedback>
         </View>
       )}
     </ScrollView>
@@ -106,6 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: -20,
+  },
+  versionNumber: {
+    marginTop: 20,
+    color: 'black',
+    opacity: 0.25,
   },
 });
 
