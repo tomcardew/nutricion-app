@@ -1,7 +1,9 @@
 import {Spinner} from '@ui-kitten/components';
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {default as theme} from '../../custom-theme.json';
+import {FontWeight} from '../models/Common';
+import Text from './Text';
 
 interface Props {
   animating?: boolean;
@@ -36,7 +38,9 @@ const LoaderView = ({message, animating}: Props) => {
     return (
       <Animated.View style={[styles.container, {opacity: fadeAnim}]}>
         <Spinner size="giant" />
-        <Text style={styles.text}>{message}</Text>
+        <Text weight={FontWeight.Medium} style={styles.text}>
+          {message}
+        </Text>
       </Animated.View>
     );
 

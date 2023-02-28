@@ -1,20 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable} from 'react-native';
 import {default as theme} from '../../../custom-theme.json';
-
-export enum AlertActionType {
-  Normal,
-  Destructive,
-  Action,
-}
-
-export interface AlertAction {
-  label: string;
-  type?: AlertActionType;
-  isFirstTwo?: boolean | null;
-
-  onClick?: () => void;
-}
+import {AlertAction, AlertActionType, FontWeight} from '../../models/Common';
+import Text from '../Text';
 
 const AlertActionButton = ({
   label,
@@ -27,12 +15,19 @@ const AlertActionButton = ({
       style={[styles.container, isFirstTwo ? styles.rightBorder : null]}
       onPress={onClick}>
       <Text
+        weight={
+          type == AlertActionType.Cancel
+            ? FontWeight.Regular
+            : FontWeight.Medium
+        }
         style={[
           styles.label,
           type == AlertActionType.Action
             ? styles.labelAction
             : type == AlertActionType.Destructive
             ? styles.labelDestructive
+            : type == AlertActionType.Cancel
+            ? styles.labelCancel
             : null,
         ]}>
         {label}
@@ -58,15 +53,16 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme['color-primary-600'],
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '400',
   },
-  labelAction: {
-    fontWeight: '600',
-  },
+  labelAction: {},
   labelDestructive: {
-    fontWeight: '600',
     color: '#CC0000',
+  },
+  labelCancel: {
+    color: 'black',
+    opacity: 0.9,
   },
 });
 

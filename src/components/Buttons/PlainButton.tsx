@@ -1,6 +1,15 @@
 import React from 'react';
 import {Button} from '@ui-kitten/components';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+  ViewStyle,
+} from 'react-native';
+import {FontWeight} from '../../models/Common';
+import Text from '../Text';
+import {theme} from '../../utils/Utils';
 
 interface Props {
   title: string;
@@ -11,10 +20,25 @@ interface Props {
 
 const PlainButton = ({title, style, onPress = () => {}}: Props) => {
   return (
-    <Button style={style} appearance="ghost" onPress={onPress}>
-      {title}
-    </Button>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.container, style]}>
+        <Text weight={FontWeight.SemiBold} style={styles.text}>
+          {title}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+  },
+  text: {
+    color: theme['color-primary-500'],
+  },
+});
 
 export default PlainButton;

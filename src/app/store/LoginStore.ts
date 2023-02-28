@@ -1,7 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {AlertActionType} from '../../components/Alert/AlertAction';
-import {AlertType} from '../../components/Alert/AlertPopup';
-import {AlertMessage} from '../../components/Layout/BaseLayoutView';
+import {AlertMessage, AlertType} from '../../models/Common';
 import AuthServices from '../../services/auth';
 import ErrorCatalogue from '../../utils/ErrorCatalogue';
 
@@ -23,11 +21,14 @@ export class LoginStore {
 
   public login = async () => {
     this.logingIn = true;
+    const email = this.email.trim();
+    const password = this.password.trim();
     if (this.email && this.password) {
-      const data = await AuthServices.login(this.email, this.password);
+      const data = await AuthServices.login(email, password);
       this.logingIn = false;
       if (data.success) {
-        console.log('Login succesfull');
+        this.isAuthorized = true;
+        return data;
       } else {
         this.error = {
           title: 'Ocurrió un error',
@@ -36,6 +37,7 @@ export class LoginStore {
           showIcon: true,
           actions: [{label: 'Cerrar'}],
         };
+        return null;
       }
     } else {
       this.logingIn = false;
@@ -46,6 +48,7 @@ export class LoginStore {
         showIcon: true,
         actions: [{label: 'Cerrar'}],
       };
+      return null;
     }
   };
 
@@ -62,7 +65,6 @@ export class LoginStore {
     if (this.email) {
       const data = await AuthServices.passwordRecovery(this.email);
       this.loading = false;
-      console.log(data);
       if (data.success) {
         this.alert = {
           title: 'Listo',

@@ -14,12 +14,12 @@ const LoginController = observer(({viewModel}: Props) => {
       hideHeader
       showOverSafeArea
       loadingMessage="Iniciando sesión..."
-      loading={viewModel.store.logingIn}
-      alert={viewModel.store.error}
+      loading={viewModel.loginStore.logingIn}
+      alert={viewModel.loginStore.error}
       onAlertDismiss={viewModel.dismissAlert}>
       <LoginView
-        email={viewModel.store.email}
-        password={viewModel.store.password}
+        email={viewModel.loginStore.email}
+        password={viewModel.loginStore.password}
         onLoginPress={viewModel.login}
         onRegisterPress={viewModel.goToRegister}
         onForgotPasswordPress={viewModel.goToForgotPassword}

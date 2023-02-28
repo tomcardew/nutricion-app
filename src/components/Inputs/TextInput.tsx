@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@ui-kitten/components';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {KeyboardTypeOptions} from 'react-native';
+import Text from '../Text';
 
 interface Props {
   label?: string;
@@ -9,6 +10,9 @@ interface Props {
   value: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
+  accessoryRight?: JSX.Element | undefined;
+  autocapitalize?: boolean;
+  disabled?: boolean;
   textContentType?:
     | 'none'
     | 'URL'
@@ -63,9 +67,12 @@ const TextInput = ({
   label,
   placeholder,
   value,
+  accessoryRight,
   secureTextEntry,
   keyboardType,
   textContentType,
+  autocapitalize = true,
+  disabled = false,
   onChangeText = () => {},
 }: Props) => {
   const [state, setState] = useState({passwordVisible: false});
@@ -76,17 +83,21 @@ const TextInput = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{label}</Text>
+      {label && <Text style={styles.text}>{label}</Text>}
       <Input
         placeholder={placeholder}
         value={value}
         style={styles.input}
+        disabled={disabled}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry && !state.passwordVisible}
+        autoCapitalize={autocapitalize ? 'sentences' : 'none'}
         accessoryRight={
-          secureTextEntry ? (
+          accessoryRight ? (
+            accessoryRight
+          ) : secureTextEntry ? (
             <EyeAccessory
               selected={state.passwordVisible}
               onToggle={togglePassword}

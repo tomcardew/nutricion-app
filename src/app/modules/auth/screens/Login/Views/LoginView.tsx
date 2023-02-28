@@ -35,12 +35,15 @@ const LoginView = ({
           label="Correo electrónico"
           value={email}
           onChangeText={didChangeEmail}
+          keyboardType="email-address"
+          autocapitalize={false}
         />
         <TextInput
           value={password}
           label="Contraseña"
           secureTextEntry
           onChangeText={didChangePassword}
+          autocapitalize={false}
         />
         <PlainButton
           style={{marginBottom: 20}}

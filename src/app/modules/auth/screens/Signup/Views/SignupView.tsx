@@ -21,7 +21,7 @@ interface Props {
   onRegisterPress?: () => void;
 
   didChangeName?: (nextValue: string) => void;
-  didChangeDate?: (nextValue: Date | undefined) => void;
+  didPressChangeDate?: () => void;
   didChangeGender?: (nextValue: IndexPath | IndexPath[]) => void;
   didChangeEmail?: (nextValue: string) => void;
   didChangePassword?: (nextValue: string) => void;
@@ -37,7 +37,7 @@ const SignupView = ({
   password,
   passwordConfirmation,
   didChangeName,
-  didChangeDate,
+  didPressChangeDate,
   didChangeGender,
   didChangeEmail,
   didChangePassword,
@@ -55,14 +55,16 @@ const SignupView = ({
         />
         <DatePicker
           date={date}
+          hideTime
           label="Fecha de nacimiento"
-          onSelect={didChangeDate}
+          onPress={didPressChangeDate}
         />
         <Selector
           label="Género"
           placeholder="Selecciona una opción"
           selectedIndex={genderSelectedIndex}
           onSelect={didChangeGender}
+          keys={['Femenino', 'Masculino']}
           value={genderSelectedValue}
         />
         <TextInput

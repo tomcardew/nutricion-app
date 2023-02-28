@@ -1,19 +1,21 @@
 import {Icon} from '@ui-kitten/components';
 import React, {useRef, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
-import AlertActionButton, {AlertAction} from './AlertAction';
+import {View, StyleSheet, Dimensions, Animated} from 'react-native';
+import AlertActionButton from './AlertAction';
 import {default as theme} from '../../../custom-theme.json';
-
-export enum AlertType {
-  Error,
-  Warning,
-  Info,
-  Success,
-}
+import {
+  AlertAction,
+  AlertMessage,
+  AlertType,
+  ErrorMessage,
+  FontWeight,
+} from '../../models/Common';
+import Text from '../Text';
 
 interface Props {
   title?: string;
   message?: string;
+  error?: ErrorMessage;
   type: AlertType;
   showIcon?: boolean;
   actions?: AlertAction[] | null;
@@ -61,6 +63,7 @@ const IconView = ({type}: IconViewProps) => {
 const AlertPopup = ({
   title,
   message,
+  error,
   showIcon = true,
   actions = [],
   type = AlertType.Success,
@@ -69,10 +72,24 @@ const AlertPopup = ({
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const [show, setShow] = useState(false);
+  const [data, setData] = useState<AlertMessage>({
+    title: '',
+    actions: [],
+    message: '',
+    showIcon: false,
+    type: AlertType.Info,
+  });
 
   useEffect(() => {
     if (title) {
       setShow(true);
+      setData({
+        title: title!,
+        actions: actions!,
+        message: message!,
+        showIcon: showIcon,
+        type: type,
+      });
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 200,
@@ -85,9 +102,20 @@ const AlertPopup = ({
         useNativeDriver: false,
       }).start(() => {
         setShow(false);
+        cleanState();
       });
     }
   }, [title]);
+
+  const cleanState = () => {
+    setData({
+      title: '',
+      actions: [],
+      message: '',
+      showIcon: false,
+      type: AlertType.Info,
+    });
+  };
 
   const handleActionClick = (action: AlertAction) => {
     if (action.onClick) action.onClick();
@@ -100,36 +128,42 @@ const AlertPopup = ({
         <View style={styles.container}>
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
-              {showIcon && (
+              {data.showIcon && (
                 <View style={styles.icon}>
-                  <IconView type={type} />
+                  <IconView type={data.type} />
                 </View>
               )}
-              <Text style={styles.title}>{title}</Text>
+              <Text weight={FontWeight.Bold} style={styles.title}>
+                {data.title}
+              </Text>
             </View>
-            <Text style={styles.message}>{message}</Text>
+            <Text style={styles.message}>{data.message}</Text>
           </View>
           <View
             style={[
               styles.actionContainer,
-              actions && actions.length > 2
+              data.actions && data.actions.length > 2
                 ? styles.actionContainerColumn
                 : styles.actionContainerRow,
               {
                 height:
-                  actions && actions.length > 2 ? 40 * actions.length : 40,
+                  data.actions && data.actions.length > 2
+                    ? 40 * data.actions.length
+                    : 40,
               },
             ]}>
-            {actions &&
-              actions.map((action, index) => (
+            {data.actions &&
+              data.actions.map((action, index) => (
                 <AlertActionButton
                   label={action.label}
                   type={action.type}
                   onClick={() => {
                     handleActionClick(action);
                   }}
-                  isFirstTwo={actions && actions.length < 3 && index == 0}
-                  key={Math.random()}
+                  isFirstTwo={
+                    data.actions && data.actions.length < 3 && index == 0
+                  }
+                  key={`alert-action-button-${index}`}
                 />
               ))}
           </View>
@@ -151,16 +185,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 10,
+    zIndex: 100,
   },
   container: {
     width: Dimensions.get('window').width * 0.75,
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
+    maxWidth: 400,
   },
   innerContainer: {
-    padding: 15,
+    padding: 18,
   },
   actionContainer: {
     display: 'flex',
@@ -180,7 +215,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontWeight: '500',
     color: 'black',
     fontSize: 18,
     textAlign: 'center',
@@ -191,12 +225,18 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     textAlign: 'center',
     color: 'black',
-    fontWeight: '400',
   },
   icon: {
     width: '100%',
     height: 40,
     marginBottom: 10,
+  },
+  error: {
+    fontWeight: '300',
+    fontSize: 10,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    marginTop: 5,
   },
 });
 

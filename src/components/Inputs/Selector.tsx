@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {IndexPath, Select, SelectItem} from '@ui-kitten/components';
+import Text from '../Text';
 
 interface Props {
   label?: string;
   placeholder?: string;
   value?: string;
   selectedIndex?: IndexPath | IndexPath[] | undefined;
+  keys: string[];
   onSelect?: (index: IndexPath | IndexPath[]) => void;
 }
 
@@ -15,6 +17,7 @@ const Selector = ({
   label,
   placeholder,
   value,
+  keys = [],
   onSelect = () => {},
 }: Props) => {
   return (
@@ -26,8 +29,9 @@ const Selector = ({
         value={value}
         style={styles.input}
         onSelect={onSelect}>
-        <SelectItem title="Femenino" />
-        <SelectItem title="Masculino" />
+        {keys.map(item => (
+          <SelectItem key={`component-selector-${item}`} title={item} />
+        ))}
       </Select>
     </View>
   );

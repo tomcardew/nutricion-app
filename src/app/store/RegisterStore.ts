@@ -1,9 +1,9 @@
 import {makeAutoObservable} from 'mobx';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertMessage} from '../../components/Layout/BaseLayoutView';
-import {AlertType} from '../../components/Alert/AlertPopup';
 import AuthServices from '../../services/auth';
 import ErrorCatalogue from '../../utils/ErrorCatalogue';
+import {AlertMessage, AlertType} from '../../models/Common';
+import { Profile } from '../../models/Profile';
 
 export class RegisterStore {
   public name: string = '';
@@ -66,7 +66,10 @@ export class RegisterStore {
       );
       this.loading = false;
       if (data.success) {
-        console.log('Sign up successfull');
+        return {
+          token: data.token,
+          profile: data.customer
+        };
       } else {
         this.error = {
           title: 'Ocurrió un error',
@@ -75,6 +78,7 @@ export class RegisterStore {
           showIcon: true,
           actions: [{label: 'Cerrar'}],
         };
+        return null;
       }
     } else {
       this.loading = false;
@@ -85,6 +89,7 @@ export class RegisterStore {
         showIcon: true,
         actions: [{label: 'Cerrar'}],
       };
+      return null;
     }
   };
 

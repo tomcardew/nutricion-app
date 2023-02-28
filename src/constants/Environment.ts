@@ -6,6 +6,7 @@ const Environment = {
   ENV: config.environment,
   URL: config.url,
   PORT: config.port,
+  VERSION: config.version,
 };
 
 export default Environment;

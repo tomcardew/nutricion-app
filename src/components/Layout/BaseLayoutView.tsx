@@ -5,52 +5,73 @@ import {
   View,
   StatusBar,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
-import AlertPopup, {AlertType} from '../Alert/AlertPopup';
-import {AlertAction} from '../Alert/AlertAction';
+import AlertPopup from '../Alert/AlertPopup';
+import {AlertMessage, AlertType} from '../../models/Common';
 
 interface Props {
   title?: string;
+  subtitle?: string;
   loadingMessage: string | undefined;
   children?: any;
   hideHeader?: boolean;
   showOverSafeArea?: boolean;
+  contentUnderHeader?: boolean;
   loading: boolean;
   alert?: AlertMessage | null;
   showBackButton?: boolean;
+  disableScrollBar?: boolean;
+  backgroundColor?: string;
+  color?: string;
+  overlay?: JSX.Element;
+  actionButtonView?: JSX.Element;
+  rightAccessory?: JSX.Element;
+  showDateSelector?: boolean;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
-}
-
-export interface AlertMessage {
-  title: string;
-  message: string;
-  type: AlertType;
-  showIcon: boolean;
-  actions: AlertAction[];
+  onActionButtonPress?: () => void;
+  didChangeSelectedDate?: (date: Date) => void;
 }
 
 const BaseLayoutView = ({
   title = 'Fitness App',
+  subtitle,
   children,
   hideHeader,
   showOverSafeArea,
+  contentUnderHeader,
   loading = false,
   loadingMessage,
   alert,
   showBackButton = true,
+  disableScrollBar = false,
+  backgroundColor = theme['color-primary-600'],
+  color = 'white',
+  overlay,
+  actionButtonView,
+  rightAccessory,
   onBackAction = () => {},
   onAlertDismiss = () => {},
+  onActionButtonPress = () => {},
 }: Props) => {
   const content = () => (
     <View style={styles.content}>
+      {actionButtonView && (
+        <TouchableOpacity
+          style={styles.actionButtonContainer}
+          onPress={onActionButtonPress}>
+          {actionButtonView}
+        </TouchableOpacity>
+      )}
       <AlertPopup
         title={alert?.title}
         message={alert?.message}
+        error={alert?.error}
         type={alert?.type || AlertType.Error}
         showIcon={alert?.showIcon}
         actions={alert?.actions}
@@ -62,17 +83,34 @@ const BaseLayoutView = ({
         barStyle="light-content"
       />
       {!hideHeader && (
-        <HeaderView
-          title={title}
-          showBackIcon={showBackButton}
-          onBackAction={onBackAction}
-        />
+        <View
+          style={{
+            width: '100%',
+            position: contentUnderHeader ? 'absolute' : 'relative',
+            top: 0,
+            zIndex: 10,
+          }}>
+          <HeaderView
+            title={title}
+            subtitle={subtitle}
+            showBackIcon={showBackButton}
+            onBackAction={() => onBackAction()}
+            backgroundColor={backgroundColor}
+            color={color}
+            rightAccessory={rightAccessory}
+          />
+        </View>
       )}
-      <ScrollView
-        showsVerticalScrollIndicator
-        contentContainerStyle={styles.content}>
-        {children}
-      </ScrollView>
+      {disableScrollBar ? (
+        <View>{children}</View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator
+          contentContainerStyle={styles.content}>
+          {children}
+        </ScrollView>
+      )}
+      {overlay}
     </View>
   );
 
@@ -102,6 +140,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  actionButtonContainer: {
+    position: 'absolute',
+    right: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 20,
+    zIndex: 9,
+    height: 60,
+    width: 60,
+    backgroundColor: theme['color-primary-500'],
+    borderRadius: 100,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 10,
+    elevation: 3,
   },
 });
 

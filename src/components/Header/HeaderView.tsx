@@ -1,32 +1,44 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Layout,
   TopNavigation,
   Icon,
   TopNavigationAction,
-  Text,
 } from '@ui-kitten/components';
 import {default as theme} from '../../../custom-theme.json';
+import Text from '../Text';
+import {FontWeight} from '../../models/Common';
 
 interface Props {
   title?: string;
+  subtitle?: string;
   showBackIcon?: boolean;
+  color?: string;
+  backgroundColor?: string;
+  rightAccessory?: JSX.Element;
   onBackAction?: () => void;
 }
 
-const BackIcon = (props: any) => (
-  <Icon {...props} fill="#FFFFFF" name="arrow-back" />
-);
+const BackIcon = (props: any) => <Icon {...props} name="arrow-back" />;
 
 const HeaderView = ({
   title = 'Fitness App',
+  subtitle,
   showBackIcon = false,
+  color = 'white',
+  backgroundColor = theme['color-primary-500'],
+  rightAccessory,
   onBackAction = () => {},
 }: Props) => {
   const renderBackAction = () => {
     if (!showBackIcon) return <></>;
-    return <TopNavigationAction icon={BackIcon} onPress={onBackAction} />;
+    return (
+      <TopNavigationAction
+        icon={<BackIcon fill={color} />}
+        onPress={onBackAction}
+      />
+    );
   };
 
   return (
@@ -34,12 +46,18 @@ const HeaderView = ({
       <TopNavigation
         alignment="center"
         title={props => (
-          <Text {...props} style={styles.title}>
-            {title}
-          </Text>
+          <View>
+            <Text weight={FontWeight.SemiBold} style={[styles.title, {color}]}>
+              {title}
+            </Text>
+            {subtitle && (
+              <Text style={[styles.subtitle, {color}]}>{subtitle}</Text>
+            )}
+          </View>
         )}
-        style={styles.header}
+        style={{backgroundColor}}
         accessoryLeft={renderBackAction}
+        accessoryRight={rightAccessory}
       />
     </Layout>
   );
@@ -48,17 +66,16 @@ const HeaderView = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-  },
-  header: {
-    backgroundColor: theme['color-primary-500'],
+    backgroundColor: 'transparent',
   },
   title: {
-    color: 'white',
     fontSize: 18,
-    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: -5,
   },
-  icon: {
-    color: 'white',
+  subtitle: {
+    fontSize: 14,
+    textAlign: 'center',
   },
 });
 

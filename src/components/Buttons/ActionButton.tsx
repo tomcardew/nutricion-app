@@ -1,33 +1,55 @@
 import React from 'react';
 import {Button} from '@ui-kitten/components';
-import {ViewStyle, StyleProp, StyleSheet} from 'react-native';
+import {
+  ViewStyle,
+  StyleProp,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import Text from '../Text';
+import {FontWeight} from '../../models/Common';
+import {theme} from '../../utils/Utils';
 
 interface Props {
   title: string;
+  disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
 }
 
-const PrimaryButton = ({title, style, onPress = () => {}}: Props) => {
+const PrimaryButton = ({
+  title,
+  disabled = false,
+  style,
+  onPress = () => {},
+}: Props) => {
   return (
-    <Button style={[styles.container, style]} onPress={onPress}>
-      {title}
-    </Button>
+    <TouchableWithoutFeedback disabled={disabled} onPress={onPress}>
+      <View
+        style={[
+          styles.container,
+          style,
+          disabled && {backgroundColor: '#ddd'},
+        ]}>
+        <Text weight={FontWeight.SemiBold} style={styles.text}>
+          {title}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
+    backgroundColor: theme['color-primary-500'],
+  },
+  text: {
+    color: 'white',
   },
 });
 

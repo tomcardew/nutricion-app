@@ -1,7 +1,8 @@
 {
   "name": "nutricion_app",
   "displayName": "Nutrición",
-  "environment": "dev",
-  "url": "http://137.184.195.182",
-  "port": "4000"
+  "url": "http://146.190.36.239",
+  "port": "4000",
+  "version": "0.1.0",
+  "environment": "dev"
 }
