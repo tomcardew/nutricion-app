@@ -14,6 +14,7 @@ import ProfileDietCard from './ProfileDietCard';
 import Text from '../../../../../../components/Text';
 import Environment from '../../../../../../constants/Environment';
 import {FontWeight} from '../../../../../../models/Common';
+import ProfileStepsCard from './ProfileStepsCard';
 
 interface Props {
   profile?: Profile | null;
@@ -69,6 +70,14 @@ const ProfileView = ({
               width: Dimensions.get('window').width - 40,
             }}
           />
+          <ProfileStepsCard
+            style={{
+              marginTop: 20,
+              width: Dimensions.get('window').width - 40,
+            }}
+            goal={5000}
+            count={2500}
+          />
           <ProfileSummaryCard
             weight={weight}
             bodyFat={bodyFat}
@@ -79,12 +88,6 @@ const ProfileView = ({
             }}
             onSeeAllPress={didPressGoToProgress}
           />
-          {/* <ProfileStepsCard
-            style={{
-              marginTop: 20,
-              width: Dimensions.get('window').width - 40,
-            }}
-          /> */}
           {profile.seccion_ejercicios && (
             <ProfileDietCard
               onSeeDietPress={didPressSeeDiet}

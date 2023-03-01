@@ -3,6 +3,6 @@
   "displayName": "Nutrición",
   "url": "http://146.190.36.239",
   "port": "4000",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "environment": "dev"
 }
