@@ -3,15 +3,12 @@ import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import ProfileViewModel from '../ViewModels/ProfileViewModel';
 import ProfileView from '../Views/ProfileView';
-import {Logger} from '../../../../../../utils/Utils';
-
 interface Props {
   viewModel: ProfileViewModel;
 }
 
 const ProfileController = observer(({viewModel}: Props) => {
   useEffect(() => {
-    Logger.warn('PatientProfileController.tsx:14');
     viewModel.load();
   }, []);
 
