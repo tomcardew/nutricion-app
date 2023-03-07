@@ -37,6 +37,7 @@
     "react-native-image-picker": "^5.0.1",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-logs": "^5.0.1",
+    "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-pdf": "^6.6.2",
     "react-native-permissions": "^3.7.3",
