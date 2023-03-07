@@ -11,6 +11,9 @@ export class AuthStore {
   public token: string | null = null;
   public user: Profile | null = null;
 
+  public releaseNotes: string = '';
+  public loading: boolean = false;
+
   constructor() {
     stopPersisting(this);
     makeAutoObservable(this);

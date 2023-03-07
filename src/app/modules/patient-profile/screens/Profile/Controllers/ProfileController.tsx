@@ -30,6 +30,7 @@ const ProfileController = observer(({viewModel}: Props) => {
         onEditProfilePress={viewModel.showEditingOptions}
         didPressGoToProgress={viewModel.goToProgress}
         didPressSeeDiet={viewModel.didPressSeeDiet}
+        didPressSeeVersion={viewModel.didPressSeeVersion}
         stepCount={viewModel.profileStore.stepCount}
       />
     </BaseLayoutView>

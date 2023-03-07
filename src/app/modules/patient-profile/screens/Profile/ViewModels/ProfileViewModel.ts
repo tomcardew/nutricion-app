@@ -146,6 +146,11 @@ class ProfileViewModel {
     this.navigation.navigate(ScreenNames.PatientDiet.toString());
   };
 
+  didPressSeeVersion = () => {
+    Logger.debug(`Navigating to ${ScreenNames.About.toString()}`);
+    this.navigation.navigate(ScreenNames.About.toString());
+  };
+
   goBack = () => {
     this.navigation.goBack();
   };

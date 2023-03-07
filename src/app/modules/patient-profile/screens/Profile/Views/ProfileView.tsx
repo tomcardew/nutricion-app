@@ -3,7 +3,7 @@ import {
   Dimensions,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {ProfilePicture} from '../../../../../../components/Images';
@@ -103,11 +103,11 @@ const ProfileView = ({
               }}
             />
           )}
-          <TouchableWithoutFeedback onPress={didPressSeeVersion}>
+          <TouchableOpacity onPress={didPressSeeVersion}>
             <Text weight={FontWeight.Medium} style={styles.versionNumber}>
               Versión {Environment.VERSION}
             </Text>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </View>
       )}
     </ScrollView>

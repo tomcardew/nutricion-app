@@ -1,7 +1,3 @@
-# Release notes
-
-## Versiones
-
 ### 0.1.0
 
 - Primera versión beta de la aplicación
@@ -19,3 +15,5 @@
 - Se añade componente de conteo de pasos en perfil del paciente
 - Se añade solicitud de permisos de monitoreo de actividad
 - Se añade integración con Google Fit para el conteo de pasos
+- Se añade pantalla `Acerca de`
+- Se añade pantalla `Notas de la versión`
