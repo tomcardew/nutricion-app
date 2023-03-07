@@ -15,6 +15,7 @@
 
 ### 0.2.0
 
+- Se añade archivo de notas de la revisión
 - Se añade componente de conteo de pasos en perfil del paciente
 - Se añade solicitud de permisos de monitoreo de actividad
 - Se añade integración con Google Fit para el conteo de pasos
