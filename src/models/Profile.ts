@@ -1,5 +1,5 @@
 import {PatientProgress} from './Patients';
-import {dateToDayMonthSmall} from '../utils/Utils';
+import {dateToDayMonthSmall, getRandomInt} from '../utils/Utils';
 import moment from 'moment';
 
 export interface Profile {
@@ -23,7 +23,9 @@ export function profileDataToGraphData(profile: Profile, key: string) {
       dateToDayMonthSmall(moment(item.fecha_registro).toDate()),
     );
     const values = profile.Datos.map(item =>
-      parseFloat(`${item[key as keyof PatientProgress]}`),
+      key === 'pasos'
+        ? getRandomInt(2000, 5000)
+        : parseFloat(`${item[key as keyof PatientProgress]}`),
     );
     return {
       data: values,

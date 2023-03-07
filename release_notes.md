@@ -12,3 +12,9 @@
 ### 0.1.1
 
 - Se añade uso de tráfico no seguro para pruebas abiertas (provisional)
+
+### 0.2.0
+
+- Se añade componente de conteo de pasos en perfil del paciente
+- Se añade solicitud de permisos de monitoreo de actividad
+- Se añade integración con Google Fit para el conteo de pasos

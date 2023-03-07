@@ -19,6 +19,8 @@ import ProfileStepsCard from './ProfileStepsCard';
 interface Props {
   profile?: Profile | null;
   date?: Date;
+  enableSteps?: boolean;
+  stepCount?: number;
 
   onEditProfilePress?: () => void;
   didPressGoToProgress?: () => void;
@@ -29,6 +31,8 @@ interface Props {
 const ProfileView = ({
   profile,
   date = new Date(),
+  enableSteps = true,
+  stepCount = 0,
   onEditProfilePress = () => {},
   didPressGoToProgress = () => {},
   didPressSeeDiet = () => {},
@@ -70,14 +74,16 @@ const ProfileView = ({
               width: Dimensions.get('window').width - 40,
             }}
           />
-          <ProfileStepsCard
-            style={{
-              marginTop: 20,
-              width: Dimensions.get('window').width - 40,
-            }}
-            goal={5000}
-            count={2500}
-          />
+          {enableSteps && (
+            <ProfileStepsCard
+              style={{
+                marginTop: 20,
+                width: Dimensions.get('window').width - 40,
+              }}
+              goal={5000}
+              count={stepCount}
+            />
+          )}
           <ProfileSummaryCard
             weight={weight}
             bodyFat={bodyFat}
