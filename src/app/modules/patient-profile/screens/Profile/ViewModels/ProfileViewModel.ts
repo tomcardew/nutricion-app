@@ -83,10 +83,15 @@ class ProfileViewModel {
     }
   };
 
+  disconnect = () => {
+    GoogleFit.disconnect();
+  };
+
   showEditingOptions = () => {
     this.profileStore.showAlert(
       () => {
         this.authStore.logout();
+        this.disconnect();
         this.dismissAlert();
       },
       source => {
