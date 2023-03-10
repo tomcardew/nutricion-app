@@ -14,9 +14,9 @@ const AboutView = ({didPressSeeReleaseNotes = () => {}}: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../../../../../../public/assets/splashscreen.png')}
+        source={require('../../../../../../../public/assets/icon.png')}
         style={styles.image}
-        resizeMode="cover"
+        resizeMode="contain"
       />
       <Text style={styles.appName} weight={FontWeight.Bold}>
         {Environment.DISPLAY_NAME}
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Dimensions.get('window').width,
-    height: 250,
+    height: 200,
+    marginVertical: 30,
   },
   appName: {
     color: 'black',
