@@ -5,6 +5,7 @@ import {ProfilePicture} from '../../../../../../components/Images';
 import MenuOptionView from './MenuOptionView';
 import ScreenNames from '../../../../../../constants/Screens';
 import CommonBanner from '../../../../../../components/CommonBanner';
+import Text from '../../../../../../components/Text';
 
 interface Props {
   data: Patient | null;
@@ -27,7 +28,7 @@ const PatientView = ({
   onToggleExercises = () => {},
   onToggleAccess = () => {},
 }: Props) => {
-  const patientIsActive = data?.activo ?? false;
+  const patientIsActive = data?.activo;
   const options: MenuOption[] = [
     {
       title: 'Datos del paciente',
@@ -93,7 +94,7 @@ const PatientView = ({
         url={data?.urlFoto}
         fallback={data?.nombre}
       />
-      {!patientIsActive && (
+      {patientIsActive != undefined && !patientIsActive && (
         <CommonBanner
           type="danger"
           text="Este paciente no se encuentra activo"

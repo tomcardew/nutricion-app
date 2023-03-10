@@ -17,3 +17,5 @@
 - Se añade integración con Google Fit para el conteo de pasos
 - Se añade pantalla `Acerca de`
 - Se añade pantalla `Notas de la versión`
+- Se mejora la inicialización de `TabNavigation` al cargar
+- Se mejora el proceso de carga de un paciente en el módulo de administrador

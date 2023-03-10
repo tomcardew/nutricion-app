@@ -30,6 +30,7 @@ export class PatientsStore {
   public patients_raw: Patient[] = [];
   public query: string = '';
 
+  public loadingSelectedPatient: boolean = true;
   public selectedPatient: Patient | null = null;
   public selectedPatientId: string | null = null;
 
@@ -82,12 +83,12 @@ export class PatientsStore {
 
   public getPatientById = async (token: string) => {
     if (this.selectedPatientId) {
-      this.loading = true;
+      this.loadingSelectedPatient = true;
       const data = await AdministratorServices.getPatientById(
         this.selectedPatientId,
         token,
       );
-      this.loading = false;
+      this.loadingSelectedPatient = false;
       if (data.success) {
         this.selectedPatient = data.data;
         this.loaded = true;
