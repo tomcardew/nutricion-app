@@ -12,6 +12,7 @@ interface Props {
   onNavigateTo?: (screen: ScreenNames, props?: any) => void;
   onToggleExercises?: () => void;
   onToggleAccess?: (newValue: boolean) => void;
+  onUploadDiet?: () => void;
 }
 
 interface MenuOption {
@@ -27,6 +28,7 @@ const PatientView = ({
   onNavigateTo = () => {},
   onToggleExercises = () => {},
   onToggleAccess = () => {},
+  onUploadDiet = () => {},
 }: Props) => {
   const patientIsActive = data?.activo;
   const options: MenuOption[] = [
@@ -44,6 +46,12 @@ const PatientView = ({
     {
       title: 'Programar Ejercicios',
       screen: ScreenNames.AdminExercisesList,
+    },
+    {
+      title: 'Actualizar dieta',
+      props: {
+        isUploadDiet: true,
+      },
     },
     {
       title: '',
@@ -82,6 +90,8 @@ const PatientView = ({
       onToggleExercises();
     } else if (item.props.isChangeAccess) {
       onToggleAccess(item.props.newValue ?? true);
+    } else if (item.props.isUploadDiet) {
+      onUploadDiet();
     }
   };
 

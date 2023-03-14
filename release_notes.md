@@ -19,4 +19,5 @@
 - Se añade pantalla `Notas de la versión`
 - Se mejora la inicialización de `TabNavigation` al cargar
 - Se mejora el proceso de carga de un paciente en el módulo de administrador
-- Se añade nuevo ícono de aplicación y se actualiza el splash scteen
+- Se añade nuevo ícono de aplicación y se actualiza el splash screen
+- El administrador ya puedo subir la dieta de cada paciente
