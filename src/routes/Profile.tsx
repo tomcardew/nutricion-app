@@ -15,6 +15,7 @@ import {
   PatientDietController,
   PatientDietViewModel,
 } from '../app/modules/patient-profile';
+import AboutRouter from './About';
 
 const Stack = createNativeStackNavigator();
 
@@ -87,6 +88,10 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
       <Stack.Screen
         name={ScreenNames.PatientDiet.toString()}
         component={PatientDietScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.About.toString()}
+        component={AboutRouter}
       />
     </Stack.Navigator>
   );

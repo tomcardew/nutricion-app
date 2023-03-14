@@ -286,6 +286,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation project(':react-native-google-fit')
+    implementation project(':react-native-document-picker')
 }
 
 if (isNewArchitectureEnabled()) {

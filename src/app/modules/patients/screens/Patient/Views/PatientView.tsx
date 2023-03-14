@@ -5,12 +5,14 @@ import {ProfilePicture} from '../../../../../../components/Images';
 import MenuOptionView from './MenuOptionView';
 import ScreenNames from '../../../../../../constants/Screens';
 import CommonBanner from '../../../../../../components/CommonBanner';
+import Text from '../../../../../../components/Text';
 
 interface Props {
   data: Patient | null;
   onNavigateTo?: (screen: ScreenNames, props?: any) => void;
   onToggleExercises?: () => void;
   onToggleAccess?: (newValue: boolean) => void;
+  onUploadDiet?: () => void;
 }
 
 interface MenuOption {
@@ -26,8 +28,9 @@ const PatientView = ({
   onNavigateTo = () => {},
   onToggleExercises = () => {},
   onToggleAccess = () => {},
+  onUploadDiet = () => {},
 }: Props) => {
-  const patientIsActive = data?.activo ?? false;
+  const patientIsActive = data?.activo;
   const options: MenuOption[] = [
     {
       title: 'Datos del paciente',
@@ -43,6 +46,12 @@ const PatientView = ({
     {
       title: 'Programar Ejercicios',
       screen: ScreenNames.AdminExercisesList,
+    },
+    {
+      title: 'Actualizar dieta',
+      props: {
+        isUploadDiet: true,
+      },
     },
     {
       title: '',
@@ -81,6 +90,8 @@ const PatientView = ({
       onToggleExercises();
     } else if (item.props.isChangeAccess) {
       onToggleAccess(item.props.newValue ?? true);
+    } else if (item.props.isUploadDiet) {
+      onUploadDiet();
     }
   };
 
@@ -93,7 +104,7 @@ const PatientView = ({
         url={data?.urlFoto}
         fallback={data?.nombre}
       />
-      {!patientIsActive && (
+      {patientIsActive != undefined && !patientIsActive && (
         <CommonBanner
           type="danger"
           text="Este paciente no se encuentra activo"

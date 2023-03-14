@@ -15,6 +15,9 @@ export class ProfileStore {
 
   public dietUrl: string | undefined = undefined;
 
+  public isGoogleFitAuthorized: boolean = false;
+  public stepCount: number = 0;
+
   constructor() {
     makeAutoObservable(this);
   }

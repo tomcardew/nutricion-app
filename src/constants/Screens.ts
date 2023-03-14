@@ -1,5 +1,7 @@
 enum ScreenNames {
   Dashboard,
+  About,
+  ReleaseNotes,
   ForgotPassword,
   Login,
   Signup,

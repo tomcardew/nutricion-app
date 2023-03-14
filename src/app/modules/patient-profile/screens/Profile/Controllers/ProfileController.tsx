@@ -26,9 +26,12 @@ const ProfileController = observer(({viewModel}: Props) => {
       onBackAction={viewModel.goBack}>
       <ProfileView
         profile={viewModel.authStore.user}
+        enableSteps={viewModel.profileStore.isGoogleFitAuthorized}
         onEditProfilePress={viewModel.showEditingOptions}
         didPressGoToProgress={viewModel.goToProgress}
         didPressSeeDiet={viewModel.didPressSeeDiet}
+        didPressSeeVersion={viewModel.didPressSeeVersion}
+        stepCount={viewModel.profileStore.stepCount}
       />
     </BaseLayoutView>
   );

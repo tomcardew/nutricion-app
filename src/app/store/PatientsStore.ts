@@ -30,6 +30,7 @@ export class PatientsStore {
   public patients_raw: Patient[] = [];
   public query: string = '';
 
+  public loadingSelectedPatient: boolean = true;
   public selectedPatient: Patient | null = null;
   public selectedPatientId: string | null = null;
 
@@ -82,12 +83,12 @@ export class PatientsStore {
 
   public getPatientById = async (token: string) => {
     if (this.selectedPatientId) {
-      this.loading = true;
+      this.loadingSelectedPatient = true;
       const data = await AdministratorServices.getPatientById(
         this.selectedPatientId,
         token,
       );
-      this.loading = false;
+      this.loadingSelectedPatient = false;
       if (data.success) {
         this.selectedPatient = data.data;
         this.loaded = true;
@@ -568,6 +569,69 @@ export class PatientsStore {
         return null;
       }
     }
+  };
+
+  public showSelectDietDocument = (onContinue: () => void) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Actualizar dieta',
+      message:
+        'Seleccione de sus archivos el documento en formato PDF que desea asignar al paciente.',
+      showIcon: true,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: 'Continuar',
+          type: AlertActionType.Action,
+          onClick: onContinue,
+        },
+        {
+          label: 'Cancelar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
+  };
+
+  public uploadDiet = async (token: string, asset: Asset) => {
+    if (this.selectedPatient) {
+      this.loading = true;
+      const data = await AdministratorServices.uploadPatientDiet(
+        this.selectedPatient.idUsuario,
+        token,
+        asset,
+      );
+      this.loading = false;
+      if (data.success) {
+        return data;
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'No se pudo completar la operación',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
+        return null;
+      }
+    }
+  };
+
+  public showUploadDietSuccess = () => {
+    this.alert = null;
+    this.alert = {
+      title: 'Dieta actualizada',
+      message: 'Se ha actualizado la dieta con éxito',
+      showIcon: true,
+      type: AlertType.Success,
+      actions: [
+        {
+          label: 'Cerrar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
   };
 
   get patients() {

@@ -4,6 +4,7 @@ import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import PatientViewModel from '../ViewModels/PatientViewModel';
 import PatientView from '../Views/PatientView';
 import {Logger} from '../../../../../../utils/Utils';
+import {StyleSheet} from 'react-native';
 
 interface Props {
   viewModel: PatientViewModel;
@@ -22,7 +23,8 @@ const PatientController = observer(({viewModel}: Props) => {
     <BaseLayoutView
       title=""
       loadingMessage="Cargando..."
-      loading={viewModel.patientsStore.loading}
+      loading={viewModel.patientsStore.loadingSelectedPatient}
+      loadingStyle={styles.loading}
       alert={viewModel.patientsStore.alert}
       disableScrollBar
       contentUnderHeader
@@ -34,9 +36,16 @@ const PatientController = observer(({viewModel}: Props) => {
         onToggleExercises={viewModel.toggleExercises}
         onToggleAccess={viewModel.toggleAccess}
         onNavigateTo={viewModel.navigateTo}
+        onUploadDiet={viewModel.onUploadDiet}
       />
     </BaseLayoutView>
   );
+});
+
+const styles = StyleSheet.create({
+  loading: {
+    backgroundColor: 'white',
+  },
 });
 
 export default PatientController;

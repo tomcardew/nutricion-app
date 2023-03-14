@@ -3,7 +3,7 @@ import {
   Dimensions,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {ProfilePicture} from '../../../../../../components/Images';
@@ -14,10 +14,13 @@ import ProfileDietCard from './ProfileDietCard';
 import Text from '../../../../../../components/Text';
 import Environment from '../../../../../../constants/Environment';
 import {FontWeight} from '../../../../../../models/Common';
+import ProfileStepsCard from './ProfileStepsCard';
 
 interface Props {
   profile?: Profile | null;
   date?: Date;
+  enableSteps?: boolean;
+  stepCount?: number;
 
   onEditProfilePress?: () => void;
   didPressGoToProgress?: () => void;
@@ -28,6 +31,8 @@ interface Props {
 const ProfileView = ({
   profile,
   date = new Date(),
+  enableSteps = true,
+  stepCount = 0,
   onEditProfilePress = () => {},
   didPressGoToProgress = () => {},
   didPressSeeDiet = () => {},
@@ -69,6 +74,16 @@ const ProfileView = ({
               width: Dimensions.get('window').width - 40,
             }}
           />
+          {enableSteps && (
+            <ProfileStepsCard
+              style={{
+                marginTop: 20,
+                width: Dimensions.get('window').width - 40,
+              }}
+              goal={5000}
+              count={stepCount}
+            />
+          )}
           <ProfileSummaryCard
             weight={weight}
             bodyFat={bodyFat}
@@ -79,12 +94,6 @@ const ProfileView = ({
             }}
             onSeeAllPress={didPressGoToProgress}
           />
-          {/* <ProfileStepsCard
-            style={{
-              marginTop: 20,
-              width: Dimensions.get('window').width - 40,
-            }}
-          /> */}
           {profile.seccion_ejercicios && (
             <ProfileDietCard
               onSeeDietPress={didPressSeeDiet}
@@ -94,11 +103,11 @@ const ProfileView = ({
               }}
             />
           )}
-          <TouchableWithoutFeedback onPress={didPressSeeVersion}>
+          <TouchableOpacity onPress={didPressSeeVersion}>
             <Text weight={FontWeight.Medium} style={styles.versionNumber}>
               Versión {Environment.VERSION}
             </Text>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </View>
       )}
     </ScrollView>

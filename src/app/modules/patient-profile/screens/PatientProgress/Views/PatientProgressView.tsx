@@ -26,7 +26,11 @@ const PatientProgressView = ({
       title={item.title.split('_').join(' ')}
       style={{marginBottom: 10, padding: 0}}
       contentStyle={{padding: 0}}>
-      <PatientProgressGraphView bezier data={item.data} />
+      <PatientProgressGraphView
+        bezier
+        data={item.data}
+        type={item.title == 'pasos' ? 'column' : 'line'}
+      />
     </SimpleCard>
   );
   return (
