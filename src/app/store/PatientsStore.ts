@@ -570,6 +570,69 @@ export class PatientsStore {
     }
   };
 
+  public showSelectDietDocument = (onContinue: () => void) => {
+    this.alert = null;
+    this.alert = {
+      title: 'Actualizar dieta',
+      message:
+        'Seleccione de sus archivos el documento en formato PDF que desea asignar al paciente.',
+      showIcon: true,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: 'Continuar',
+          type: AlertActionType.Action,
+          onClick: onContinue,
+        },
+        {
+          label: 'Cancelar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
+  };
+
+  public uploadDiet = async (token: string, asset: Asset) => {
+    if (this.selectedPatient) {
+      this.loading = true;
+      const data = await AdministratorServices.uploadPatientDiet(
+        this.selectedPatient.idUsuario,
+        token,
+        asset,
+      );
+      this.loading = false;
+      if (data.success) {
+        return data;
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: 'Ocurrió un error',
+          message: 'No se pudo completar la operación',
+          showIcon: true,
+          actions: [{label: 'Cerrar'}],
+          error: data.error,
+        };
+        return null;
+      }
+    }
+  };
+
+  public showUploadDietSuccess = () => {
+    this.alert = null;
+    this.alert = {
+      title: 'Dieta actualiza',
+      message: 'Se ha actualizado la dieta con éxito',
+      showIcon: true,
+      type: AlertType.Success,
+      actions: [
+        {
+          label: 'Cerrar',
+          type: AlertActionType.Cancel,
+        },
+      ],
+    };
+  };
+
   get patients() {
     return this.patients_raw.filter(patient =>
       patient.nombre.includes(this.query),

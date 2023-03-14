@@ -17,3 +17,4 @@
 - Se añade integración con Google Fit para el conteo de pasos
 - Se añade pantalla `Acerca de`
 - Se añade pantalla `Notas de la versión`
+- El administrador ya puedo subir la dieta de cada paciente

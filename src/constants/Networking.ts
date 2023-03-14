@@ -242,7 +242,13 @@ const changePatientStatus: NetworkingConfig = {
   url: fullURL,
   path: 'admin/patients/change-status',
   method: RequestMethod.PATCH,
-}
+};
+
+const uploadPatientDiet: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/diets/uploadDiet',
+  method: RequestMethod.POST,
+};
 
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
@@ -342,7 +348,8 @@ export const Networking = {
     getAllDates,
     postPatientDate,
     postPatientActivityPicture,
-    changePatientStatus
+    changePatientStatus,
+    uploadPatientDiet,
   },
   catalogues: {
     getExerciseCategories,
