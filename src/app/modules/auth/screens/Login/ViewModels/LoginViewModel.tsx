@@ -27,7 +27,6 @@ class LoginViewModel {
     if (this.loginStore.isAuthorized == true) {
       this.authStore.setToken(data.token);
       this.authStore.setUser(data.user);
-      this.navigation.navigate(ScreenNames.Dashboard.toString());
     }
   };
 

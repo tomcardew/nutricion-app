@@ -6,6 +6,9 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
+  StyleProp,
+  ViewProps,
+  ViewStyle,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
@@ -31,6 +34,7 @@ interface Props {
   actionButtonView?: JSX.Element;
   rightAccessory?: JSX.Element;
   showDateSelector?: boolean;
+  loadingStyle?: StyleProp<ViewStyle>;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
@@ -55,6 +59,7 @@ const BaseLayoutView = ({
   overlay,
   actionButtonView,
   rightAccessory,
+  loadingStyle,
   onBackAction = () => {},
   onAlertDismiss = () => {},
   onActionButtonPress = () => {},
@@ -77,7 +82,11 @@ const BaseLayoutView = ({
         actions={alert?.actions}
         onDismiss={onAlertDismiss}
       />
-      <LoaderView message={loadingMessage} animating={loading} />
+      <LoaderView
+        style={loadingStyle}
+        message={loadingMessage}
+        animating={loading}
+      />
       <StatusBar
         backgroundColor={theme['color-primary-600']}
         barStyle="light-content"
