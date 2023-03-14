@@ -34,6 +34,7 @@ const PatientController = observer(({viewModel}: Props) => {
         onToggleExercises={viewModel.toggleExercises}
         onToggleAccess={viewModel.toggleAccess}
         onNavigateTo={viewModel.navigateTo}
+        onUploadDiet={viewModel.onUploadDiet}
       />
     </BaseLayoutView>
   );

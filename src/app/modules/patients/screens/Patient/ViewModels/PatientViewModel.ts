@@ -2,6 +2,8 @@ import {PatientsStore} from '../../../../../store/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
 import ScreenNames from '../../../../../../constants/Screens';
 import {AlertMessage} from '../../../../../../models/Common';
+import DocumentPicker from 'react-native-document-picker';
+import {Logger} from '../../../../../../utils/Utils';
 
 class PatientViewModel {
   authStore: AuthStore;
@@ -48,6 +50,36 @@ class PatientViewModel {
     this.dismissAlert();
     await this.patientsStore.toggleAccess(this.authStore.token ?? '');
     await this.load();
+  };
+
+  onUploadDiet = () => {
+    this.dismissAlert();
+    this.patientsStore.showSelectDietDocument(this.selectedDietDocument);
+  };
+
+  selectedDietDocument = async () => {
+    this.dismissAlert();
+    try {
+      const pickerResult = await DocumentPicker.pickSingle({
+        presentationStyle: 'fullScreen',
+        copyTo: 'cachesDirectory',
+        type: ['application/pdf'],
+      });
+      const data = await this.patientsStore.uploadDiet(
+        this.authStore.token ?? '',
+        {
+          uri: pickerResult.uri,
+          fileSize: pickerResult.size ?? undefined,
+          fileName: pickerResult.name ?? undefined,
+          type: pickerResult.type ?? undefined,
+        },
+      );
+      if (data) {
+        this.patientsStore.showUploadDietSuccess();
+      }
+    } catch (error) {
+      Logger.error(error);
+    }
   };
 
   dismissAlert = () => {
