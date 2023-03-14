@@ -10,7 +10,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.nutricion_app.newarchitecture.MainApplicationReactNativeHost;
-import com.reactnative.googlefit.GoogleFitPackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

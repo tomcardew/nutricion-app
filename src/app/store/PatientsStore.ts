@@ -621,7 +621,7 @@ export class PatientsStore {
   public showUploadDietSuccess = () => {
     this.alert = null;
     this.alert = {
-      title: 'Dieta actualiza',
+      title: 'Dieta actualizada',
       message: 'Se ha actualizado la dieta con éxito',
       showIcon: true,
       type: AlertType.Success,
