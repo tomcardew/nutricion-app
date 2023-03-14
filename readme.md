@@ -1,4 +1,5 @@
 # Nutrición App
+
 ![](https://img.shields.io/badge/version-0.1.0-green?style=for-the-badge)
 
 Aplicación de fitness y nutrición hecha con React Native y TypeScript.
@@ -35,3 +36,8 @@ Aplicación de fitness y nutrición hecha con React Native y TypeScript.
 - Asegurate de tener instalado Android Studio y un JDK > 11
 - Ejectua `yarn`
 - Desde el directorio raiz, ejecuta `yarn android`
+
+### Generar build release en Android
+
+- Ejecuta `npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle`
+- Ejecuta `yarn build-android`
