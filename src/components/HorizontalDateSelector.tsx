@@ -15,12 +15,14 @@ import Text from './Text';
 interface Props {
   value: Date;
   style?: StyleProp<ViewStyle>;
+  didPress?: () => void;
   didChangeDate?: (date: Date) => void;
 }
 
 const HorizontalDateSelector = ({
   value,
   style,
+  didPress,
   didChangeDate = () => {},
 }: Props) => {
   const BackIcon = () => (
@@ -55,9 +57,11 @@ const HorizontalDateSelector = ({
   return (
     <View style={[styles.container, style]}>
       <BackIcon />
-      <Text weight={FontWeight.SemiBold} style={styles.date}>
-        {dateToDayMonth(value)}
-      </Text>
+      <TouchableOpacity disabled={didPress == null} onPress={didPress}>
+        <Text weight={FontWeight.SemiBold} style={styles.date}>
+          {dateToDayMonth(value)}
+        </Text>
+      </TouchableOpacity>
       <ForwardIcon />
     </View>
   );
@@ -68,14 +72,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexDirection: 'row',
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowOffset: {width: 0, height: 2},
-    shadowRadius: 10,
-    elevation: 1,
     backgroundColor: 'white',
     paddingVertical: 10,
     borderRadius: 100,
+    borderWidth: 2,
+    borderColor: theme['color-primary-500'],
   },
   date: {
     fontSize: 18,

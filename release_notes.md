@@ -21,3 +21,9 @@
 - Se mejora el proceso de carga de un paciente en el módulo de administrador
 - Se añade nuevo ícono de aplicación y se actualiza el splash screen
 - El administrador ya puedo subir la dieta de cada paciente
+
+### 0.2.1
+
+- Se añade evento `didPress` al componente `HorizontalDateSelector` para permitir hacer scroll automático en el calendario:
+  - Citas (Admin)
+  - Citas (Paciente)
