@@ -42,15 +42,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   time: {
-    fontSize: 12,
+    fontSize: 13,
     opacity: 0.5,
+    color: 'black',
   },
   person: {
-    fontSize: 16,
+    fontSize: 17,
     color: 'black',
   },
   place: {
-    fontSize: 14,
+    fontSize: 15,
     bottom: 10,
     left: 10,
     position: 'absolute',

@@ -28,3 +28,4 @@
   - Citas (Admin)
   - Citas (Paciente)
 - Se añade selector de fecha en sección de Citas (Admin y Paciente) para dirigirse directamente a una fecha en el calendario
+- Mejoras a la composición de la vista de calendario

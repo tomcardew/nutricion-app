@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexDirection: 'row',
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#fff',
     height: 2400,
   },
   hourContainer: {
@@ -99,18 +99,20 @@ const styles = StyleSheet.create({
   dateContainer: {
     position: 'absolute',
     left: 80,
-    backgroundColor: theme['color-primary-100'],
+    backgroundColor: theme['color-primary-300'],
     width: Dimensions.get('window').width - 100,
     height: 100,
     borderRadius: 10,
-    borderColor: theme['color-primary-200'],
-    borderWidth: 1,
+    elevation: 2,
   },
   hourItem: {
     height: 100,
-    borderBottomColor: '#DDD',
+    borderBottomColor: '#ddd',
     borderBottomWidth: 1,
     borderStyle: 'dashed',
+    color: 'black',
+    marginLeft: 10,
+    lineHeight: 45,
   },
   currentTimeContainer: {
     width: '100%',
