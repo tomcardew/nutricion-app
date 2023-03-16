@@ -32,7 +32,10 @@ const ScheduleView = ({data, date, didChangeDate = () => {}}: Props) => {
         style={styles.dateContainer}
         value={date}
         didChangeDate={didChangeDate}
-        didPress={scrollToNow}
+        didPress={() => {
+          didChangeDate(new Date());
+          scrollToNow();
+        }}
       />
       <ScrollView
         ref={scrollViewRef}

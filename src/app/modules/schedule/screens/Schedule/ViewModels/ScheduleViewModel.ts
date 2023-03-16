@@ -1,3 +1,4 @@
+import moment from 'moment';
 import ScreenNames from '../../../../../../constants/Screens';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ScheduleStore} from '../../../../../store/ScheduleStore';
@@ -27,6 +28,13 @@ class ScheduleViewModel {
 
   goToAddSchedule = () => {
     this.navigation.navigate(ScreenNames.AddSchedule.toString());
+  };
+
+  didChangeSelectedDate = (date: Date | undefined | string) => {
+    if (date) {
+      const _date = moment(date, 'YYYY/MM/DD HH:mm').toDate();
+      this.scheduleStore.currentDate = _date;
+    }
   };
 
   goBack = () => {

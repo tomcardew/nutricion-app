@@ -24,6 +24,7 @@
 
 ### 0.2.1
 
-- Se añade evento `didPress` al componente `HorizontalDateSelector` para permitir hacer scroll automático en el calendario:
+- Se añade evento `didPress` al componente `HorizontalDateSelector` para permitir hacer scroll automático y regresar a la fecha actual en el calendario:
   - Citas (Admin)
   - Citas (Paciente)
+- Se añade selector de fecha en sección de Citas (Admin y Paciente) para dirigirse directamente a una fecha en el calendario

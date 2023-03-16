@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     paddingHorizontal: 20,
+    zIndex: 10,
   },
   button: {
     marginTop: 20,
