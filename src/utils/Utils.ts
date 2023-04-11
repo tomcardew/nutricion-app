@@ -1,8 +1,9 @@
 import moment from 'moment';
-import {PatientPicture} from '../models/Patients';
+import { PatientPicture } from '../models/Patients';
 import Environment from '../constants/Environment';
-import {default as theme} from '../../custom-theme.json';
-import {consoleTransport, logger} from 'react-native-logs';
+import { default as theme } from '../../custom-theme.json';
+import { consoleTransport, logger } from 'react-native-logs';
+import quotes from '../constants/Quotes';
 
 export const MONTHS = [
   'Enero',
@@ -134,10 +135,14 @@ export const Logger = logger.createLogger<
   'debug' | 'success' | 'info' | 'warn' | 'error'
 >(loggerConfig);
 
-export {theme};
+export { theme };
 
 export const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const getRandomQuote = (): string => {
+  return quotes[Math.floor(Math.random() * quotes.length)];
+}

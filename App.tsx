@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
@@ -35,6 +35,16 @@ const App = observer(() => {
     },
   );
 
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    if (!authStore.hydrating) {
+      setTimeout(() => {
+        setShowSplash(false);
+      }, 5000);
+    }
+  }, [authStore.hydrating]);
+
   return (
     <>
       <IconRegistry icons={[EvaIconsPack, FeatherIconsPack]} />
@@ -42,7 +52,7 @@ const App = observer(() => {
         {...eva}
         customMapping={mapping}
         theme={{...eva.light, ...theme}}>
-        {authStore.hydrating ? (
+        {showSplash ? (
           <SplashScreen />
         ) : (
           <NavigationContainer>
