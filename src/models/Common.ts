@@ -31,6 +31,14 @@ export enum UserType {
   Patient,
 }
 
+export enum MediaType {
+  Image,
+  Video,
+  Audio,
+  Document,
+  None,
+}
+
 export interface AlertAction {
   label: string;
   type?: AlertActionType;
@@ -58,4 +66,32 @@ export enum FontWeight {
   SemiBoldItalic = 'SemiBoldItalic',
   Thin = 'Thin',
   ThinItalic = 'ThinItalic',
+}
+
+export interface GoogleImageResults {
+  meta: GoogleImageMeta;
+  image_results: GoogleImageItem[];
+}
+
+export interface GoogleImageMeta {
+  api_key: string;
+  q: string;
+  gl?: string;
+  hl?: string;
+  safe?: string;
+}
+
+export interface GoogleImageItem {
+  title: string;
+  link: string;
+  source: string;
+  thumbnail: string;
+  original: string;
+  rank: number;
+}
+
+export interface StepCountRecord {
+  id: number;
+  fecha_registro: string;
+  cantidad: number;
 }

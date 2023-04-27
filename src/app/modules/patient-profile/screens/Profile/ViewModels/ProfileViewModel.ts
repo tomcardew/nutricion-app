@@ -9,9 +9,8 @@ import {AuthStore} from '../../../../../store/AuthStore';
 import {ProfileStore} from '../../../../../store/ProfileStore';
 import ScreenNames from '../../../../../../constants/Screens';
 import {Logger} from '../../../../../../utils/Utils';
-import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
-import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
-import moment from 'moment';
+import GoogleFit, {Scopes} from 'react-native-google-fit';
+import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -69,6 +68,11 @@ class ProfileViewModel {
         item => item.source == 'com.google.android.gms:estimated_steps',
       )[0].rawSteps[0].steps;
       this.profileStore.stepCount = steps;
+      this.authStore.lastStepCount = steps;
+
+      if (steps > 0) {
+        this.profileStore.postStepCount(this.authStore.token ?? '', steps);
+      }
     });
   };
 

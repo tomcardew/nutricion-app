@@ -5,66 +5,85 @@ import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import Text from '../../../../../../components/Text';
 import {FontWeight} from '../../../../../../models/Common';
+import {ActionButton, PlainButton} from '../../../../../../components/Buttons';
 
 interface Props {
   item: PatientExerciseListItem;
-  onPress?: () => void;
+  onPress?: (exercise: PatientExerciseListItem) => void;
 }
 
 const PatientExerciseItemView = ({item, onPress = () => {}}: Props) => {
   const completed = item.completado;
 
+  const onPressSelf = () => {
+    if (onPress) {
+      onPress(item);
+    }
+  };
+
   return (
     <TouchableOpacity
-      disabled={item.completado}
-      style={styles.container}
-      onPress={onPress}>
-      <View style={styles.dataContainer}>
-        <View style={styles.categoryContainer}>
-          <Text
-            weight={FontWeight.SemiBold}
-            style={styles.categoryLabel}
-            numberOfLines={1}>
-            {item.Categoria_ejercicio.categoria}
+      // disabled={item.completado}
+      style={styles.superContainer}
+      onPress={onPressSelf}>
+      <View style={styles.container}>
+        <View style={styles.dataContainer}>
+          <Text weight={FontWeight.Bold} numberOfLines={2} style={styles.text}>
+            {item.Nombre_ejercicio.nombre_ejercicio}
           </Text>
+          <Text numberOfLines={1} style={styles.dataText}>
+            {item.Series.series} Series - {item.Repeticiones.repeticiones}
+          </Text>
+          <View
+            style={[
+              styles.categoryContainer,
+              {
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              },
+            ]}>
+            <Text
+              weight={FontWeight.SemiBold}
+              style={styles.categoryLabel}
+              numberOfLines={1}>
+              {item.Categoria_ejercicio.categoria}
+            </Text>
+            <Icon
+              style={{
+                height: 18,
+                width: 18,
+                marginLeft: 10,
+              }}
+              fill="#000"
+              name="more-horizontal-outline"
+            />
+          </View>
         </View>
-        <Text weight={FontWeight.Bold} numberOfLines={2} style={styles.text}>
-          {item.Nombre_ejercicio.nombre_ejercicio}
-        </Text>
-        <Text numberOfLines={1} style={styles.dataText}>
-          {item.Peso} - {item.Series.series} Series -{' '}
-          {item.Repeticiones.repeticiones} - {item.Descansos.descansos} desc.
-        </Text>
-        <Text
-          weight={FontWeight.Light}
-          numberOfLines={1}
-          style={styles.noteText}>
-          Nota: {item.Notas}
-        </Text>
-      </View>
-      <View
-        style={[
-          styles.iconContainer,
-          {
-            backgroundColor: completed
-              ? theme['color-success-600']
-              : theme['color-info-500'],
-          },
-        ]}>
-        <Icon
-          style={styles.icon}
-          fill="#fff"
-          name={completed ? 'checkmark-outline' : 'clock-outline'}
-        />
+        <View
+          style={[
+            styles.iconContainer,
+            {
+              backgroundColor: completed
+                ? theme['color-success-600']
+                : theme['color-info-500'],
+            },
+          ]}>
+          <Icon
+            style={styles.icon}
+            fill="#fff"
+            name={completed ? 'checkmark-outline' : 'clock-outline'}
+          />
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  superContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: Dimensions.get('window').width - 20,
@@ -79,6 +98,12 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: 'white',
   },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   dataContainer: {
     width: '90%',
   },
@@ -90,6 +115,7 @@ const styles = StyleSheet.create({
   },
   dataText: {
     color: 'black',
+    opacity: 0.5,
   },
   noteText: {
     opacity: 0.75,
@@ -108,8 +134,6 @@ const styles = StyleSheet.create({
   categoryContainer: {
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginLeft: 0,
-    marginBottom: 5,
   },
   categoryLabel: {
     backgroundColor: theme['color-primary-100'],
@@ -118,6 +142,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     color: theme['color-primary-600'],
     fontWeight: '500',
+    fontSize: 10,
+  },
+  playIcon: {
+    height: 18,
+    width: 18,
+    marginRight: 5,
   },
 });
 

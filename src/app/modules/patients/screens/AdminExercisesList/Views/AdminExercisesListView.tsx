@@ -10,15 +10,17 @@ interface Props {
   data: PatientExerciseListItem[];
   currentDate: Date;
   didChangeDate: (date: Date) => void;
+  onPress: (exercise: PatientExerciseListItem) => void;
 }
 
 const AdminExercisesListView = ({
   data,
   currentDate,
   didChangeDate = () => {},
+  onPress = () => {},
 }: Props) => {
   const renderItem = (item: PatientExerciseListItem) => (
-    <PatientExerciseItemView item={item} />
+    <PatientExerciseItemView item={item} onPress={onPress} />
   );
 
   return (

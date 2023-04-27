@@ -7,6 +7,10 @@ import {
   PatientExercisesController,
   PatientExercisesViewModel,
 } from '../app/modules/patient-exercises';
+import {
+  AdminExerciseDetailsController,
+  AdminExerciseDetailsViewModel,
+} from '../app/modules/patients';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,8 +24,18 @@ const ExercisesRouter = () => {
     patientsStore,
   );
 
+  const adminExerciseDetailsViewModel = new AdminExerciseDetailsViewModel(
+    navigation,
+    patientsStore,
+    authStore,
+  );
+
   const PatientExercisesScreen = () => (
     <PatientExercisesController viewModel={patientExercisesViewModel} />
+  );
+
+  const AdminExerciseDetailsScreen = () => (
+    <AdminExerciseDetailsController viewModel={adminExerciseDetailsViewModel} />
   );
 
   return (
@@ -29,6 +43,10 @@ const ExercisesRouter = () => {
       <Stack.Screen
         name={ScreenNames.PatientExercises.toString()}
         component={PatientExercisesScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.AdminExerciseDetails.toString()}
+        component={AdminExerciseDetailsScreen}
       />
     </Stack.Navigator>
   );
