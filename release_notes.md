@@ -26,3 +26,4 @@
 
 - Se modifica splashscreen para mostrar una frase motivacional al azar
 - Se añade vista de detalles de ejercicio, incluyendo un video muestra si está disponible
+- Sincronización de pasos entre usuario Paciente y usuario Administrador

@@ -13,14 +13,16 @@ const SplashScreen = ({}: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../public/assets/splashscreen.png')}
+        source={require('../../public/assets/icon.png')}
         style={styles.image}
-        resizeMode="cover"
+        resizeMode="contain"
       />
       <Text style={styles.text} weight={FontWeight.Bold}>
         {getRandomQuote()}
       </Text>
-      <Text style={styles.textBottom}>Mi Nutri Plan {Environment.VERSION}</Text>
+      <Text weight={FontWeight.Bold} style={styles.textBottom}>
+        - Mi Nutri Plan -
+      </Text>
     </View>
   );
 };
@@ -35,19 +37,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    height: 120,
+    height: 150,
     width: Dimensions.get('window').width - 40,
     marginTop: 150,
-    marginBottom: 120,
+    marginBottom: 60,
   },
   text: {
     textAlign: 'center',
     color: theme['color-primary-700'],
     fontSize: 18,
+    marginHorizontal: 20,
   },
   textBottom: {
     bottom: 40,
     position: 'absolute',
+    color: 'black',
   },
 });
 
