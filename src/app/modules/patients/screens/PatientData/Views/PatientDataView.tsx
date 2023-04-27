@@ -11,10 +11,11 @@ import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   data: PatientProgress | null;
+  stepCount?: number;
 }
 
-const PatientDataView = ({data}: Props) => {
-  const items = patientProgressToKeyValues(data);
+const PatientDataView = ({data, stepCount = 0}: Props) => {
+  const items = patientProgressToKeyValues(data, stepCount);
 
   return (
     <View style={styles.container}>

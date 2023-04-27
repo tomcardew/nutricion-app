@@ -14,7 +14,7 @@ const AdminExercisesListController = observer(({viewModel}: Props) => {
     viewModel.load();
 
     return () => {
-      viewModel.patientsStore.cleanExercises();
+      // viewModel.patientsStore.cleanExercises();
     };
   }, []);
 
@@ -34,6 +34,7 @@ const AdminExercisesListController = observer(({viewModel}: Props) => {
         data={viewModel.patientsStore.AdminExercises}
         currentDate={viewModel.patientsStore.currentDate}
         didChangeDate={viewModel.didChangeDate}
+        onPress={viewModel.goToExerciseDetails}
       />
     </BaseLayoutView>
   );

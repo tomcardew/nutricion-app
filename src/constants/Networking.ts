@@ -38,7 +38,7 @@ export class RequestData {
 
   get fullPath() {
     return `${this.url}/${this.path}${this.params ? this.params : ''}${
-      this.query ? '&' + this.query : ''
+      this.query ? '?' + this.query : ''
     }`;
   }
 
@@ -250,6 +250,12 @@ const uploadPatientDiet: NetworkingConfig = {
   method: RequestMethod.POST,
 };
 
+const getSteps: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/steps',
+  method: RequestMethod.GET,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -277,6 +283,12 @@ const getRepetitions: NetworkingConfig = {
 const getRest: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/rest',
+  method: RequestMethod.GET,
+};
+
+const getExerciseImage: NetworkingConfig = {
+  url: 'https://api.serpdog.io',
+  path: 'images',
   method: RequestMethod.GET,
 };
 
@@ -328,6 +340,12 @@ const getDiet: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const postSteps: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/steps',
+  method: RequestMethod.POST,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -350,6 +368,7 @@ export const Networking = {
     postPatientActivityPicture,
     changePatientStatus,
     uploadPatientDiet,
+    getSteps,
   },
   catalogues: {
     getExerciseCategories,
@@ -357,6 +376,7 @@ export const Networking = {
     getSeries,
     getRepetitions,
     getRest,
+    getExerciseImage,
   },
   patient: {
     getPatientProfile,
@@ -367,5 +387,6 @@ export const Networking = {
     postActivityPicture,
     getDates,
     getDiet,
+    postSteps,
   },
 };

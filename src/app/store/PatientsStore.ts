@@ -17,10 +17,18 @@ import {
 } from '../../models/Catalogues';
 import CataloguesServices from '../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertActionType, AlertMessage, AlertType} from '../../models/Common';
+import {
+  AlertActionType,
+  AlertMessage,
+  AlertType,
+  GoogleImageItem,
+  GoogleImageResults,
+  MediaType,
+  StepCountRecord,
+} from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 import PatientServices from '../../services/patient';
-import {Logger} from '../../utils/Utils';
+import {Logger, typeOfAsset} from '../../utils/Utils';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -37,9 +45,11 @@ export class PatientsStore {
   // PatientGallery
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
+  public patientStepCount: number = 0;
 
   // AdminExercisesList
   public currentDate: Date = new Date();
+  public selectedAdminExercise: PatientExerciseListItem | null = null;
   public AdminExercises: PatientExerciseListItem[] = [];
 
   // AdminExercises
@@ -100,6 +110,27 @@ export class PatientsStore {
     }
   };
 
+  public getExerciseImage = async () => {
+    if (this.selectedAdminExercise) {
+      const data: GoogleImageResults =
+        await CataloguesServices.getExerciseImage(
+          this.selectedAdminExercise.Nombre_ejercicio.nombre_ejercicio,
+        );
+      data.image_results.every((asset: GoogleImageItem) => {
+        if (
+          [MediaType.Image, MediaType.Video].includes(
+            typeOfAsset(asset.original),
+          ) &&
+          this.selectedAdminExercise
+        ) {
+          this.selectedAdminExercise.Nombre_ejercicio.url_gif = asset.original;
+          return false;
+        }
+        return true;
+      });
+    }
+  };
+
   public getPatientProgress = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
@@ -120,6 +151,20 @@ export class PatientsStore {
       } else {
         this.patientProgress = null;
         // TODO: Show error alert
+      }
+    }
+  };
+
+  public getPatientSteps = async (token: string) => {
+    if (this.selectedPatientId) {
+      const data = await AdministratorServices.getSteps(
+        token,
+        this.selectedPatientId,
+        new Date(),
+      );
+      if (data.succes && data.data) {
+        const lastValue = data.data.pop();
+        this.patientStepCount = lastValue?.cantidad ?? 0;
       }
     }
   };
@@ -257,6 +302,7 @@ export class PatientsStore {
             if (success) {
               this.alert = null;
               this.getPatientExercises(token, this.currentDate);
+              this.selectedAdminExercise = null;
             }
           },
           type: AlertActionType.Action,

@@ -12,6 +12,7 @@ export interface Exercise {
 export interface ExerciseName {
   id: number;
   nombre_ejercicio: string;
+  url_gif?: string;
 }
 
 export interface Serie {

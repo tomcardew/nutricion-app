@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "@types/react-native-vector-icons": "^6.4.13",
+    "@types/react-native-video": "^5.0.14",
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
     "mobx": "^6.6.2",
@@ -48,6 +49,7 @@
     "react-native-svg": "^13.8.0",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
+    "react-native-video": "^5.2.1",
     "react-native-zoom-reanimated": "^1.1.2"
   },
   "devDependencies": {
