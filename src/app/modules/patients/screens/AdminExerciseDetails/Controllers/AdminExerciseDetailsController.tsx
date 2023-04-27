@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import AdminExerciseDetailsViewModel from '../ViewModels/AdminExerciseDetailsViewModel';
 import AdminExerciseDetailsView from '../Views/AdminExerciseDetailsView';
-import {dateToDayMonth} from '../../../../../../utils/Utils';
+import {Logger, dateToDayMonth} from '../../../../../../utils/Utils';
+import {Icon} from '@ui-kitten/components';
 
 interface Props {
   viewModel: AdminExerciseDetailsViewModel;
@@ -11,14 +12,33 @@ interface Props {
 
 const AdminExerciseDetailsController = observer(({viewModel}: Props) => {
   const exercise = viewModel.patientsStore.selectedAdminExercise;
+  const isAdmin = viewModel.authStore.user?.esAdministrador ?? false;
+  const isCompleted = exercise?.completado ?? false;
+
+  useEffect(() => {
+    if (viewModel.patientsStore.selectedAdminExercise == null) {
+      viewModel.goBack();
+    }
+  }, [viewModel.patientsStore.selectedAdminExercise]);
 
   return (
     <BaseLayoutView
       title={exercise?.Nombre_ejercicio.nombre_ejercicio}
       subtitle={dateToDayMonth(new Date(exercise?.fecha_ejercicio ?? ''))}
       loading={false}
+      alert={viewModel.patientsStore.alert}
       loadingMessage="Cargando..."
-      // disableScrollBar
+      actionButtonView={
+        !isAdmin && !isCompleted ? (
+          <Icon
+            style={{width: 30, height: 30}}
+            fill="#FFF"
+            name="checkmark-outline"
+          />
+        ) : undefined
+      }
+      onActionButtonPress={isAdmin ? undefined : viewModel.didPressComplete}
+      onAlertDismiss={viewModel.dismissAlert}
       onBackAction={viewModel.goBack}>
       <AdminExerciseDetailsView
         demoUrl={exercise?.Nombre_ejercicio.url_gif}

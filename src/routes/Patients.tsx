@@ -66,6 +66,7 @@ const PatientsRouter = () => {
   const adminExerciseDetailsViewModel = new AdminExerciseDetailsViewModel(
     navigation,
     patientsStore,
+    authStore,
   );
 
   const PatientsScreen = () => (

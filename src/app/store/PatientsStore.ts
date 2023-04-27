@@ -286,6 +286,7 @@ export class PatientsStore {
             if (success) {
               this.alert = null;
               this.getPatientExercises(token, this.currentDate);
+              this.selectedAdminExercise = null;
             }
           },
           type: AlertActionType.Action,

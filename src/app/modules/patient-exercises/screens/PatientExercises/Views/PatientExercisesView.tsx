@@ -10,7 +10,7 @@ interface Props {
   data: PatientExerciseListItem[];
   currentDate: Date;
   didChangeDate: (date: Date) => void;
-  didSelectExercise: (id: number) => void;
+  didSelectExercise: (exercise: PatientExerciseListItem) => void;
 }
 
 const PatientExercisesView = ({
@@ -22,7 +22,7 @@ const PatientExercisesView = ({
   const renderItem = (item: PatientExerciseListItem) => (
     <PatientExerciseItemView
       item={item}
-      onPress={() => didSelectExercise(item.id)}
+      onPress={() => didSelectExercise(item)}
     />
   );
 

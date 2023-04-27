@@ -1,3 +1,5 @@
+import ScreenNames from '../../../../../../constants/Screens';
+import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 
@@ -40,11 +42,9 @@ class PatientExercisesViewModel {
     }
   };
 
-  didSelectExercise = (id: number) => {
-    this.patientsStore.showExerciseCompletionAlert(
-      this.authStore.token ?? '',
-      id,
-    );
+  didSelectExercise = (exercise: PatientExerciseListItem) => {
+    this.patientsStore.selectedAdminExercise = exercise;
+    this.navigation.navigate(ScreenNames.AdminExerciseDetails.toString());
   };
 
   dismissAlert = () => {
