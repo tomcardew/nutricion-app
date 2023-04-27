@@ -8,6 +8,8 @@ import {
   PatientsViewModel,
   AdminExercisesListViewModel,
   AdminExercisesViewModel,
+  AdminExerciseDetailsViewModel,
+  AdminExerciseDetailsController,
 } from '../app/modules/patients';
 import ScreenNames from '../constants/Screens';
 import {useStores} from '../../use-store';
@@ -61,6 +63,11 @@ const PatientsRouter = () => {
     patientsStore,
   );
 
+  const adminExerciseDetailsViewModel = new AdminExerciseDetailsViewModel(
+    navigation,
+    patientsStore,
+  );
+
   const PatientsScreen = () => (
     <PatientsController viewModel={patientsViewModel} />
   );
@@ -87,6 +94,10 @@ const PatientsRouter = () => {
 
   const AdminExercisesScreen = () => (
     <AdminExercisesController viewModel={adminExercisesViewModel} />
+  );
+
+  const AdminExerciseDetailsScreen = () => (
+    <AdminExerciseDetailsController viewModel={adminExerciseDetailsViewModel} />
   );
 
   return (
@@ -118,6 +129,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.AdminExercises.toString()}
         component={AdminExercisesScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.AdminExerciseDetails.toString()}
+        component={AdminExerciseDetailsScreen}
       />
     </Stack.Navigator>
   );

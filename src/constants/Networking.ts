@@ -38,7 +38,7 @@ export class RequestData {
 
   get fullPath() {
     return `${this.url}/${this.path}${this.params ? this.params : ''}${
-      this.query ? '&' + this.query : ''
+      this.query ? '?' + this.query : ''
     }`;
   }
 
@@ -280,6 +280,12 @@ const getRest: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getExerciseImage: NetworkingConfig = {
+  url: 'https://api.serpdog.io',
+  path: 'images',
+  method: RequestMethod.GET,
+};
+
 const getPatientProfile: NetworkingConfig = {
   url: fullURL,
   path: 'patient',
@@ -357,6 +363,7 @@ export const Networking = {
     getSeries,
     getRepetitions,
     getRest,
+    getExerciseImage,
   },
   patient: {
     getPatientProfile,

@@ -17,10 +17,17 @@ import {
 } from '../../models/Catalogues';
 import CataloguesServices from '../../services/catalogues';
 import {IndexPath} from '@ui-kitten/components';
-import {AlertActionType, AlertMessage, AlertType} from '../../models/Common';
+import {
+  AlertActionType,
+  AlertMessage,
+  AlertType,
+  GoogleImageItem,
+  GoogleImageResults,
+  MediaType,
+} from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 import PatientServices from '../../services/patient';
-import {Logger} from '../../utils/Utils';
+import {Logger, typeOfAsset} from '../../utils/Utils';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -40,6 +47,7 @@ export class PatientsStore {
 
   // AdminExercisesList
   public currentDate: Date = new Date();
+  public selectedAdminExercise: PatientExerciseListItem | null = null;
   public AdminExercises: PatientExerciseListItem[] = [];
 
   // AdminExercises
@@ -97,6 +105,27 @@ export class PatientsStore {
         this.selectedPatientId = null;
         Logger.error('Error getting patient by Id', data);
       }
+    }
+  };
+
+  public getExerciseImage = async () => {
+    if (this.selectedAdminExercise) {
+      const data: GoogleImageResults =
+        await CataloguesServices.getExerciseImage(
+          this.selectedAdminExercise.Nombre_ejercicio.nombre_ejercicio,
+        );
+      data.image_results.every((asset: GoogleImageItem) => {
+        if (
+          [MediaType.Image, MediaType.Video].includes(
+            typeOfAsset(asset.original),
+          ) &&
+          this.selectedAdminExercise
+        ) {
+          this.selectedAdminExercise.Nombre_ejercicio.url_gif = asset.original;
+          return false;
+        }
+        return true;
+      });
     }
   };
 

@@ -4,6 +4,7 @@ import Environment from '../constants/Environment';
 import { default as theme } from '../../custom-theme.json';
 import { consoleTransport, logger } from 'react-native-logs';
 import quotes from '../constants/Quotes';
+import { MediaType } from '../models/Common';
 
 export const MONTHS = [
   'Enero',
@@ -145,4 +146,24 @@ export const getRandomInt = (min: number, max: number) => {
 
 export const getRandomQuote = (): string => {
   return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+export const typeOfAsset = (url: string): MediaType => {
+  const extension = url.split(".").pop()?.toLowerCase()
+  switch (extension) {
+    case "png":
+    case "jpg":
+    case "jpeg":
+    case "gif":
+      return MediaType.Image;
+    case "mp4":
+      return MediaType.Video;
+    case "pdf":
+    case "docx":
+      return MediaType.Document;
+    case "mp3":
+      return MediaType.Audio;
+    default:
+      return MediaType.None
+  }
 }
