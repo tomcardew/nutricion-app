@@ -266,6 +266,18 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  getSteps: async (token: string, patientId: string, date: Date) => {
+    const _date = moment(date).utc(true).format('yyyy-MM-DD');
+    try {
+      const request = new RequestData(Networking.administrator.getSteps, token);
+      request.setParams(`/${patientId}/${_date}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;

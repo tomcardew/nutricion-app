@@ -89,3 +89,9 @@ export interface GoogleImageItem {
   original: string;
   rank: number;
 }
+
+export interface StepCountRecord {
+  id: number;
+  fecha_registro: string;
+  cantidad: number;
+}

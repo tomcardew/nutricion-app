@@ -22,6 +22,7 @@ class PatientDataViewModel {
 
   load = async () => {
     await this.patientsStore.getPatientProgress(this.authStore.token ?? '');
+    await this.patientsStore.getPatientSteps(this.authStore.token ?? '');
   };
 
   didPressEditData = () => {

@@ -35,7 +35,7 @@ export interface PatientProgressBody {
   cadera: string;
 }
 
-export function patientProgressToKeyValues(data: any) {
+export function patientProgressToKeyValues(data: any, count: number = 0) {
   if (!data) {
     return [];
   }
@@ -46,6 +46,8 @@ export function patientProgressToKeyValues(data: any) {
       results.push({key: key.split('_').join(' '), value: data[key]});
     }
   });
+
+  results.push({key: 'Pasos', value: count});
 
   return results;
 }

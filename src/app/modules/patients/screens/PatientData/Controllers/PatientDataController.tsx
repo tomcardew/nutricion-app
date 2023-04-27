@@ -27,7 +27,10 @@ const PatientDataController = observer(({viewModel}: Props) => {
       onActionButtonPress={viewModel.didPressEditData}
       onBackAction={viewModel.goBack}
       onAlertDismiss={() => {}}>
-      <PatientDataView data={viewModel.patientsStore.patientProgress} />
+      <PatientDataView
+        data={viewModel.patientsStore.patientProgress}
+        stepCount={viewModel.patientsStore.patientStepCount}
+      />
     </BaseLayoutView>
   );
 });

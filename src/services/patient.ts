@@ -126,6 +126,17 @@ const PatientServices = {
       console.log(error);
     }
   },
+  postSteps: async (token: string, cantidad: string) => {
+    try {
+      const request = new RequestData(Networking.patient.postSteps, token);
+      request.setBody({cantidad});
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;

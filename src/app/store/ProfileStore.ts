@@ -109,6 +109,10 @@ export class ProfileStore {
     return data;
   };
 
+  public postStepCount = async (token: string, count: number) => {
+    await PatientServices.postSteps(token, `${count}`);
+  };
+
   public getProfile = async (token: string, type: UserType) => {
     this.loading = true;
     const data = await CommonServices.getProfile(token, type);

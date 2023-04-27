@@ -11,7 +11,6 @@ interface Props {
 
 const ProfileController = observer(({viewModel}: Props) => {
   useEffect(() => {
-    Logger.warn('PatientProfileController.tsx:14');
     viewModel.load();
   }, []);
 

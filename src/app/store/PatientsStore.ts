@@ -24,6 +24,7 @@ import {
   GoogleImageItem,
   GoogleImageResults,
   MediaType,
+  StepCountRecord,
 } from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 import PatientServices from '../../services/patient';
@@ -44,6 +45,7 @@ export class PatientsStore {
   // PatientGallery
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
+  public patientStepCount: number = 0;
 
   // AdminExercisesList
   public currentDate: Date = new Date();
@@ -149,6 +151,20 @@ export class PatientsStore {
       } else {
         this.patientProgress = null;
         // TODO: Show error alert
+      }
+    }
+  };
+
+  public getPatientSteps = async (token: string) => {
+    if (this.selectedPatientId) {
+      const data = await AdministratorServices.getSteps(
+        token,
+        this.selectedPatientId,
+        new Date(),
+      );
+      if (data.succes && data.data) {
+        const lastValue = data.data.pop();
+        this.patientStepCount = lastValue?.cantidad ?? 0;
       }
     }
   };

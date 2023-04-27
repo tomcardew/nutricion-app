@@ -4,6 +4,7 @@ import {makePersistable, stopPersisting} from 'mobx-persist-store';
 import {Profile, profileDataToGraphData} from '../../models/Profile';
 import {Logger} from '../../utils/Utils';
 import {ProgressDataSetElement} from '../modules/patient-profile/screens/PatientProgress/Views/PatientProgressView';
+import {StepCountRecord} from '../../models/Common';
 
 export class AuthStore {
   public hydrating: boolean = true;
@@ -14,13 +15,15 @@ export class AuthStore {
   public releaseNotes: string = '';
   public loading: boolean = false;
 
+  public lastStepCount: number = 0;
+
   constructor() {
     stopPersisting(this);
     makeAutoObservable(this);
     makePersistable(this, {
       name: 'auth',
       storage: AsyncStorage,
-      properties: ['token', 'user'],
+      properties: ['token', 'user', 'lastStepCount'],
       stringify: true,
     }).then(
       action(persistStore => {
