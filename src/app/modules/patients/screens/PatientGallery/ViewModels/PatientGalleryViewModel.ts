@@ -3,7 +3,7 @@ import {
   launchImageLibrary,
   Asset,
 } from 'react-native-image-picker';
-import {AlertMessage} from '../../../../../../models/Common';
+import {AlertMessage, GalleryCategory} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 
@@ -32,7 +32,7 @@ class PatientGalleryViewModel {
   };
 
   didPressAddPicture = () => {
-    this.patientsStore.showPostActivityPicture(source => {
+    this.patientsStore.showPostActivityPicture(true, source => {
       const launch = async () => {
         let result;
         switch (source) {
@@ -69,6 +69,10 @@ class PatientGalleryViewModel {
     if (data.success) {
       this.load(true);
     }
+  };
+
+  didChangeCategory = (category: GalleryCategory) => {
+    this.patientsStore.selectedGalleryCategory = category;
   };
 
   public dismissAlert = () => {

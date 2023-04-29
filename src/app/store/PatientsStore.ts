@@ -21,6 +21,7 @@ import {
   AlertActionType,
   AlertMessage,
   AlertType,
+  GalleryCategory,
   GoogleImageItem,
   GoogleImageResults,
   MediaType,
@@ -28,7 +29,7 @@ import {
 } from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
 import PatientServices from '../../services/patient';
-import {Logger, typeOfAsset} from '../../utils/Utils';
+import {Logger, toGalleryCategory, typeOfAsset} from '../../utils/Utils';
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -45,6 +46,7 @@ export class PatientsStore {
   // PatientGallery
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
+  public selectedGalleryCategory: GalleryCategory = GalleryCategory.Activities;
   public patientStepCount: number = 0;
 
   // AdminExercisesList
@@ -484,6 +486,7 @@ export class PatientsStore {
         this.selectedPatientId,
         token,
         asset,
+        this.selectedGalleryCategory,
       );
       this.loading = false;
       if (data.success) {
@@ -502,9 +505,17 @@ export class PatientsStore {
     return null;
   };
 
-  public postActivityPicture = async (token: string, asset: Asset) => {
+  public postActivityPicture = async (
+    token: string,
+    asset: Asset,
+    category: GalleryCategory,
+  ) => {
     this.loading = true;
-    const data = await PatientServices.postActivityPicture(token, asset);
+    const data = await PatientServices.postActivityPicture(
+      token,
+      asset,
+      category,
+    );
     this.loading = false;
     if (data.success) {
       return data;
@@ -522,12 +533,15 @@ export class PatientsStore {
   };
 
   public showPostActivityPicture = (
+    isAdmin: boolean,
     onChooseSource: (source: 'camera' | 'library') => void = () => {},
   ) => {
     this.alert = null;
     this.alert = {
       title: 'Subir fotografía',
-      message: 'Elige la foto que deseas utilizar',
+      message: `Elige la foto que deseas utilizar${
+        isAdmin ? '. Se guardará en la categoría seleccionada.' : ''
+      }`,
       showIcon: false,
       type: AlertType.Info,
       actions: [
@@ -689,24 +703,26 @@ export class PatientsStore {
   get preparedPictures() {
     var lists: GalleryItems[] = []; // will contain a list of pictures list separated by month
     this.rawPictures.forEach((item, index) => {
-      const date = moment(item.fecha_foto);
-      var dateExists = false;
-      for (var j in lists) {
-        const listItem = lists[j];
-        const itemDate = moment(listItem.date);
-        const year = itemDate.year();
-        const month = itemDate.month();
-        if (year === date.year() && month == date.month()) {
-          dateExists = true;
-          listItem.data.push(item);
-          break;
+      if (toGalleryCategory(item.categoria) == this.selectedGalleryCategory) {
+        const date = moment(item.fecha_foto);
+        var dateExists = false;
+        for (var j in lists) {
+          const listItem = lists[j];
+          const itemDate = moment(listItem.date);
+          const year = itemDate.year();
+          const month = itemDate.month();
+          if (year === date.year() && month == date.month()) {
+            dateExists = true;
+            listItem.data.push(item);
+            break;
+          }
         }
-      }
-      if (!dateExists) {
-        lists.push({
-          date: date.toDate(),
-          data: [item],
-        });
+        if (!dateExists) {
+          lists.push({
+            date: date.toDate(),
+            data: [item],
+          });
+        }
       }
     });
     lists = lists.reverse();
