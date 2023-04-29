@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { PatientPicture } from '../models/Patients';
+import {PatientPicture} from '../models/Patients';
 import Environment from '../constants/Environment';
-import { default as theme } from '../../custom-theme.json';
-import { consoleTransport, logger } from 'react-native-logs';
+import {default as theme} from '../../custom-theme.json';
+import {consoleTransport, logger} from 'react-native-logs';
 import quotes from '../constants/Quotes';
-import { MediaType } from '../models/Common';
+import {GalleryCategory, MediaType} from '../models/Common';
 
 export const MONTHS = [
   'Enero',
@@ -136,7 +136,7 @@ export const Logger = logger.createLogger<
   'debug' | 'success' | 'info' | 'warn' | 'error'
 >(loggerConfig);
 
-export { theme };
+export {theme};
 
 export const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
@@ -146,24 +146,35 @@ export const getRandomInt = (min: number, max: number) => {
 
 export const getRandomQuote = (): string => {
   return quotes[Math.floor(Math.random() * quotes.length)];
-}
+};
 
 export const typeOfAsset = (url: string): MediaType => {
-  const extension = url.split(".").pop()?.toLowerCase()
+  const extension = url.split('.').pop()?.toLowerCase();
   switch (extension) {
-    case "png":
-    case "jpg":
-    case "jpeg":
-    case "gif":
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
       return MediaType.Image;
-    case "mp4":
+    case 'mp4':
       return MediaType.Video;
-    case "pdf":
-    case "docx":
+    case 'pdf':
+    case 'docx':
       return MediaType.Document;
-    case "mp3":
+    case 'mp3':
       return MediaType.Audio;
     default:
-      return MediaType.None
+      return MediaType.None;
   }
-}
+};
+
+export const toGalleryCategory = (category: string): GalleryCategory => {
+  switch (category) {
+    case 'Activities':
+      return GalleryCategory.Activities;
+    case 'Progress':
+      return GalleryCategory.Progress;
+    default:
+      return GalleryCategory.Other;
+  }
+};

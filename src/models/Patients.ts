@@ -61,6 +61,7 @@ export interface PatientPicture {
   id: number;
   url: string;
   fecha_foto: string;
+  categoria: string;
 }
 
 export interface PatientExerciseBody {

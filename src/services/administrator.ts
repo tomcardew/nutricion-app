@@ -5,6 +5,7 @@ import uuid from 'react-native-uuid';
 import {uriToFileType} from '../utils/Utils';
 import moment from 'moment';
 import {ScheduleDateBody} from '../models/Schedule';
+import {GalleryCategory} from '../models/Common';
 
 const AdministratorServices = {
   getProfile: async (token: string) => {
@@ -202,6 +203,7 @@ const AdministratorServices = {
     id: string,
     token: string,
     asset: Asset,
+    category: GalleryCategory,
   ) => {
     try {
       const request = new RequestData(
@@ -218,6 +220,7 @@ const AdministratorServices = {
         uri: asset.uri,
       };
       formData.append('file', file);
+      formData.append('categoria', category.toString());
 
       request.setFormData(formData);
 

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, Dimensions, RefreshControl} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {GalleryItems} from '../../../../../../models/Patients';
 import PatientMonthCard from './PatientMonthCard';
 import EmptyView from '../../../../../../components/EmptyView';
 import {dateToMonthYear} from '../../../../../../utils/Utils';
+import {PillButton} from '../../../../../../components/Buttons';
+import {GalleryCategory} from '../../../../../../models/Common';
 
 interface Props {
   data: GalleryItems[];
   refreshing: boolean;
   onShowPreview: (url: string) => void;
   onRefresh?: () => void;
+  didChangeCategory?: (category: GalleryCategory) => void;
 }
 
 const PatientGalleryView = ({
@@ -18,16 +21,47 @@ const PatientGalleryView = ({
   refreshing = false,
   onShowPreview = () => {},
   onRefresh = () => {},
+  didChangeCategory = () => {},
 }: Props) => {
+  const [category, setCategory] = useState<GalleryCategory>(
+    GalleryCategory.Activities,
+  );
+
   const handlePicturePress = (url: string) => {
     onShowPreview(url);
   };
 
+  const toggleCategory = (category: GalleryCategory) => {
+    setCategory(category);
+    didChangeCategory(category);
+  };
+
   return (
     <View style={styles.container}>
+      <View style={styles.categoriesContainer}>
+        <PillButton
+          title="Actividades"
+          style={{marginRight: 10}}
+          selected={category === GalleryCategory.Activities}
+          onPress={() => toggleCategory(GalleryCategory.Activities)}
+        />
+        <PillButton
+          title="Progreso"
+          style={{marginRight: 10}}
+          selected={category === GalleryCategory.Progress}
+          onPress={() => toggleCategory(GalleryCategory.Progress)}
+        />
+        <PillButton
+          title="Otras"
+          selected={category === GalleryCategory.Other}
+          onPress={() => toggleCategory(GalleryCategory.Other)}
+        />
+      </View>
       <FlatList
         data={data.slice()}
-        ListEmptyComponent={<EmptyView message="No hay fotos para mostrar" />}
+        ListEmptyComponent={
+          <EmptyView message="No hay fotos para mostrar. Intenta con otra categoría." />
+        }
         contentContainerStyle={{paddingBottom: 150}}
         renderItem={({item}) => (
           <PatientMonthCard
@@ -58,6 +92,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  categoriesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // backgroundColor: '#00000010',
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   preview: {
     width: '100%',

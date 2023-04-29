@@ -49,6 +49,8 @@ const GalleryController = observer(({viewModel}: Props) => {
         onRefresh={() => viewModel.load(true)}
         onShowPreview={url => setPreviewUrl(url)}
         refreshing={viewModel.patientsStore.refreshing}
+        didChangeCategory={viewModel.didChangeCategory}
+        category={viewModel.patientsStore.selectedGalleryCategory}
       />
     </BaseLayoutView>
   );
