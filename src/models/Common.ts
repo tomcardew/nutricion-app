@@ -39,6 +39,12 @@ export enum MediaType {
   None,
 }
 
+export enum GalleryCategory {
+  Activities = 'Activities',
+  Progress = 'Progress',
+  Other = 'Other',
+}
+
 export interface AlertAction {
   label: string;
   type?: AlertActionType;

@@ -53,6 +53,7 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
         onRefresh={onRefresh}
         data={viewModel.patientsStore.preparedPictures}
         onShowPreview={url => setPreviewUrl(url)}
+        didChangeCategory={viewModel.didChangeCategory}
       />
     </BaseLayoutView>
   );
