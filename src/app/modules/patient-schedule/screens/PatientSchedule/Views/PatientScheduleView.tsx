@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import CalendarDay from '../../../../../../components/Calendar/CalendarDay';
 import HorizontalDateSelector from '../../../../../../components/HorizontalDateSelector';
@@ -12,20 +12,19 @@ interface Props {
 }
 
 const PatientScheduleView = ({data, date, didChangeDate = () => {}}: Props) => {
-  const [ref, setRef] = useState<ScrollView | null>(null);
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      ref?.scrollTo({
-        x: 0,
-        y: dateToScrollHeight(new Date()),
-        animated: true,
-      });
-    }, 1000);
-    return () => {
-      clearTimeout(timeout);
-    };
+    scrollToNow();
   }, []);
+
+  const scrollToNow = () => {
+    scrollViewRef?.current?.scrollTo({
+      x: 0,
+      y: dateToScrollHeight(new Date()),
+      animated: true,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -33,9 +32,10 @@ const PatientScheduleView = ({data, date, didChangeDate = () => {}}: Props) => {
         style={styles.dateContainer}
         value={date}
         didChangeDate={didChangeDate}
+        didPress={scrollToNow}
       />
       <ScrollView
-        ref={ref => setRef(ref)}
+        ref={scrollViewRef}
         style={{width: Dimensions.get('window').width, marginTop: 10}}
         contentContainerStyle={{paddingBottom: 5}}>
         <CalendarDay data={data} />

@@ -31,3 +31,10 @@
 ### 0.4.0
 
 - Se modifica la galería para mostrar y subir fotografías categorizadas
+
+### 0.4.1
+
+- Se añade evento `didPress` al componente `HorizontalDateSelector` para permitir hacer scroll automático en el calendario:
+  - Citas (Admin)
+  - Citas (Paciente)
+- Se modifica uso de fechas con `moment` para manejo de zonas horarias
