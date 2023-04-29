@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleProp,
-  ViewProps,
   ViewStyle,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';

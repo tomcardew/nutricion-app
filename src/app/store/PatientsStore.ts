@@ -285,7 +285,9 @@ export class PatientsStore {
     this.loading = false;
     if (data.success) {
       this.AdminExercises = data.data.filter((item: any) =>
-        moment(item.fecha_ejercicio).isSame(moment(this.currentDate), 'day'),
+        moment
+          .utc(item.fecha_ejercicio)
+          .isSame(moment.utc(this.currentDate), 'day'),
       );
     }
   };
@@ -704,11 +706,11 @@ export class PatientsStore {
     var lists: GalleryItems[] = []; // will contain a list of pictures list separated by month
     this.rawPictures.forEach((item, index) => {
       if (toGalleryCategory(item.categoria) == this.selectedGalleryCategory) {
-        const date = moment(item.fecha_foto);
+        const date = moment.utc(item.fecha_foto);
         var dateExists = false;
         for (var j in lists) {
           const listItem = lists[j];
-          const itemDate = moment(listItem.date);
+          const itemDate = moment.utc(listItem.date);
           const year = itemDate.year();
           const month = itemDate.month();
           if (year === date.year() && month == date.month()) {
