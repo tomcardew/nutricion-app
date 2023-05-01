@@ -259,7 +259,11 @@ export class PatientsStore {
     const data = await PatientServices.getActivityPictures(token);
     refreshing ? (this.refreshing = false) : (this.loading = false);
     if (data.success) {
-      this.rawPictures = data.data;
+      var values: PatientPicture[] = data.data;
+      values.forEach((item, index) => {
+        item.global_index = index;
+      });
+      this.rawPictures = values;
     }
   };
 

@@ -57,6 +57,7 @@ const PatientGalleryController = observer(({viewModel}: Props) => {
           setShowingGallery(true);
         }}
         didChangeCategory={viewModel.didChangeCategory}
+        category={viewModel.patientsStore.selectedGalleryCategory}
       />
     </BaseLayoutView>
   );
