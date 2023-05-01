@@ -75,6 +75,8 @@ class PatientGalleryViewModel {
     this.patientsStore.selectedGalleryCategory = category;
   };
 
+  didPressCloseGallery = () => {};
+
   public dismissAlert = () => {
     this.patientsStore.alert = null;
   };

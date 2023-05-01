@@ -11,7 +11,7 @@ import {GalleryCategory} from '../../../../../../models/Common';
 interface Props {
   data: GalleryItems[];
   refreshing: boolean;
-  onShowPreview: (url: string) => void;
+  onShowPreview: (index: number) => void;
   onRefresh?: () => void;
   didChangeCategory?: (category: GalleryCategory) => void;
 }
@@ -26,10 +26,6 @@ const PatientGalleryView = ({
   const [category, setCategory] = useState<GalleryCategory>(
     GalleryCategory.Activities,
   );
-
-  const handlePicturePress = (url: string) => {
-    onShowPreview(url);
-  };
 
   const toggleCategory = (category: GalleryCategory) => {
     setCategory(category);
@@ -63,11 +59,11 @@ const PatientGalleryView = ({
           <EmptyView message="No hay fotos para mostrar. Intenta con otra categoría." />
         }
         contentContainerStyle={{paddingBottom: 150}}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <PatientMonthCard
             month={`${dateToMonthYear(item.date)}`}
             data={item.data}
-            onPress={handlePicturePress}
+            onPress={onShowPreview}
           />
         )}
         refreshControl={

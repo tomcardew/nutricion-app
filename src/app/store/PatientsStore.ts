@@ -245,7 +245,11 @@ export class PatientsStore {
       );
       refreshing ? (this.refreshing = false) : (this.loading = false);
       if (data.success) {
-        this.rawPictures = data.data;
+        var values: PatientPicture[] = data.data;
+        values.forEach((item, index) => {
+          item.global_index = index;
+        });
+        this.rawPictures = values;
       }
     }
   };
@@ -732,6 +736,14 @@ export class PatientsStore {
       item.data = item.data.reverse();
     });
     return lists;
+  }
+
+  get preparedPicturesAssetList() {
+    const originalList = this.rawPictures;
+    const uriList = originalList.map(item => {
+      return {uri: item.url};
+    });
+    return uriList;
   }
 
   get categories() {
