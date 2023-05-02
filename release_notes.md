@@ -42,4 +42,5 @@
 ### 0.5.0
 
 - Se mejora la experiencia de visualización de fotos desde la galería. Ahora eres capáz de acercar, alejar y moverte entre las imágenes más fácilmente.
-- Se añade selector de fecha en vista de citas (Paciente)
+- Se añade selector de fecha en vista de citas
+- Se mejora la visualización de citas
