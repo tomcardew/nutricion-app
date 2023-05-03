@@ -5,20 +5,26 @@ import {SearchBar} from '../../../../../../components/Inputs';
 import MyPatient from './MyPatient';
 import EmptyView from '../../../../../../components/EmptyView';
 import {Patient} from '../../../../../../models/Patients';
+import {PillButton} from '../../../../../../components/Buttons';
+import {PatientsCategory} from '../../../../../../models/Common';
 
 interface Props {
   query: string;
   data: Patient[];
+  category: PatientsCategory;
   onPatientPress?: (id: string) => void;
   didChangeQuery?: (q: string) => void;
+  didPressCategory?: (category: PatientsCategory) => void;
   onReload?: () => void;
 }
 
 const PatientsView = ({
   data,
   query,
+  category = PatientsCategory.All,
   didChangeQuery = () => {},
   onPatientPress = () => {},
+  didPressCategory = () => {},
   onReload = () => {},
 }: Props) => {
   const renderItem = ({item}: any) => (
@@ -27,6 +33,25 @@ const PatientsView = ({
 
   return (
     <View style={styles.content}>
+      <View style={styles.pillContainer}>
+        <PillButton
+          title="Todos"
+          selected={category == PatientsCategory.All}
+          style={styles.pill}
+          onPress={() => didPressCategory(PatientsCategory.All)}
+        />
+        <PillButton
+          title="Activos"
+          selected={category == PatientsCategory.Active}
+          style={styles.pill}
+          onPress={() => didPressCategory(PatientsCategory.Active)}
+        />
+        <PillButton
+          title="Inactivos"
+          selected={category == PatientsCategory.Inactive}
+          onPress={() => didPressCategory(PatientsCategory.Inactive)}
+        />
+      </View>
       <SearchBar value={query} onChangeText={didChangeQuery} />
       <FlatList
         data={data.slice()}
@@ -61,6 +86,12 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginLeft: 0,
+  },
+  pillContainer: {
+    flexDirection: 'row',
+  },
+  pill: {
+    marginRight: 10,
   },
 });
 

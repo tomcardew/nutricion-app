@@ -1,7 +1,7 @@
 import ScreenNames from '../../../../../../constants/Screens';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 import {AuthStore} from '../../../../../store/AuthStore';
-import {AlertMessage} from '../../../../../../models/Common';
+import {AlertMessage, PatientsCategory} from '../../../../../../models/Common';
 
 class PatientsViewModel {
   authStore: AuthStore;
@@ -31,6 +31,10 @@ class PatientsViewModel {
 
   didChangeQuery = (query: string) => {
     this.patientsStore.setQuery(query);
+  };
+
+  didPressCategory = (category: PatientsCategory) => {
+    this.patientsStore.selectedPatientsList = category;
   };
 }
 

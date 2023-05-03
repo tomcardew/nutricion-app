@@ -11,7 +11,8 @@ import {GalleryCategory} from '../../../../../../models/Common';
 interface Props {
   data: GalleryItems[];
   refreshing: boolean;
-  onShowPreview: (url: string) => void;
+  category: GalleryCategory;
+  onShowPreview: (index: number) => void;
   onRefresh?: () => void;
   didChangeCategory?: (category: GalleryCategory) => void;
 }
@@ -19,23 +20,11 @@ interface Props {
 const PatientGalleryView = ({
   data,
   refreshing = false,
+  category,
   onShowPreview = () => {},
   onRefresh = () => {},
   didChangeCategory = () => {},
 }: Props) => {
-  const [category, setCategory] = useState<GalleryCategory>(
-    GalleryCategory.Activities,
-  );
-
-  const handlePicturePress = (url: string) => {
-    onShowPreview(url);
-  };
-
-  const toggleCategory = (category: GalleryCategory) => {
-    setCategory(category);
-    didChangeCategory(category);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.categoriesContainer}>
@@ -43,18 +32,18 @@ const PatientGalleryView = ({
           title="Actividades"
           style={{marginRight: 10}}
           selected={category === GalleryCategory.Activities}
-          onPress={() => toggleCategory(GalleryCategory.Activities)}
+          onPress={() => didChangeCategory(GalleryCategory.Activities)}
         />
         <PillButton
           title="Progreso"
           style={{marginRight: 10}}
           selected={category === GalleryCategory.Progress}
-          onPress={() => toggleCategory(GalleryCategory.Progress)}
+          onPress={() => didChangeCategory(GalleryCategory.Progress)}
         />
         <PillButton
           title="Otras"
           selected={category === GalleryCategory.Other}
-          onPress={() => toggleCategory(GalleryCategory.Other)}
+          onPress={() => didChangeCategory(GalleryCategory.Other)}
         />
       </View>
       <FlatList
@@ -67,7 +56,7 @@ const PatientGalleryView = ({
           <PatientMonthCard
             month={`${dateToMonthYear(item.date)}`}
             data={item.data}
-            onPress={handlePicturePress}
+            onPress={onShowPreview}
           />
         )}
         refreshControl={

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import ScreenNames from '../../../../../../constants/Screens';
 import {PatientExerciseListItem} from '../../../../../../models/Patients';
 import {AuthStore} from '../../../../../store/AuthStore';
@@ -30,6 +31,10 @@ class PatientExercisesViewModel {
       this.authStore.token ?? '',
       date,
     );
+  };
+
+  didChangeDateString = (dateString: string) => {
+    this.patientsStore.currentDate = moment(dateString, 'YYYY/MM/DD').toDate();
   };
 
   markExerciseAsCompleted = async (id: number) => {

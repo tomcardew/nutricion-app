@@ -12,7 +12,7 @@ interface Props {
   data: GalleryItems[];
   refreshing: boolean;
   category: GalleryCategory;
-  onShowPreview: (url: string) => void;
+  onShowPreview: (index: number) => void;
   onRefresh?: () => void;
   didChangeCategory?: (category: GalleryCategory) => void;
 }
@@ -25,14 +25,6 @@ const GalleryView = ({
   onRefresh = () => {},
   didChangeCategory = () => {},
 }: Props) => {
-  const handlePicturePress = (url: string) => {
-    onShowPreview(url);
-  };
-
-  const toggleCategory = (category: GalleryCategory) => {
-    didChangeCategory(category);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.categoriesContainer}>
@@ -40,18 +32,18 @@ const GalleryView = ({
           title="Actividades"
           style={{marginRight: 10}}
           selected={category === GalleryCategory.Activities}
-          onPress={() => toggleCategory(GalleryCategory.Activities)}
+          onPress={() => didChangeCategory(GalleryCategory.Activities)}
         />
         <PillButton
           title="Progreso"
           style={{marginRight: 10}}
           selected={category === GalleryCategory.Progress}
-          onPress={() => toggleCategory(GalleryCategory.Progress)}
+          onPress={() => didChangeCategory(GalleryCategory.Progress)}
         />
         <PillButton
           title="Otras"
           selected={category === GalleryCategory.Other}
-          onPress={() => toggleCategory(GalleryCategory.Other)}
+          onPress={() => didChangeCategory(GalleryCategory.Other)}
         />
       </View>
       <FlatList
@@ -62,7 +54,7 @@ const GalleryView = ({
           <PatientMonthCard
             month={`${dateToMonthYear(item.date)}`}
             data={item.data}
-            onPress={handlePicturePress}
+            onPress={onShowPreview}
           />
         )}
         refreshControl={

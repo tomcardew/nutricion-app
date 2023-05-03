@@ -8,12 +8,15 @@ import {
   TouchableOpacity,
   StyleProp,
   ViewStyle,
+  ImageURISource,
+  ImageRequireSource,
 } from 'react-native';
 import HeaderView from '../Header/HeaderView';
 import {default as theme} from '../../../custom-theme.json';
 import LoaderView from '../LoaderView';
 import AlertPopup from '../Alert/AlertPopup';
 import {AlertMessage, AlertType} from '../../models/Common';
+import ImageView from 'react-native-image-viewing';
 
 interface Props {
   title?: string;
@@ -33,12 +36,16 @@ interface Props {
   actionButtonView?: JSX.Element;
   rightAccessory?: JSX.Element;
   showDateSelector?: boolean;
+  showImageGallery?: boolean;
+  imageGalleryAssets?: (ImageURISource | ImageRequireSource)[];
+  imageGalleryIndex?: number;
   loadingStyle?: StyleProp<ViewStyle>;
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
   onActionButtonPress?: () => void;
   didChangeSelectedDate?: (date: Date) => void;
+  didPressCloseGallery?: () => void;
 }
 
 const BaseLayoutView = ({
@@ -59,9 +66,13 @@ const BaseLayoutView = ({
   actionButtonView,
   rightAccessory,
   loadingStyle,
+  showImageGallery,
+  imageGalleryAssets = [],
+  imageGalleryIndex = 0,
   onBackAction = () => {},
   onAlertDismiss = () => {},
   onActionButtonPress = () => {},
+  didPressCloseGallery = () => {},
 }: Props) => {
   const content = () => (
     <View style={styles.content}>
@@ -119,6 +130,12 @@ const BaseLayoutView = ({
         </ScrollView>
       )}
       {overlay}
+      <ImageView
+        images={imageGalleryAssets}
+        imageIndex={imageGalleryIndex}
+        visible={showImageGallery ?? false}
+        onRequestClose={didPressCloseGallery}
+      />
     </View>
   );
 
