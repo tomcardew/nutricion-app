@@ -1259,6 +1259,11 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/blur@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/blur/-/blur-4.3.0.tgz#e5018b3b0bd6de9632ac6cf34e9f8e0f1a9a28ec"
+  integrity sha512-d6phh39kKcbZ4IluDftiVWqfeFOgjl1AbQWzN47x+hLKQ5GvQJ6QhRvgAuDZ+xbJksrbXgNpMjVYkjsbcVehxg==
+
 "@react-native-community/cli-clean@^9.2.1":
   version "9.2.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-clean/-/cli-clean-9.2.1.tgz#198c5dd39c432efb5374582073065ff75d67d018"
@@ -6684,6 +6689,11 @@ react-native-image-picker@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.0.1.tgz#c9e99217396bc82a977785e39e14afb4819e8448"
   integrity sha512-+poQTHOnEGrbxJnut591XA9006svFOyfPg/i5bv+fLuwoSHh5HW0E/PVhvT8lbX0Z5C108vh3DAsnrfFFnPBGw==
+
+react-native-image-viewing@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-viewing/-/react-native-image-viewing-0.2.2.tgz#fb26e57d7d3d9ce4559a3af3d244387c0367242b"
+  integrity sha512-osWieG+p/d2NPbAyonOMubttajtYEYiRGQaJA54slFxZ69j1V4/dCmcrVQry47ktVKy8/qpFwCpW1eT6MH5T2Q==
 
 react-native-keyboard-aware-scrollview@^2.1.0:
   version "2.1.0"

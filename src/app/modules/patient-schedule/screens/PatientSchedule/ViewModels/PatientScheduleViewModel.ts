@@ -1,3 +1,5 @@
+import moment from 'moment';
+import {Logger} from '../../../../../../utils/Utils';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ScheduleStore} from '../../../../../store/ScheduleStore';
 
@@ -22,6 +24,10 @@ class PatientScheduleViewModel {
 
   didChangeDate = async (date: Date) => {
     this.scheduleStore.currentDate = date;
+  };
+
+  didChangeDateString = (dateString: string) => {
+    this.scheduleStore.currentDate = moment(dateString, 'YYYY/MM/DD').toDate();
   };
 
   goBack = () => {

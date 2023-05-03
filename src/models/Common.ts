@@ -45,6 +45,12 @@ export enum GalleryCategory {
   Other = 'Other',
 }
 
+export enum PatientsCategory {
+  All,
+  Active,
+  Inactive,
+}
+
 export interface AlertAction {
   label: string;
   type?: AlertActionType;

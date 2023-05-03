@@ -38,3 +38,10 @@
   - Citas (Admin)
   - Citas (Paciente)
 - Se modifica uso de fechas con `moment` para manejo de zonas horarias
+
+### 0.5.0
+
+- Se mejora la experiencia de visualización de fotos desde la galería. Ahora eres capáz de acercar, alejar y moverte entre las imágenes más fácilmente
+- Se añade selector de fecha en vista de citas y vista de ejercicios
+- Se mejora la visualización de citas
+- Se añade categoría en listado de pacientes (Admin) para separar pacientes activos de pacientes inactivos

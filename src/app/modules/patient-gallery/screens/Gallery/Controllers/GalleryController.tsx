@@ -11,7 +11,8 @@ interface Props {
 }
 
 const GalleryController = observer(({viewModel}: Props) => {
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewIndex, setPreviewIndex] = useState(0);
+  const [showingGallery, setShowingGallery] = useState(false);
 
   useEffect(() => {
     viewModel.load();
@@ -21,6 +22,10 @@ const GalleryController = observer(({viewModel}: Props) => {
     };
   }, []);
 
+  const onRefresh = () => {
+    viewModel.load(true);
+  };
+
   return (
     <BaseLayoutView
       title="Galería"
@@ -28,11 +33,6 @@ const GalleryController = observer(({viewModel}: Props) => {
       disableScrollBar
       loadingMessage="Cargando..."
       showBackButton={false}
-      overlay={
-        previewUrl ? (
-          <PreviewImage url={previewUrl} onClose={() => setPreviewUrl('')} />
-        ) : undefined
-      }
       actionButtonView={
         <Icon
           style={{width: 30, height: 30}}
@@ -40,6 +40,10 @@ const GalleryController = observer(({viewModel}: Props) => {
           name="cloud-upload-outline"
         />
       }
+      showImageGallery={showingGallery}
+      imageGalleryIndex={previewIndex}
+      imageGalleryAssets={viewModel.patientsStore.preparedPicturesAssetList}
+      didPressCloseGallery={() => setShowingGallery(false)}
       alert={viewModel.patientsStore.alert}
       onAlertDismiss={viewModel.dismissAlert}
       onActionButtonPress={viewModel.didPressAddPicture}
@@ -47,7 +51,10 @@ const GalleryController = observer(({viewModel}: Props) => {
       <GalleryView
         data={viewModel.patientsStore.preparedPictures}
         onRefresh={() => viewModel.load(true)}
-        onShowPreview={url => setPreviewUrl(url)}
+        onShowPreview={index => {
+          setPreviewIndex(index);
+          setShowingGallery(true);
+        }}
         refreshing={viewModel.patientsStore.refreshing}
         didChangeCategory={viewModel.didChangeCategory}
         category={viewModel.patientsStore.selectedGalleryCategory}

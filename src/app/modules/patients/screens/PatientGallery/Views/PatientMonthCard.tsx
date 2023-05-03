@@ -10,7 +10,7 @@ import {FontWeight} from '../../../../../../models/Common';
 interface Props {
   month: string;
   data: PatientPicture[];
-  onPress?: (url: string) => void;
+  onPress?: (index: number) => void;
 }
 
 const PatientMonthCard = ({month, data, onPress = () => {}}: Props) => {
@@ -32,7 +32,7 @@ const PatientMonthCard = ({month, data, onPress = () => {}}: Props) => {
               style={styles.item}
               key={`patient-gallery-${month}-${item.id}`}
               url={replaceLocalhost(item.url)}
-              onPress={() => onPress(item.url)}
+              onPress={() => onPress(item.global_index ?? 0)}
             />
           ))}
         </View>
@@ -42,7 +42,7 @@ const PatientMonthCard = ({month, data, onPress = () => {}}: Props) => {
               style={styles.item}
               key={`patient-gallery-${month}-${item.id}`}
               url={replaceLocalhost(item.url)}
-              onPress={() => onPress(item.url)}
+              onPress={() => onPress(item.global_index ?? 0)}
             />
           ))}
         </View>
@@ -52,7 +52,7 @@ const PatientMonthCard = ({month, data, onPress = () => {}}: Props) => {
               style={styles.item}
               key={`patient-gallery-${month}-${item.id}`}
               url={replaceLocalhost(item.url)}
-              onPress={() => onPress(item.url)}
+              onPress={() => onPress(item.global_index ?? 0)}
             />
           ))}
         </View>
