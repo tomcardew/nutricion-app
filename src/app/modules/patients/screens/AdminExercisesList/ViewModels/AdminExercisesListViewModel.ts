@@ -1,8 +1,9 @@
-import { AuthStore } from '../../../../../store/AuthStore';
-import { PatientsStore } from '../../../../../store/PatientsStore';
+import {AuthStore} from '../../../../../store/AuthStore';
+import {PatientsStore} from '../../../../../store/PatientsStore';
 import ScreenNames from '../../../../../../constants/Screens';
-import { Exercise } from '../../../../../../models/Catalogues';
-import { PatientExerciseListItem } from '../../../../../../models/Patients';
+import {Exercise} from '../../../../../../models/Catalogues';
+import {PatientExerciseListItem} from '../../../../../../models/Patients';
+import moment from 'moment';
 
 class AdminExercisesListViewModel {
   navigation: any;
@@ -30,13 +31,17 @@ class AdminExercisesListViewModel {
   goToExerciseDetails = (exercise: PatientExerciseListItem) => {
     this.patientsStore.selectedAdminExercise = exercise;
     this.navigation.navigate(ScreenNames.AdminExerciseDetails.toString(), {
-      exercise
+      exercise,
     });
-  }
+  };
 
   didChangeDate = (date: Date) => {
     this.patientsStore.currentDate = date;
     this.patientsStore.getAdminExercises(this.authStore.token ?? '');
+  };
+
+  didChangeDateString = (dateString: string) => {
+    this.patientsStore.currentDate = moment(dateString, 'YYYY/MM/DD').toDate();
   };
 
   goBack = () => {
