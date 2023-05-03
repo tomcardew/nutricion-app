@@ -25,7 +25,9 @@ const PatientsController = observer(({viewModel}: Props) => {
       <PatientsView
         data={viewModel.patientsStore.patients}
         query={viewModel.patientsStore.query}
+        category={viewModel.patientsStore.selectedPatientsList}
         didChangeQuery={viewModel.didChangeQuery}
+        didPressCategory={viewModel.didPressCategory}
         onPatientPress={viewModel.goToPatient}
         onReload={viewModel.load}
       />

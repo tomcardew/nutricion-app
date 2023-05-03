@@ -25,6 +25,7 @@ import {
   GoogleImageItem,
   GoogleImageResults,
   MediaType,
+  PatientsCategory,
   StepCountRecord,
 } from '../../models/Common';
 import {Asset} from 'react-native-image-picker';
@@ -38,6 +39,7 @@ export class PatientsStore {
   public refreshing: boolean = false;
   public patients_raw: Patient[] = [];
   public query: string = '';
+  public selectedPatientsList: PatientsCategory = PatientsCategory.All;
 
   public loadingSelectedPatient: boolean = true;
   public selectedPatient: Patient | null = null;
@@ -705,9 +707,18 @@ export class PatientsStore {
   };
 
   get patients() {
-    return this.patients_raw.filter(patient =>
-      patient.nombre.includes(this.query),
-    );
+    let filteredList = this.patients_raw;
+    switch (this.selectedPatientsList) {
+      case PatientsCategory.Inactive:
+        filteredList = this.patients_raw.filter(patient => !patient.activo);
+        break;
+      case PatientsCategory.Active:
+        filteredList = this.patients_raw.filter(patient => patient.activo);
+        break;
+      default:
+        break;
+    }
+    return filteredList.filter(patient => patient.nombre.includes(this.query));
   }
 
   get preparedPictures() {
