@@ -9,6 +9,7 @@ export interface AlertMessage {
   error?: ErrorMessage;
   type: AlertType;
   showIcon: boolean;
+  autoClose: boolean;
   actions: AlertAction[];
 }
 

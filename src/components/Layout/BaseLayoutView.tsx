@@ -90,6 +90,7 @@ const BaseLayoutView = ({
         type={alert?.type || AlertType.Error}
         showIcon={alert?.showIcon}
         actions={alert?.actions}
+        autoClose={alert?.autoClose}
         onDismiss={onAlertDismiss}
       />
       <LoaderView

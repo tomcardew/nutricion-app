@@ -196,15 +196,17 @@ export class PatientsStore {
           title: 'Operación exitosa',
           message: 'El progreso ha sido guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
           type: AlertType.Error,
           title: 'Ocurrió un error',
-          message: 'El preogreso no pudo ser guardado correctamente',
+          message: 'El progreso no pudo ser guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -326,6 +328,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -457,7 +460,8 @@ export class PatientsStore {
           title: 'Operación exitosa',
           message: 'El ejercicio ha sido guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
@@ -465,7 +469,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'El ejercicio no pudo ser guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -509,7 +514,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo subir la imagen correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -537,7 +543,8 @@ export class PatientsStore {
         title: 'Ocurrió un error',
         message: 'No se pudo subir la imagen correctamente',
         showIcon: true,
-        actions: [{label: 'Cerrar'}],
+        actions: [],
+        autoClose: true,
         error: data.error,
       };
       return null;
@@ -572,6 +579,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -594,6 +602,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -616,6 +625,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -635,7 +645,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo completar la operación',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
         return null;
@@ -662,6 +673,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -682,7 +694,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo completar la operación',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
         return null;
@@ -697,12 +710,8 @@ export class PatientsStore {
       message: 'Se ha actualizado la dieta con éxito',
       showIcon: true,
       type: AlertType.Success,
-      actions: [
-        {
-          label: 'Cerrar',
-          type: AlertActionType.Cancel,
-        },
-      ],
+      actions: [],
+      autoClose: true,
     };
   };
 
