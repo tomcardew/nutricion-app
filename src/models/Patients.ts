@@ -14,40 +14,82 @@ export interface Patient {
   seccion_ejercicios: boolean;
 }
 
+export enum PatientProgresCategories {
+  PLIEGUES = 'pliegues',
+  PERIMETROS = 'perimetros',
+  RESULTADOS = 'resultados',
+}
+
 export interface PatientProgress {
   id: number;
-  peso: string;
-  imc: string;
-  grasa_corporal: string;
-  cintura: string;
-  abdomen: string;
-  cadera: string;
-  pasos: number;
+  pliegues_Tricipital: number;
+  pliegues_Subescapular: number;
+  pliegues_Bicipital: number;
+  pliegues_Cresta_ilíaca: number;
+  pliegues_Supraespinal: number;
+  pliegues_Abdominal: number;
+  pliegues_Muslo: number;
+  pliegues_Pantorrilla: number;
+  perimetros_cintura: string;
+  perimetros_abdomen: string;
+  perimetros_cadera: string;
+  perimetros_brazo_contraido: string;
+  perimetros_muslo: string;
+  perimetros_pantorrilla: string;
+  resultados_peso: string;
+  resultados_grasa_corporal: string;
+  resultados_kg_grasa: string;
+  resultados_kg_musculo: string;
+  resultados_suma_pliegues: number;
   fecha_registro: string;
 }
 
 export interface PatientProgressBody {
-  peso: string;
-  imc: string;
-  grasa_corporal: string;
-  cintura: string;
-  abdomen: string;
-  cadera: string;
+  pliegues_Tricipital: number;
+  pliegues_Subescapular: number;
+  pliegues_Bicipital: number;
+  pliegues_Cresta_ilíaca: number;
+  pliegues_Supraespinal: number;
+  pliegues_Abdominal: number;
+  pliegues_Muslo: number;
+  pliegues_Pantorrilla: number;
+  perimetros_cintura: string;
+  perimetros_abdomen: string;
+  perimetros_cadera: string;
+  perimetros_brazo_contraido: string;
+  perimetros_muslo: string;
+  perimetros_pantorrilla: string;
+  resultados_peso: string;
+  resultados_grasa_corporal: string;
+  resultados_kg_grasa: string;
+  resultados_kg_musculo: string;
+  resultados_suma_pliegues: number;
 }
 
-export function patientProgressToKeyValues(data: any, count: number = 0) {
+export function patientProgressToBody(
+  data: PatientProgress,
+): PatientProgressBody {
+  return {
+    ...data,
+  };
+}
+
+export function patientProgressToKeyValues(
+  data: any,
+  category: PatientProgresCategories,
+) {
   if (!data) {
     return [];
   }
   let ignoreKeys = ['id', 'fecha_registro'];
   let results: KeyValue[] = [];
+  let usingCategory: string = category.toString();
+
   Object.keys(data).forEach(key => {
-    if (!ignoreKeys.includes(key)) {
+    if (!ignoreKeys.includes(key) && key.startsWith(usingCategory)) {
       results.push({key: key.split('_').join(' '), value: data[key]});
     }
   });
-
-  results.push({key: 'Pasos', value: count});
 
   return results;
 }

@@ -29,7 +29,9 @@ const PatientDataController = observer(({viewModel}: Props) => {
       onAlertDismiss={() => {}}>
       <PatientDataView
         data={viewModel.patientsStore.patientProgress}
+        selectedCategory={viewModel.patientsStore.selectedProgressCategory}
         stepCount={viewModel.patientsStore.patientStepCount}
+        didChangeCategory={viewModel.didChangeProgressCategory}
       />
     </BaseLayoutView>
   );

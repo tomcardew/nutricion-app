@@ -1,34 +1,64 @@
 import React from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import {VerticalInfoCard} from '../../../../../../components/Cards';
 import {
+  PatientProgresCategories,
   PatientProgress,
   patientProgressToKeyValues,
 } from '../../../../../../models/Patients';
 import EmptyView from '../../../../../../components/EmptyView';
-import Text from '../../../../../../components/Text';
-import {FontWeight} from '../../../../../../models/Common';
+import {PillButton} from '../../../../../../components/Buttons';
+import ProfileStepsCard from '../../../../patient-profile/screens/Profile/Views/ProfileStepsCard';
 
 interface Props {
   data: PatientProgress | null;
+  selectedCategory: PatientProgresCategories;
   stepCount?: number;
+
+  didChangeCategory?: (category: PatientProgresCategories) => void;
 }
 
-const PatientDataView = ({data, stepCount = 0}: Props) => {
-  const items = patientProgressToKeyValues(data, stepCount);
+const PatientDataView = ({
+  data,
+  selectedCategory,
+  stepCount = 0,
+  didChangeCategory = () => {},
+}: Props) => {
+  const items = patientProgressToKeyValues(data, selectedCategory);
 
   return (
     <View style={styles.container}>
-      {data && (
-        <View style={styles.lastUpdateContainer}>
-          <Text weight={FontWeight.Medium}>Última actualización</Text>
-          <Text style={styles.lastUpdateContent}>
-            {new Date(data.fecha_registro).toLocaleString('es')}
-          </Text>
-        </View>
-      )}
+      <ProfileStepsCard
+        simple
+        style={{
+          marginTop: 20,
+          width: Dimensions.get('window').width,
+        }}
+        goal={5000}
+        count={2750}
+      />
+      <View style={styles.categoriesContainer}>
+        <PillButton
+          title="Pliegues"
+          style={{marginRight: 10}}
+          selected={selectedCategory === PatientProgresCategories.PLIEGUES}
+          onPress={() => didChangeCategory(PatientProgresCategories.PLIEGUES)}
+        />
+        <PillButton
+          title="Perimetros"
+          style={{marginRight: 10}}
+          selected={selectedCategory === PatientProgresCategories.PERIMETROS}
+          onPress={() => didChangeCategory(PatientProgresCategories.PERIMETROS)}
+        />
+        <PillButton
+          title="Resultados"
+          selected={selectedCategory === PatientProgresCategories.RESULTADOS}
+          onPress={() => didChangeCategory(PatientProgresCategories.RESULTADOS)}
+        />
+      </View>
       <FlatList
         data={items.slice()}
+        contentContainerStyle={{paddingBottom: 50}}
         ListEmptyComponent={<EmptyView message="No hay datos registrados" />}
         renderItem={item => (
           <VerticalInfoCard title={item.item.key} content={item.item.value} />
@@ -54,6 +84,15 @@ const styles = StyleSheet.create({
   lastUpdateContent: {
     fontSize: 14,
     color: 'black',
+  },
+  categoriesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // backgroundColor: '#00000010',
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
 });
 

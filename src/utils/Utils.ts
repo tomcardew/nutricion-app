@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {PatientPicture} from '../models/Patients';
+import {PatientPicture, PatientProgress} from '../models/Patients';
 import Environment from '../constants/Environment';
 import {default as theme} from '../../custom-theme.json';
 import {consoleTransport, logger} from 'react-native-logs';
@@ -177,4 +177,34 @@ export const toGalleryCategory = (category: string): GalleryCategory => {
     default:
       return GalleryCategory.Other;
   }
+};
+
+export const isPatientProgressComplete = (
+  progress: PatientProgress,
+): boolean => {
+  const {
+    id,
+    pliegues_Tricipital,
+    pliegues_Subescapular,
+    pliegues_Bicipital,
+    pliegues_Cresta_ilíaca,
+    pliegues_Supraespinal,
+    pliegues_Abdominal,
+    pliegues_Muslo,
+    pliegues_Pantorrilla,
+    perimetros_cintura,
+    perimetros_abdomen,
+    perimetros_cadera,
+    perimetros_brazo_contraido,
+    perimetros_muslo,
+    perimetros_pantorrilla,
+    resultados_peso,
+    resultados_grasa_corporal,
+    resultados_kg_grasa,
+    resultados_kg_musculo,
+    resultados_suma_pliegues,
+    fecha_registro,
+  } = progress;
+  
+  return false;
 };
