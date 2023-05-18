@@ -14,40 +14,63 @@ export interface Patient {
   seccion_ejercicios: boolean;
 }
 
+export enum PatientProgresCategories {
+  PLIEGUES = 'pliegues',
+  PERIMETROS = 'perimetros',
+  RESULTADOS = 'resultados',
+}
+
+export const patientProgresCategoriesLabels = [
+  'Pliegues',
+  'Perimetros',
+  'Resultados',
+];
+
 export interface PatientProgress {
   id: number;
-  peso: string;
-  imc: string;
-  grasa_corporal: string;
-  cintura: string;
-  abdomen: string;
-  cadera: string;
-  pasos: number;
+  pliegues_Tricipital: any;
+  pliegues_Subescapular: any;
+  pliegues_Bicipital: any;
+  pliegues_Cresta_ilíaca: any;
+  pliegues_Supraespinal: any;
+  pliegues_Abdominal: any;
+  pliegues_Muslo: any;
+  pliegues_Pantorrilla: any;
+  perimetros_cintura: any;
+  perimetros_abdomen: any;
+  perimetros_cadera: any;
+  perimetros_brazo_contraido: any;
+  perimetros_muslo: any;
+  perimetros_pantorrilla: any;
+  resultados_peso: any;
+  resultados_grasa_corporal: any;
+  resultados_kg_grasa: any;
+  resultados_kg_musculo: any;
+  resultados_suma_pliegues: any;
   fecha_registro: string;
 }
 
-export interface PatientProgressBody {
-  peso: string;
-  imc: string;
-  grasa_corporal: string;
-  cintura: string;
-  abdomen: string;
-  cadera: string;
-}
-
-export function patientProgressToKeyValues(data: any, count: number = 0) {
+export function patientProgressToKeyValues(
+  data: any,
+  category: PatientProgresCategories,
+) {
   if (!data) {
     return [];
   }
   let ignoreKeys = ['id', 'fecha_registro'];
   let results: KeyValue[] = [];
+  let usingCategory: string = category.toString();
+
   Object.keys(data).forEach(key => {
-    if (!ignoreKeys.includes(key)) {
-      results.push({key: key.split('_').join(' '), value: data[key]});
+    if (!ignoreKeys.includes(key) && key.startsWith(usingCategory)) {
+      results.push({
+        name: key.split('_').join(' '),
+        key,
+        value: data[key],
+        properties: {isNumeric: usingCategory === 'pliegues'},
+      });
     }
   });
-
-  results.push({key: 'Pasos', value: count});
 
   return results;
 }

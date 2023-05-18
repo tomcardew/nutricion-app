@@ -4,7 +4,7 @@ import {makePersistable, stopPersisting} from 'mobx-persist-store';
 import {Profile, profileDataToGraphData} from '../../models/Profile';
 import {Logger} from '../../utils/Utils';
 import {ProgressDataSetElement} from '../modules/patient-profile/screens/PatientProgress/Views/PatientProgressView';
-import {StepCountRecord} from '../../models/Common';
+import {PatientProgresCategories} from '../../models/Patients';
 
 export class AuthStore {
   public hydrating: boolean = true;
@@ -16,6 +16,10 @@ export class AuthStore {
   public loading: boolean = false;
 
   public lastStepCount: number = 0;
+
+  // Progress Data - Patient
+  public progressCategory: PatientProgresCategories =
+    PatientProgresCategories.PLIEGUES;
 
   constructor() {
     stopPersisting(this);
@@ -54,9 +58,9 @@ export class AuthStore {
   get dataset() {
     let sets: ProgressDataSetElement[] = [];
     if (this.user && this.user.Datos && this.user.Datos.length > 0) {
-      const keys = Object.keys(this.user.Datos[0]).filter(
-        value => !['id', 'fecha_registro'].includes(value),
-      );
+      const keys = Object.keys(this.user.Datos[0])
+        .filter(value => !['id', 'fecha_registro'].includes(value))
+        .filter(value => value.startsWith(this.progressCategory.toString()));
       sets = keys.map(key => {
         Logger.info(key);
         return {

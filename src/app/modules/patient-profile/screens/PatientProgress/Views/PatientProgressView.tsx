@@ -4,6 +4,8 @@ import {RefreshControl} from 'react-native-gesture-handler';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 import EmptyView from '../../../../../../components/EmptyView';
 import PatientProgressGraphView, {GraphData} from './PatientProgressGraphView';
+import {PillButton} from '../../../../../../components/Buttons';
+import {PatientProgresCategories} from '../../../../../../models/Patients';
 
 export interface ProgressDataSetElement {
   title: string;
@@ -12,14 +14,18 @@ export interface ProgressDataSetElement {
 
 interface Props {
   data: ProgressDataSetElement[];
+  category: PatientProgresCategories;
   refreshing?: boolean;
   onRefresh?: () => void;
+  didChangeCategory?: (category: PatientProgresCategories) => void;
 }
 
 const PatientProgressView = ({
   data,
+  category,
   refreshing = false,
   onRefresh = () => {},
+  didChangeCategory = () => {},
 }: Props) => {
   const renderItem = ({item}: any) => (
     <SimpleCard
@@ -35,6 +41,25 @@ const PatientProgressView = ({
   );
   return (
     <View style={styles.container}>
+      <View style={styles.categoriesContainer}>
+        <PillButton
+          title="Pliegues"
+          style={{marginRight: 10}}
+          selected={category === PatientProgresCategories.PLIEGUES}
+          onPress={() => didChangeCategory(PatientProgresCategories.PLIEGUES)}
+        />
+        <PillButton
+          title="Perimetros"
+          style={{marginRight: 10}}
+          selected={category === PatientProgresCategories.PERIMETROS}
+          onPress={() => didChangeCategory(PatientProgresCategories.PERIMETROS)}
+        />
+        <PillButton
+          title="Resultados"
+          selected={category === PatientProgresCategories.RESULTADOS}
+          onPress={() => didChangeCategory(PatientProgresCategories.RESULTADOS)}
+        />
+      </View>
       <FlatList
         data={data.slice()}
         renderItem={renderItem}
@@ -59,6 +84,15 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
     paddingBottom: 70,
+  },
+  categoriesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // backgroundColor: '#00000010',
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
 });
 

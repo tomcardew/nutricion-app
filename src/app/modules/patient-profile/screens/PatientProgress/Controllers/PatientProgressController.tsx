@@ -18,8 +18,10 @@ const PatientProgressController = observer(({viewModel}: Props) => {
       onBackAction={viewModel.goBack}>
       <PatientProgressView
         data={viewModel.authStore.dataset}
+        category={viewModel.authStore.progressCategory}
         refreshing={viewModel.profileStore.loading}
         onRefresh={viewModel.load}
+        didChangeCategory={viewModel.didChangeCategory}
       />
     </BaseLayoutView>
   );

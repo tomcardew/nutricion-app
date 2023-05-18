@@ -1,6 +1,9 @@
+import {IndexPath} from '@ui-kitten/components';
 import {AlertType} from '../../../../../../models/Common';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
+import {PatientProgresCategories} from '../../../../../../models/Patients';
+import {Logger} from '../../../../../../utils/Utils';
 
 class PatientDataEditorViewModel {
   authStore: AuthStore;
@@ -17,28 +20,25 @@ class PatientDataEditorViewModel {
     this.navigation = navigation;
   }
 
-  didChangeWeight = (value: string) => {
-    this.patientsStore.data_weight = value;
+  didChangeCategory = (path?: IndexPath | IndexPath[]) => {
+    const options = [
+      PatientProgresCategories.PLIEGUES,
+      PatientProgresCategories.PERIMETROS,
+      PatientProgresCategories.RESULTADOS,
+    ];
+    if (Array.isArray(path)) {
+      this.patientsStore.currentProgressCategory = path[0];
+      this.patientsStore.selectedProgressCategory = options[path[0].row];
+    } else {
+      this.patientsStore.currentProgressCategory = path;
+      this.patientsStore.selectedProgressCategory = options[path?.row ?? 0];
+    }
   };
 
-  didChangeImc = (value: string) => {
-    this.patientsStore.data_imc = value;
-  };
-
-  didChangeBodyFat = (value: string) => {
-    this.patientsStore.data_bodyFat = value;
-  };
-
-  didChangeWaist = (value: string) => {
-    this.patientsStore.data_waist = value;
-  };
-
-  didChangeAbdomen = (value: string) => {
-    this.patientsStore.data_abdomen = value;
-  };
-
-  didChangeHip = (value: string) => {
-    this.patientsStore.data_hip = value;
+  didChangeValue = (value: string, key: string) => {
+    // eslint-disable-next-line
+    this.patientsStore.dataPatientProgress[key] = value;
+    this.patientsStore.reloader = !this.patientsStore.reloader;
   };
 
   didPressSaveProgress = async () => {

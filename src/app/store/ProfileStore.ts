@@ -46,6 +46,7 @@ export class ProfileStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -67,6 +68,7 @@ export class ProfileStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -95,6 +97,7 @@ export class ProfileStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -148,6 +151,7 @@ export class ProfileStore {
           onClick: onRetry,
         },
       ],
+      autoClose: false,
     };
   };
 

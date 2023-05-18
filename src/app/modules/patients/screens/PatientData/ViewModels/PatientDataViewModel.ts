@@ -1,5 +1,6 @@
 import ScreenNames from '../../../../../../constants/Screens';
 import {AlertMessage} from '../../../../../../models/Common';
+import {PatientProgresCategories} from '../../../../../../models/Patients';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {PatientsStore} from '../../../../../store/PatientsStore';
 
@@ -27,6 +28,10 @@ class PatientDataViewModel {
 
   didPressEditData = () => {
     this.navigation.navigate(ScreenNames.PatientDataEditor.toString());
+  };
+
+  didChangeProgressCategory = (category: PatientProgresCategories) => {
+    this.patientsStore.selectedProgressCategory = category;
   };
 
   goBack = () => {

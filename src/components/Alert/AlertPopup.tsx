@@ -19,6 +19,7 @@ interface Props {
   type: AlertType;
   showIcon?: boolean;
   actions?: AlertAction[] | null;
+  autoClose?: boolean;
 
   onDismiss?: () => void;
 }
@@ -67,9 +68,12 @@ const AlertPopup = ({
   showIcon = true,
   actions = [],
   type = AlertType.Success,
+  autoClose,
   onDismiss = () => {},
 }: Props) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeBackdrop = useRef(new Animated.Value(0)).current;
+  const fadePopup = useRef(new Animated.Value(0)).current;
+  const scalePopup = useRef(new Animated.Value(0.8)).current;
 
   const [show, setShow] = useState(false);
   const [data, setData] = useState<AlertMessage>({
@@ -77,8 +81,21 @@ const AlertPopup = ({
     actions: [],
     message: '',
     showIcon: false,
+    autoClose: false,
     type: AlertType.Info,
   });
+
+  useEffect(() => {
+    if (show && autoClose) {
+      const timer = setTimeout(() => {
+        onDismiss && onDismiss();
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [show]);
 
   useEffect(() => {
     if (title) {
@@ -88,21 +105,49 @@ const AlertPopup = ({
         actions: actions!,
         message: message!,
         showIcon: showIcon,
+        autoClose: autoClose ?? false,
         type: type,
       });
-      Animated.timing(fadeAnim, {
+      Animated.timing(fadeBackdrop, {
         toValue: 1,
         duration: 200,
         useNativeDriver: false,
-      }).start();
-    } else {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: false,
       }).start(() => {
-        setShow(false);
-        cleanState();
+        Animated.parallel([
+          Animated.timing(fadePopup, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: false,
+          }),
+          Animated.timing(scalePopup, {
+            toValue: 1,
+            duration: 100,
+            useNativeDriver: false,
+          }),
+        ]).start();
+      });
+    } else {
+      Animated.parallel([
+        Animated.timing(fadePopup, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(scalePopup, {
+          toValue: 0.8,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start(() => {
+        Animated.timing(fadeBackdrop, {
+          toValue: 0,
+          duration: 200,
+          delay: 0,
+          useNativeDriver: false,
+        }).start(() => {
+          setShow(false);
+          cleanState();
+        });
       });
     }
   }, [title]);
@@ -113,6 +158,7 @@ const AlertPopup = ({
       actions: [],
       message: '',
       showIcon: false,
+      autoClose: false,
       type: AlertType.Info,
     });
   };
@@ -124,8 +170,13 @@ const AlertPopup = ({
 
   if (show) {
     return (
-      <Animated.View style={[styles.backdrop, {opacity: fadeAnim}]}>
-        <View style={styles.container}>
+      <View style={styles.super}>
+        <Animated.View style={[styles.backdrop, {opacity: fadeBackdrop}]} />
+        <Animated.View
+          style={[
+            styles.container,
+            {opacity: fadePopup, transform: [{scale: scalePopup}]},
+          ]}>
           <View style={styles.innerContainer}>
             <View style={styles.titleContainer}>
               {data.showIcon && (
@@ -167,30 +218,37 @@ const AlertPopup = ({
                 />
               ))}
           </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </View>
     );
   }
   return null;
 };
 
 const styles = StyleSheet.create({
+  super: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    zIndex: 100,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   backdrop: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#000000A0',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 100,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    backgroundColor: '#00000099',
   },
   container: {
-    width: Dimensions.get('window').width * 0.75,
+    width: Dimensions.get('window').width * 0.8,
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 20,
     overflow: 'hidden',
     maxWidth: 400,
   },

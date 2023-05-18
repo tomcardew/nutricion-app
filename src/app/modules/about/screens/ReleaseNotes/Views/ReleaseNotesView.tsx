@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: 20,
     width: Dimensions.get('window').width,
+    paddingBottom: 100,
   },
   display: {
     width: Dimensions.get('window').width - 40,
