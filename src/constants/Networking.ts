@@ -83,6 +83,7 @@ export class RequestData {
   private async requestBody() {
     this.body && Logger.warn(this.body);
     try {
+      Logger.info('Data used', JSON.stringify(this.body));
       const result = await fetch(this.fullPath, {
         method: this.method,
         body: JSON.stringify(this.body),

@@ -35,7 +35,8 @@ export class LoginStore {
           message: ErrorCatalogue.get(data.error),
           type: AlertType.Error,
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
         return null;
       }
@@ -46,7 +47,8 @@ export class LoginStore {
         message: 'No has llenado todos tus datos',
         type: AlertType.Warning,
         showIcon: true,
-        actions: [{label: 'Cerrar'}],
+        actions: [],
+        autoClose: true,
       };
       return null;
     }
@@ -72,7 +74,8 @@ export class LoginStore {
             'Recibirás un correo electrónico con un enlace para recuperar tu cuenta',
           type: AlertType.Success,
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
@@ -80,7 +83,8 @@ export class LoginStore {
           message: ErrorCatalogue.get(data.error),
           type: AlertType.Error,
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       }
     } else {
@@ -90,7 +94,8 @@ export class LoginStore {
         message: 'No has llenado todos tus datos',
         type: AlertType.Warning,
         showIcon: true,
-        actions: [{label: 'Cerrar'}],
+        actions: [],
+        autoClose: true,
       };
     }
   };

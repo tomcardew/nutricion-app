@@ -3,7 +3,7 @@ import {IndexPath} from '@ui-kitten/components';
 import AuthServices from '../../services/auth';
 import ErrorCatalogue from '../../utils/ErrorCatalogue';
 import {AlertMessage, AlertType} from '../../models/Common';
-import { Profile } from '../../models/Profile';
+import {Profile} from '../../models/Profile';
 
 export class RegisterStore {
   public name: string = '';
@@ -68,7 +68,7 @@ export class RegisterStore {
       if (data.success) {
         return {
           token: data.token,
-          profile: data.customer
+          profile: data.customer,
         };
       } else {
         this.error = {
@@ -76,7 +76,8 @@ export class RegisterStore {
           message: ErrorCatalogue.get(data.error),
           type: AlertType.Error,
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
         return null;
       }
@@ -87,7 +88,8 @@ export class RegisterStore {
         message: 'No has llenado todos tus datos',
         type: AlertType.Warning,
         showIcon: true,
-        actions: [{label: 'Cerrar'}],
+        actions: [],
+        autoClose: true,
       };
       return null;
     }

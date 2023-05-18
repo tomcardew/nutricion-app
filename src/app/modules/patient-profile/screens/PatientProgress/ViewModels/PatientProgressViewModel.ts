@@ -1,4 +1,5 @@
 import {UserType} from '../../../../../../models/Common';
+import {PatientProgresCategories} from '../../../../../../models/Patients';
 import {AuthStore} from '../../../../../store/AuthStore';
 import {ProfileStore} from '../../../../../store/ProfileStore';
 
@@ -23,6 +24,10 @@ class PatientProgressViewModel {
       UserType.Patient,
     );
     this.authStore.setUser(profile.data.profile);
+  };
+
+  didChangeCategory = (category: PatientProgresCategories) => {
+    this.authStore.progressCategory = category;
   };
 
   goBack = () => {

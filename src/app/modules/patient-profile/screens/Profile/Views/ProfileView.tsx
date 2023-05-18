@@ -40,15 +40,15 @@ const ProfileView = ({
 }: Props) => {
   const weight =
     profile && profile.Datos && profile.Datos.length > 0
-      ? profile.Datos[profile.Datos.length - 1].peso
+      ? profile.Datos[profile.Datos.length - 1].resultados_peso
       : '--';
   const bodyFat =
     profile && profile.Datos && profile.Datos.length > 0
-      ? profile.Datos[profile.Datos.length - 1].grasa_corporal
+      ? profile.Datos[profile.Datos.length - 1].resultados_grasa_corporal
       : '--';
-  const imc =
+  const muscle =
     profile && profile.Datos && profile.Datos.length > 0
-      ? profile.Datos[profile.Datos.length - 1].imc
+      ? profile.Datos[profile.Datos.length - 1].resultados_kg_musculo
       : '--';
 
   return (
@@ -87,7 +87,7 @@ const ProfileView = ({
           <ProfileSummaryCard
             weight={weight}
             bodyFat={bodyFat}
-            imc={imc}
+            muscle={muscle}
             style={{
               marginTop: 20,
               width: Dimensions.get('window').width - 40,

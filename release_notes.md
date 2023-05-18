@@ -45,3 +45,7 @@
 - Se añade selector de fecha en vista de citas y vista de ejercicios
 - Se mejora la visualización de citas
 - Se añade categoría en listado de pacientes (Admin) para separar pacientes activos de pacientes inactivos
+
+### 0.6.0
+
+- Se añaden nuevos campos de progreso. Ahora se categorizan en 'pliegues', 'perimetros' y 'resultados'. El administrador puede consultarlos y también actualizarlos. El paciente puede ver la evolución de su progreso.

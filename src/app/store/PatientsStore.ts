@@ -2,6 +2,7 @@ import {makeAutoObservable} from 'mobx';
 import AdministratorServices from '../../services/administrator';
 import {
   GalleryItems,
+  PatientProgresCategories,
   Patient,
   PatientExerciseListItem,
   PatientPicture,
@@ -71,12 +72,33 @@ export class PatientsStore {
   public note: string = '';
 
   // PatientDataEditor
-  public data_weight: string = '';
-  public data_imc: string = '';
-  public data_bodyFat: string = '';
-  public data_waist: string = '';
-  public data_abdomen: string = '';
-  public data_hip: string = '';
+  public reloader: boolean = false;
+  public selectedProgressCategory: PatientProgresCategories =
+    PatientProgresCategories.PLIEGUES;
+  public currentProgressCategory: IndexPath | undefined = undefined;
+  public dataPatientProgress: PatientProgress = {
+    id: 0,
+    pliegues_Tricipital: 0,
+    pliegues_Subescapular: 0,
+    pliegues_Bicipital: 0,
+    pliegues_Cresta_ilíaca: 0,
+    pliegues_Supraespinal: 0,
+    pliegues_Abdominal: 0,
+    pliegues_Muslo: 0,
+    pliegues_Pantorrilla: 0,
+    perimetros_cintura: '',
+    perimetros_abdomen: '',
+    perimetros_cadera: '',
+    perimetros_brazo_contraido: '',
+    perimetros_muslo: '',
+    perimetros_pantorrilla: '',
+    resultados_peso: '',
+    resultados_grasa_corporal: '',
+    resultados_kg_grasa: '',
+    resultados_kg_musculo: '',
+    resultados_suma_pliegues: 0,
+    fecha_registro: '',
+  };
 
   constructor() {
     makeAutoObservable(this);
@@ -145,13 +167,7 @@ export class PatientsStore {
       this.loading = false;
       if (data.success && data.data) {
         this.patientProgress = data.data;
-        this.data_weight = this.patientProgress?.peso.split(' ')[0] ?? '';
-        this.data_imc = this.patientProgress?.imc ?? '';
-        this.data_bodyFat =
-          this.patientProgress?.grasa_corporal.split(' ')[0] ?? '';
-        this.data_waist = this.patientProgress?.cintura ?? '';
-        this.data_abdomen = this.patientProgress?.abdomen ?? '';
-        this.data_hip = this.patientProgress?.cadera ?? '';
+        this.dataPatientProgress = data.data;
       } else {
         this.patientProgress = null;
         // TODO: Show error alert
@@ -176,17 +192,13 @@ export class PatientsStore {
   public savePatientProgress = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
+      let body: any = {...this.dataPatientProgress};
+      delete body.id;
+      delete body.fecha_registro;
       const data = await AdministratorServices.postPatientProgress(
         this.selectedPatientId,
         token,
-        {
-          peso: this.data_weight + ' kg',
-          imc: this.data_imc,
-          abdomen: this.data_abdomen,
-          cadera: this.data_hip,
-          cintura: this.data_waist,
-          grasa_corporal: this.data_bodyFat + ' %',
-        },
+        body,
       );
       this.loading = false;
       console.log(data);
@@ -196,15 +208,17 @@ export class PatientsStore {
           title: 'Operación exitosa',
           message: 'El progreso ha sido guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
           type: AlertType.Error,
           title: 'Ocurrió un error',
-          message: 'El preogreso no pudo ser guardado correctamente',
+          message: 'El progreso no pudo ser guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -212,12 +226,29 @@ export class PatientsStore {
   };
 
   public cleanPatientProgress = () => {
-    this.data_weight = '';
-    this.data_imc = '';
-    this.data_bodyFat = '';
-    this.data_waist = '';
-    this.data_abdomen = '';
-    this.data_hip = '';
+    this.dataPatientProgress = {
+      id: 0,
+      pliegues_Tricipital: 0,
+      pliegues_Subescapular: 0,
+      pliegues_Bicipital: 0,
+      pliegues_Cresta_ilíaca: 0,
+      pliegues_Supraespinal: 0,
+      pliegues_Abdominal: 0,
+      pliegues_Muslo: 0,
+      pliegues_Pantorrilla: 0,
+      perimetros_cintura: '',
+      perimetros_abdomen: '',
+      perimetros_cadera: '',
+      perimetros_brazo_contraido: '',
+      perimetros_muslo: '',
+      perimetros_pantorrilla: '',
+      resultados_peso: '',
+      resultados_grasa_corporal: '',
+      resultados_kg_grasa: '',
+      resultados_kg_musculo: '',
+      resultados_suma_pliegues: 0,
+      fecha_registro: '',
+    };
   };
 
   public toggleExercises = async (token: string) => {
@@ -326,6 +357,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -457,7 +489,8 @@ export class PatientsStore {
           title: 'Operación exitosa',
           message: 'El ejercicio ha sido guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
@@ -465,7 +498,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'El ejercicio no pudo ser guardado correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -509,7 +543,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo subir la imagen correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
       }
@@ -537,7 +572,8 @@ export class PatientsStore {
         title: 'Ocurrió un error',
         message: 'No se pudo subir la imagen correctamente',
         showIcon: true,
-        actions: [{label: 'Cerrar'}],
+        actions: [],
+        autoClose: true,
         error: data.error,
       };
       return null;
@@ -572,6 +608,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -594,6 +631,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -616,6 +654,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -635,7 +674,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo completar la operación',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
         return null;
@@ -662,6 +702,7 @@ export class PatientsStore {
           type: AlertActionType.Cancel,
         },
       ],
+      autoClose: false,
     };
   };
 
@@ -682,7 +723,8 @@ export class PatientsStore {
           title: 'Ocurrió un error',
           message: 'No se pudo completar la operación',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
           error: data.error,
         };
         return null;
@@ -697,12 +739,8 @@ export class PatientsStore {
       message: 'Se ha actualizado la dieta con éxito',
       showIcon: true,
       type: AlertType.Success,
-      actions: [
-        {
-          label: 'Cerrar',
-          type: AlertActionType.Cancel,
-        },
-      ],
+      actions: [],
+      autoClose: true,
     };
   };
 
@@ -874,16 +912,16 @@ export class PatientsStore {
   }
 
   get canSavePatientProgress() {
-    if (
-      this.data_weight &&
-      this.data_imc &&
-      this.data_bodyFat &&
-      this.data_waist &&
-      this.data_abdomen &&
-      this.data_hip
-    ) {
-      return true;
-    }
+    // if (
+    //   this.data_weight &&
+    //   this.data_imc &&
+    //   this.data_bodyFat &&
+    //   this.data_waist &&
+    //   this.data_abdomen &&
+    //   this.data_hip
+    // ) {
+    //   return true;
+    // }
     return false;
   }
 }

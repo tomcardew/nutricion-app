@@ -9,7 +9,7 @@ import {theme} from '../../../../../../utils/Utils';
 interface Props {
   weight?: string;
   bodyFat?: string;
-  imc?: string;
+  muscle?: string;
   style?: StyleProp<ViewStyle>;
   onSeeAllPress?: () => void;
 }
@@ -31,7 +31,7 @@ const DataItem = ({name, value}: DataItemProps) => (
 const ProfileSummaryCard = ({
   weight,
   bodyFat,
-  imc,
+  muscle,
   style,
   onSeeAllPress = () => {},
 }: Props) => {
@@ -51,7 +51,7 @@ const ProfileSummaryCard = ({
         </View>
         <Separator orientation="vertical" style={{height: '120%'}} />
         <View style={styles.column}>
-          <DataItem name="IMC" value={imc} />
+          <DataItem name="Kg. Músculo" value={muscle} />
         </View>
       </View>
     </SimpleCard>

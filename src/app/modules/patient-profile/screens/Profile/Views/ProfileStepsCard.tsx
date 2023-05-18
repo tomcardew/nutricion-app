@@ -15,10 +15,11 @@ import {theme} from '../../../../../../utils/Utils';
 interface Props {
   count?: number;
   goal?: number;
+  simple?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-const ProfileStepsCard = ({count = 0, goal = 5000, style}: Props) => {
+const ProfileStepsCard = ({count = 0, simple, goal = 5000, style}: Props) => {
   const widthAnim = useRef(new Animated.Value(0)).current;
   const currentValue = (count * barWidth) / goal;
   useEffect(() => {
@@ -29,8 +30,9 @@ const ProfileStepsCard = ({count = 0, goal = 5000, style}: Props) => {
       delay: 1000,
     }).start();
   }, [count]);
-  return (
-    <SimpleCard title="Pasos" style={[styles.container, style]}>
+
+  const innerBody = () => (
+    <View>
       <View style={styles.contentContainer}>
         <Animated.View style={[styles.progressBar, {width: widthAnim}]}>
           {currentValue > 50 && (
@@ -47,6 +49,24 @@ const ProfileStepsCard = ({count = 0, goal = 5000, style}: Props) => {
         {currentValue <= 50 && <Text>Actual: {count} pasos</Text>}
         <Text>Meta: {goal} pasos</Text>
       </View>
+    </View>
+  );
+
+  if (simple) {
+    return (
+      <View style={[styles.container, style]}>
+        <Text
+          weight={FontWeight.Bold}
+          style={{color: theme['color-primary-700'], fontSize: 18}}>
+          Pasos
+        </Text>
+        {innerBody()}
+      </View>
+    );
+  }
+  return (
+    <SimpleCard title="Pasos" style={[styles.container, style]}>
+      {innerBody()}
     </SimpleCard>
   );
 };

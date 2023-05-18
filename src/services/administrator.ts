@@ -1,5 +1,5 @@
 import {Networking, RequestData} from '../constants/Networking';
-import {PatientExerciseBody, PatientProgressBody} from '../models/Patients';
+import {PatientExerciseBody, PatientProgress} from '../models/Patients';
 import {Asset} from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import {uriToFileType} from '../utils/Utils';
@@ -65,7 +65,7 @@ const AdministratorServices = {
   postPatientProgress: async (
     id: string,
     token: string,
-    data: PatientProgressBody,
+    data: PatientProgress,
   ) => {
     try {
       const request = new RequestData(

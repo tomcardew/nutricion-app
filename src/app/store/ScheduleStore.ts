@@ -75,7 +75,8 @@ export class ScheduleStore {
           title: 'Operación exitosa',
           message: 'La cita ha sido guardada correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
+          autoClose: true,
         };
       } else {
         this.alert = {
@@ -83,8 +84,9 @@ export class ScheduleStore {
           title: 'Ocurrió un error',
           message: 'La cita no pudo ser guardada correctamente',
           showIcon: true,
-          actions: [{label: 'Cerrar'}],
+          actions: [],
           error: data.error,
+          autoClose: true,
         };
       }
     }
