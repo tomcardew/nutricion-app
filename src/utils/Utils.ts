@@ -48,8 +48,10 @@ export const nameToFirstLetters = (fullname: string) => {
 };
 
 export interface KeyValue {
+  name?: string;
   key: string;
   value: any;
+  properties?: any;
 }
 
 export const dateToMonthYear = (date: Date) => {
@@ -205,6 +207,6 @@ export const isPatientProgressComplete = (
     resultados_suma_pliegues,
     fecha_registro,
   } = progress;
-  
+
   return false;
 };

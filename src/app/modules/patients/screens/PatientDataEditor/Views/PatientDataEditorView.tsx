@@ -1,87 +1,71 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ActionButton} from '../../../../../../components/Buttons';
-import {TextInput} from '../../../../../../components/Inputs';
+import {Selector, TextInput} from '../../../../../../components/Inputs';
+import {
+  PatientProgresCategories,
+  patientProgresCategoriesLabels,
+  PatientProgress,
+  patientProgressToKeyValues,
+} from '../../../../../../models/Patients';
+import {IndexPath} from '@ui-kitten/components';
+import Separator from '../../../../../../components/Separator';
+import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
-  weight?: string;
-  imc?: string;
-  bodyFat?: string;
-  waist?: string;
-  abdomen?: string;
-  hip?: string;
+  data: PatientProgress;
+  category: PatientProgresCategories;
+  selectedCategory?: IndexPath;
   canSave?: boolean;
-
-  didChangeWeight?: (value: string) => void;
-  didChangeImc?: (value: string) => void;
-  didChangeBodyFat?: (value: string) => void;
-  didChangeWaist?: (value: string) => void;
-  didChangeAbdomen?: (value: string) => void;
-  didChangeHip?: (value: string) => void;
-
+  reloader?: boolean;
+  didChangeValue?: (value: string, key: string) => void;
+  didChangeCategory?: (path: IndexPath | IndexPath[]) => void;
   onSaveProgress?: () => void;
 }
 
 const PatientDataEditorView = ({
-  weight,
-  imc,
-  bodyFat,
-  waist,
-  abdomen,
-  hip,
+  data,
+  selectedCategory,
   canSave = false,
-  didChangeWeight = () => {},
-  didChangeImc = () => {},
-  didChangeBodyFat = () => {},
-  didChangeWaist = () => {},
-  didChangeAbdomen = () => {},
-  didChangeHip = () => {},
+  category = PatientProgresCategories.PLIEGUES,
+  reloader,
+  didChangeValue = () => {},
   onSaveProgress = () => {},
+  didChangeCategory = () => {},
 }: Props) => {
+  const items = patientProgressToKeyValues(data, category);
+
+  useEffect(() => {
+    Logger.warn('Data changed', data);
+  }, [data]);
+
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
-        <TextInput
-          label="Peso (Kg)"
-          value={weight ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeWeight}
+        <Selector
+          label="CATEGORIA"
+          placeholder="Selecciona una opción"
+          selectedIndex={selectedCategory}
+          onSelect={didChangeCategory}
+          keys={patientProgresCategoriesLabels}
+          value={patientProgresCategoriesLabels[selectedCategory?.row ?? 0]}
         />
-        <TextInput
-          label="IMC"
-          value={imc ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeImc}
-        />
-        <TextInput
-          label="Grasa corporal (Porcentaje %)"
-          value={bodyFat ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeBodyFat}
-        />
-        <TextInput
-          label="Cintura"
-          value={waist ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeWaist}
-        />
-        <TextInput
-          label="Abdomen"
-          value={abdomen ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeAbdomen}
-        />
-        <TextInput
-          label="Cadera"
-          value={hip ?? ''}
-          keyboardType="decimal-pad"
-          onChangeText={didChangeHip}
-        />
+        <Separator style={{marginVertical: 10}} />
+        {items.slice().map(item => (
+          <TextInput
+            label={item.name?.toUpperCase()}
+            value={`${item.value}`}
+            keyboardType="default"
+            key={`patient-data-editor-item-${item.key}`}
+            onChangeText={value => {
+              didChangeValue(value, item.key);
+            }}
+          />
+        ))}
         <ActionButton
           style={styles.button}
-          disabled={!canSave}
-          title="Guardar"
+          title="Guardar cambios"
           onPress={onSaveProgress}
         />
       </View>

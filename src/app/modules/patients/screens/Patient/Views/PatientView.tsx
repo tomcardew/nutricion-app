@@ -33,7 +33,7 @@ const PatientView = ({
   const patientIsActive = data?.activo;
   const options: MenuOption[] = [
     {
-      title: 'Datos del paciente',
+      title: 'Progreso',
       screen: ScreenNames.PatientData,
       props: {
         patientId: data?.idUsuario,

@@ -35,7 +35,7 @@ const PatientDataView = ({
           width: Dimensions.get('window').width,
         }}
         goal={5000}
-        count={2750}
+        count={stepCount}
       />
       <View style={styles.categoriesContainer}>
         <PillButton
@@ -61,7 +61,10 @@ const PatientDataView = ({
         contentContainerStyle={{paddingBottom: 50}}
         ListEmptyComponent={<EmptyView message="No hay datos registrados" />}
         renderItem={item => (
-          <VerticalInfoCard title={item.item.key} content={item.item.value} />
+          <VerticalInfoCard
+            title={item.item.name ?? ''}
+            content={item.item.value}
+          />
         )}
         keyExtractor={item => `patient-data-item-${item.key}`}
       />

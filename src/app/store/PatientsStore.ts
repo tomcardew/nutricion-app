@@ -72,8 +72,10 @@ export class PatientsStore {
   public note: string = '';
 
   // PatientDataEditor
+  public reloader: boolean = false;
   public selectedProgressCategory: PatientProgresCategories =
     PatientProgresCategories.PLIEGUES;
+  public currentProgressCategory: IndexPath | undefined = undefined;
   public dataPatientProgress: PatientProgress = {
     id: 0,
     pliegues_Tricipital: 0,
@@ -190,10 +192,13 @@ export class PatientsStore {
   public savePatientProgress = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
+      let body: any = {...this.dataPatientProgress};
+      delete body.id;
+      delete body.fecha_registro;
       const data = await AdministratorServices.postPatientProgress(
         this.selectedPatientId,
         token,
-        this.dataPatientProgress,
+        body,
       );
       this.loading = false;
       console.log(data);

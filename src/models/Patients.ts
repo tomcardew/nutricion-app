@@ -20,58 +20,34 @@ export enum PatientProgresCategories {
   RESULTADOS = 'resultados',
 }
 
+export const patientProgresCategoriesLabels = [
+  'Pliegues',
+  'Perimetros',
+  'Resultados',
+];
+
 export interface PatientProgress {
   id: number;
-  pliegues_Tricipital: number;
-  pliegues_Subescapular: number;
-  pliegues_Bicipital: number;
-  pliegues_Cresta_ilíaca: number;
-  pliegues_Supraespinal: number;
-  pliegues_Abdominal: number;
-  pliegues_Muslo: number;
-  pliegues_Pantorrilla: number;
-  perimetros_cintura: string;
-  perimetros_abdomen: string;
-  perimetros_cadera: string;
-  perimetros_brazo_contraido: string;
-  perimetros_muslo: string;
-  perimetros_pantorrilla: string;
-  resultados_peso: string;
-  resultados_grasa_corporal: string;
-  resultados_kg_grasa: string;
-  resultados_kg_musculo: string;
-  resultados_suma_pliegues: number;
+  pliegues_Tricipital: any;
+  pliegues_Subescapular: any;
+  pliegues_Bicipital: any;
+  pliegues_Cresta_ilíaca: any;
+  pliegues_Supraespinal: any;
+  pliegues_Abdominal: any;
+  pliegues_Muslo: any;
+  pliegues_Pantorrilla: any;
+  perimetros_cintura: any;
+  perimetros_abdomen: any;
+  perimetros_cadera: any;
+  perimetros_brazo_contraido: any;
+  perimetros_muslo: any;
+  perimetros_pantorrilla: any;
+  resultados_peso: any;
+  resultados_grasa_corporal: any;
+  resultados_kg_grasa: any;
+  resultados_kg_musculo: any;
+  resultados_suma_pliegues: any;
   fecha_registro: string;
-}
-
-export interface PatientProgressBody {
-  pliegues_Tricipital: number;
-  pliegues_Subescapular: number;
-  pliegues_Bicipital: number;
-  pliegues_Cresta_ilíaca: number;
-  pliegues_Supraespinal: number;
-  pliegues_Abdominal: number;
-  pliegues_Muslo: number;
-  pliegues_Pantorrilla: number;
-  perimetros_cintura: string;
-  perimetros_abdomen: string;
-  perimetros_cadera: string;
-  perimetros_brazo_contraido: string;
-  perimetros_muslo: string;
-  perimetros_pantorrilla: string;
-  resultados_peso: string;
-  resultados_grasa_corporal: string;
-  resultados_kg_grasa: string;
-  resultados_kg_musculo: string;
-  resultados_suma_pliegues: number;
-}
-
-export function patientProgressToBody(
-  data: PatientProgress,
-): PatientProgressBody {
-  return {
-    ...data,
-  };
 }
 
 export function patientProgressToKeyValues(
@@ -87,7 +63,12 @@ export function patientProgressToKeyValues(
 
   Object.keys(data).forEach(key => {
     if (!ignoreKeys.includes(key) && key.startsWith(usingCategory)) {
-      results.push({key: key.split('_').join(' '), value: data[key]});
+      results.push({
+        name: key.split('_').join(' '),
+        key,
+        value: data[key],
+        properties: {isNumeric: usingCategory === 'pliegues'},
+      });
     }
   });
 
