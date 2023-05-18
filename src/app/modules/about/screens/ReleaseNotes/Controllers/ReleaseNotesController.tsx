@@ -17,7 +17,7 @@ const ReleaseNotesController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
       title="Notas de la versión"
-      subtitle={Environment.VERSION}
+      subtitle={`Actual: ${Environment.VERSION}`}
       loading={viewModel.authStore.loading}
       disableScrollBar
       loadingMessage="Cargando..."

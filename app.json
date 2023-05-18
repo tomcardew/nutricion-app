@@ -3,6 +3,6 @@
   "displayName": "Mi Nutri Plan",
   "url": "http://146.190.36.239",
   "port": "4000",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "environment": "dev"
 }
