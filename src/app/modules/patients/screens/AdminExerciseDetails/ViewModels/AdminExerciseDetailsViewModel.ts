@@ -1,6 +1,7 @@
-import {Logger} from '../../../../../../utils/Utils';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/PatientsStore';
+import ScreenNames from '../../../../../../constants/Screens';
+import { Logger } from '../../../../../../utils/Utils';
+import { AuthStore } from '../../../../../store/AuthStore';
+import { PatientsStore } from '../../../../../store/PatientsStore';
 
 class AdminExerciseDetailsViewModel {
   navigation: any;
@@ -27,6 +28,10 @@ class AdminExerciseDetailsViewModel {
   getExerciseImage = async () => {
     await this.patientsStore.getExerciseImage();
   };
+
+  goToComments = () => {
+    this.navigation.navigate(ScreenNames.PatientExerciseComments.toString());
+  }
 
   dismissAlert = () => {
     this.patientsStore.alert = null;

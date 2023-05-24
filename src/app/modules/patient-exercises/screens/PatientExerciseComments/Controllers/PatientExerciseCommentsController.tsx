@@ -11,7 +11,7 @@ interface Props {
 const PatientExerciseCommentsController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
-      title="PatientExerciseComments"
+      title="Comentarios"
       loading={false}
       loadingMessage="Cargando..."
       onBackAction={viewModel.goBack}>

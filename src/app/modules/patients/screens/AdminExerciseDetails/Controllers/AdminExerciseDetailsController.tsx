@@ -5,6 +5,7 @@ import AdminExerciseDetailsViewModel from '../ViewModels/AdminExerciseDetailsVie
 import AdminExerciseDetailsView from '../Views/AdminExerciseDetailsView';
 import {Logger, dateToDayMonth} from '../../../../../../utils/Utils';
 import {Icon} from '@ui-kitten/components';
+import {TouchableOpacity} from 'react-native';
 
 interface Props {
   viewModel: AdminExerciseDetailsViewModel;
@@ -28,6 +29,17 @@ const AdminExerciseDetailsController = observer(({viewModel}: Props) => {
       loading={false}
       alert={viewModel.patientsStore.alert}
       loadingMessage="Cargando..."
+      rightAccessory={
+        <TouchableOpacity
+          style={{marginRight: 20}}
+          onPress={viewModel.goToComments}>
+          <Icon
+            style={{width: 24, height: 24}}
+            fill="#FFF"
+            name="message-circle-outline"
+          />
+        </TouchableOpacity>
+      }
       actionButtonView={
         !isAdmin && !isCompleted ? (
           <Icon

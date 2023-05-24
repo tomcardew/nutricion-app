@@ -4,6 +4,8 @@ import {useStores} from '../../use-store';
 import {useNavigation} from '@react-navigation/native';
 import ScreenNames from '../constants/Screens';
 import {
+  PatientExerciseCommentsController,
+  PatientExerciseCommentsViewModel,
   PatientExercisesController,
   PatientExercisesViewModel,
 } from '../app/modules/patient-exercises';
@@ -18,20 +20,34 @@ const ExercisesRouter = () => {
   const {patientsStore, authStore} = useStores();
   const navigation = useNavigation();
 
+  // MARK: - Patient Screens
+
   const patientExercisesViewModel = new PatientExercisesViewModel(
     navigation,
     authStore,
     patientsStore,
   );
 
+  const PatientExercisesScreen = () => (
+    <PatientExercisesController viewModel={patientExercisesViewModel} />
+  );
+
+  const patientExerciseCommentsViewModel = new PatientExerciseCommentsViewModel(
+    navigation,
+  );
+
+  const PatientExerciseCommentsScreen = () => (
+    <PatientExerciseCommentsController
+      viewModel={patientExerciseCommentsViewModel}
+    />
+  );
+
+  // MARK: - Admin Screens
+
   const adminExerciseDetailsViewModel = new AdminExerciseDetailsViewModel(
     navigation,
     patientsStore,
     authStore,
-  );
-
-  const PatientExercisesScreen = () => (
-    <PatientExercisesController viewModel={patientExercisesViewModel} />
   );
 
   const AdminExerciseDetailsScreen = () => (
@@ -47,6 +63,10 @@ const ExercisesRouter = () => {
       <Stack.Screen
         name={ScreenNames.AdminExerciseDetails.toString()}
         component={AdminExerciseDetailsScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientExerciseComments.toString()}
+        component={PatientExerciseCommentsScreen}
       />
     </Stack.Navigator>
   );
