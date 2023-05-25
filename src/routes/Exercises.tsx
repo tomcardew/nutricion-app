@@ -34,6 +34,8 @@ const ExercisesRouter = () => {
 
   const patientExerciseCommentsViewModel = new PatientExerciseCommentsViewModel(
     navigation,
+    authStore,
+    patientsStore,
   );
 
   const PatientExerciseCommentsScreen = () => (

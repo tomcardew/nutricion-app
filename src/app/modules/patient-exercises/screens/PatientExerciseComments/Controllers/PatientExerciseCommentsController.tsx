@@ -12,10 +12,19 @@ const PatientExerciseCommentsController = observer(({viewModel}: Props) => {
   return (
     <BaseLayoutView
       title="Comentarios"
-      loading={false}
+      loading={viewModel.patientsStore.loading}
       loadingMessage="Cargando..."
+      disableScrollBar
+      alert={viewModel.patientsStore.alert}
+      onAlertDismiss={viewModel.dismiss}
       onBackAction={viewModel.goBack}>
-      <PatientExerciseCommentsView />
+      <PatientExerciseCommentsView
+        notes={viewModel.patientsStore.selectedAdminExercise?.Notas}
+        username={viewModel.authStore.user?.nombre}
+        commentTextPrompt={viewModel.patientsStore.commentTextPrompt}
+        onChangeText={viewModel.onChangeText}
+        didPressSend={viewModel.didPressSend}
+      />
     </BaseLayoutView>
   );
 });

@@ -8,9 +8,14 @@ interface Props {
   value: string;
 
   onChangeText?: (nextValue: string) => void;
+  didPressSend?: () => void;
 }
 
-const CommentTextBox = ({value, onChangeText = () => {}}: Props) => {
+const CommentTextBox = ({
+  value,
+  onChangeText = () => {},
+  didPressSend = () => {},
+}: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -28,7 +33,7 @@ const CommentTextBox = ({value, onChangeText = () => {}}: Props) => {
           borderRadius: 100,
           padding: 8,
         }}
-        onPress={() => {}}>
+        onPress={didPressSend}>
         <Icon
           style={{width: 24, height: 24}}
           fill="#FFF"

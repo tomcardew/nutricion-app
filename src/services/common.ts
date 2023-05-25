@@ -24,6 +24,22 @@ const CommonServices = {
     }
     return data;
   },
+  addComment: async (
+    token: string,
+    notas: string,
+    type: UserType,
+    patientId?: string,
+    exerciseId?: string,
+  ) => {
+    const isAdmin = type === UserType.Admin;
+    let data;
+    if (isAdmin) {
+      data = await AdministratorServices.addComment(token, patientId ?? '', exerciseId ?? '', notas)
+    } else {
+      data = await PatientServices.addComment(token, exerciseId ?? '', notas)
+    }
+    return data;
+  },
 };
 
 export default CommonServices;

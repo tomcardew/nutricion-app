@@ -1,13 +1,55 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import CommentTextBox from '../../../../../../components/CommentTextBox';
+import {ExerciseComment} from '../../../../../../models/Patients';
+import EmptyView from '../../../../../../components/EmptyView';
+import CommentItem from '../../../../../../components/CommentItem';
+import {getRandomInt} from '../../../../../../utils/Utils';
 
-interface Props {}
+interface Props {
+  notes?: ExerciseComment[];
+  username?: string;
 
-const PatientExerciseCommentsView = ({}: Props) => {
+  commentTextPrompt?: string;
+  onChangeText?: (nextValue: string) => void;
+  didPressSend?: () => void;
+}
+
+const PatientExerciseCommentsView = ({
+  notes = [],
+  username = '',
+  commentTextPrompt = '',
+  onChangeText = () => {},
+  didPressSend = () => {},
+}: Props) => {
+  const tabHeight = useBottomTabBarHeight();
+
   return (
-    <View style={styles.container}>
-      <CommentTextBox value="" />
+    <View style={[styles.container, {paddingBottom: tabHeight + 8}]}>
+      <FlatList
+        inverted
+        data={notes.slice().reverse()}
+        ListEmptyComponent={
+          <EmptyView message="No hay comentarios para mostrar" />
+        }
+        contentContainerStyle={{paddingTop: 10}}
+        renderItem={({item}) => (
+          <CommentItem
+            owner={item.Nombre}
+            comment={item.nota}
+            isCurrentUser={item.Nombre === username}
+          />
+        )}
+        keyExtractor={item =>
+          `patient-exercise-comment-${item.nota}-${getRandomInt(0, 1000)}`
+        }
+      />
+      <CommentTextBox
+        value={commentTextPrompt}
+        onChangeText={onChangeText}
+        didPressSend={didPressSend}
+      />
     </View>
   );
 };

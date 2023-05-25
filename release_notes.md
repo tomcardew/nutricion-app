@@ -49,3 +49,7 @@
 ### 0.6.0
 
 - Se añaden nuevos campos de progreso. Ahora se categorizan en 'pliegues', 'perimetros' y 'resultados'. El administrador puede consultarlos y también actualizarlos. El paciente puede ver la evolución de su progreso.
+
+### 0.7.0
+
+- Se añade la pantalla de comentarios, en la que el paciente podrá dejar anotaciones o mensajes para el administrador con respecto a los ejercicios que se le asignaron

@@ -103,10 +103,15 @@ export interface PatientExerciseListItem {
   fecha_ejercicio: string;
   completado: boolean;
   Peso: string;
-  Notas: string;
+  Notas: ExerciseComment[];
   Categoria_ejercicio: Category;
   Nombre_ejercicio: ExerciseName;
   Series: Serie;
   Repeticiones: Repetition;
   Descansos: Rest;
+}
+
+export interface ExerciseComment {
+  nota: string;
+  Nombre: string;
 }
