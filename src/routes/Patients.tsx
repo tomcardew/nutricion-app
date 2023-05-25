@@ -21,6 +21,10 @@ import {useNavigation} from '@react-navigation/native';
 import AdminExercisesController from '../app/modules/patients/screens/AdminExercises/Controllers/AdminExercisesController';
 import PatientDataEditorViewModel from '../app/modules/patients/screens/PatientDataEditor/ViewModels/PatientDataEditorViewModel';
 import PatientDataEditorController from '../app/modules/patients/screens/PatientDataEditor/Controllers/PatientDataEditorController';
+import {
+  PatientExerciseCommentsController,
+  PatientExerciseCommentsViewModel,
+} from '../app/modules/patient-exercises';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +71,18 @@ const PatientsRouter = () => {
     navigation,
     patientsStore,
     authStore,
+  );
+
+  const patientExerciseCommentsViewModel = new PatientExerciseCommentsViewModel(
+    navigation,
+    authStore,
+    patientsStore,
+  );
+
+  const PatientExerciseCommentsScreen = () => (
+    <PatientExerciseCommentsController
+      viewModel={patientExerciseCommentsViewModel}
+    />
   );
 
   const PatientsScreen = () => (
@@ -134,6 +150,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.AdminExerciseDetails.toString()}
         component={AdminExerciseDetailsScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientExerciseComments.toString()}
+        component={PatientExerciseCommentsScreen}
       />
     </Stack.Navigator>
   );

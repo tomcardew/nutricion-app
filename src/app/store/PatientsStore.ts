@@ -1,5 +1,5 @@
-import {makeAutoObservable} from 'mobx';
-import AdministratorServices from '../../services/administrator';
+import { makeAutoObservable } from "mobx";
+import AdministratorServices from "../../services/administrator";
 import {
   GalleryItems,
   PatientProgresCategories,
@@ -7,17 +7,17 @@ import {
   PatientExerciseListItem,
   PatientPicture,
   PatientProgress,
-} from '../../models/Patients';
-import moment from 'moment';
+} from "../../models/Patients";
+import moment from "moment";
 import {
   Category,
   Exercise,
   Repetition,
   Rest,
   Serie,
-} from '../../models/Catalogues';
-import CataloguesServices from '../../services/catalogues';
-import {IndexPath} from '@ui-kitten/components';
+} from "../../models/Catalogues";
+import CataloguesServices from "../../services/catalogues";
+import { IndexPath } from "@ui-kitten/components";
 import {
   AlertActionType,
   AlertMessage,
@@ -28,10 +28,12 @@ import {
   MediaType,
   PatientsCategory,
   StepCountRecord,
-} from '../../models/Common';
-import {Asset} from 'react-native-image-picker';
-import PatientServices from '../../services/patient';
-import {Logger, toGalleryCategory, typeOfAsset} from '../../utils/Utils';
+  UserType,
+} from "../../models/Common";
+import { Asset } from "react-native-image-picker";
+import PatientServices from "../../services/patient";
+import { Logger, toGalleryCategory, typeOfAsset } from "../../utils/Utils";
+import CommonServices from "../../services/common";
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
@@ -39,7 +41,7 @@ export class PatientsStore {
   public loading: boolean = true;
   public refreshing: boolean = false;
   public patients_raw: Patient[] = [];
-  public query: string = '';
+  public query: string = "";
   public selectedPatientsList: PatientsCategory = PatientsCategory.All;
 
   public loadingSelectedPatient: boolean = true;
@@ -57,6 +59,9 @@ export class PatientsStore {
   public selectedAdminExercise: PatientExerciseListItem | null = null;
   public AdminExercises: PatientExerciseListItem[] = [];
 
+  // Comments
+  public commentTextPrompt: string = "";
+
   // AdminExercises
   public categories_raw: Category[] = [];
   public currentCategory: IndexPath | undefined = undefined;
@@ -68,8 +73,8 @@ export class PatientsStore {
   public currentRepetitions: IndexPath | undefined = undefined;
   public rest_raw: Rest[] = [];
   public currentRest: IndexPath | undefined = undefined;
-  public weight: string = '';
-  public note: string = '';
+  public weight: string = "";
+  public note: string = "";
 
   // PatientDataEditor
   public reloader: boolean = false;
@@ -86,18 +91,18 @@ export class PatientsStore {
     pliegues_Abdominal: 0,
     pliegues_Muslo: 0,
     pliegues_Pantorrilla: 0,
-    perimetros_cintura: '',
-    perimetros_abdomen: '',
-    perimetros_cadera: '',
-    perimetros_brazo_contraido: '',
-    perimetros_muslo: '',
-    perimetros_pantorrilla: '',
-    resultados_peso: '',
-    resultados_grasa_corporal: '',
-    resultados_kg_grasa: '',
-    resultados_kg_musculo: '',
+    perimetros_cintura: "",
+    perimetros_abdomen: "",
+    perimetros_cadera: "",
+    perimetros_brazo_contraido: "",
+    perimetros_muslo: "",
+    perimetros_pantorrilla: "",
+    resultados_peso: "",
+    resultados_grasa_corporal: "",
+    resultados_kg_grasa: "",
+    resultados_kg_musculo: "",
     resultados_suma_pliegues: 0,
-    fecha_registro: '',
+    fecha_registro: "",
   };
 
   constructor() {
@@ -106,7 +111,7 @@ export class PatientsStore {
 
   public getPatients = async (token: string | null) => {
     this.loading = true;
-    const patients = await AdministratorServices.getPatients(token ?? '');
+    const patients = await AdministratorServices.getPatients(token ?? "");
     this.loading = false;
     if (patients.success) {
       this.patients_raw = patients.data;
@@ -122,7 +127,7 @@ export class PatientsStore {
       this.loadingSelectedPatient = true;
       const data = await AdministratorServices.getPatientById(
         this.selectedPatientId,
-        token,
+        token
       );
       this.loadingSelectedPatient = false;
       if (data.success) {
@@ -131,7 +136,7 @@ export class PatientsStore {
       } else {
         this.selectedPatient = null;
         this.selectedPatientId = null;
-        Logger.error('Error getting patient by Id', data);
+        Logger.error("Error getting patient by Id", data);
       }
     }
   };
@@ -140,12 +145,12 @@ export class PatientsStore {
     if (this.selectedAdminExercise) {
       const data: GoogleImageResults =
         await CataloguesServices.getExerciseImage(
-          this.selectedAdminExercise.Nombre_ejercicio.nombre_ejercicio,
+          this.selectedAdminExercise.Nombre_ejercicio.nombre_ejercicio
         );
       data.image_results.every((asset: GoogleImageItem) => {
         if (
           [MediaType.Image, MediaType.Video].includes(
-            typeOfAsset(asset.original),
+            typeOfAsset(asset.original)
           ) &&
           this.selectedAdminExercise
         ) {
@@ -162,7 +167,7 @@ export class PatientsStore {
       this.loading = true;
       const data = await AdministratorServices.getPatientProgress(
         this.selectedPatientId,
-        token,
+        token
       );
       this.loading = false;
       if (data.success && data.data) {
@@ -180,7 +185,7 @@ export class PatientsStore {
       const data = await AdministratorServices.getSteps(
         token,
         this.selectedPatientId,
-        new Date(),
+        new Date()
       );
       if (data.succes && data.data) {
         const lastValue = data.data.pop();
@@ -192,21 +197,21 @@ export class PatientsStore {
   public savePatientProgress = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
-      let body: any = {...this.dataPatientProgress};
+      let body: any = { ...this.dataPatientProgress };
       delete body.id;
       delete body.fecha_registro;
       const data = await AdministratorServices.postPatientProgress(
         this.selectedPatientId,
         token,
-        body,
+        body
       );
       this.loading = false;
       console.log(data);
       if (data.success) {
         this.alert = {
           type: AlertType.Success,
-          title: 'Operación exitosa',
-          message: 'El progreso ha sido guardado correctamente',
+          title: "Operación exitosa",
+          message: "El progreso ha sido guardado correctamente",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -214,8 +219,8 @@ export class PatientsStore {
       } else {
         this.alert = {
           type: AlertType.Error,
-          title: 'Ocurrió un error',
-          message: 'El progreso no pudo ser guardado correctamente',
+          title: "Ocurrió un error",
+          message: "El progreso no pudo ser guardado correctamente",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -236,18 +241,18 @@ export class PatientsStore {
       pliegues_Abdominal: 0,
       pliegues_Muslo: 0,
       pliegues_Pantorrilla: 0,
-      perimetros_cintura: '',
-      perimetros_abdomen: '',
-      perimetros_cadera: '',
-      perimetros_brazo_contraido: '',
-      perimetros_muslo: '',
-      perimetros_pantorrilla: '',
-      resultados_peso: '',
-      resultados_grasa_corporal: '',
-      resultados_kg_grasa: '',
-      resultados_kg_musculo: '',
+      perimetros_cintura: "",
+      perimetros_abdomen: "",
+      perimetros_cadera: "",
+      perimetros_brazo_contraido: "",
+      perimetros_muslo: "",
+      perimetros_pantorrilla: "",
+      resultados_peso: "",
+      resultados_grasa_corporal: "",
+      resultados_kg_grasa: "",
+      resultados_kg_musculo: "",
       resultados_suma_pliegues: 0,
-      fecha_registro: '',
+      fecha_registro: "",
     };
   };
 
@@ -256,7 +261,7 @@ export class PatientsStore {
       this.loading = true;
       const data = await AdministratorServices.toggleExercises(
         this.selectedPatientId,
-        token,
+        token
       );
       this.loading = false;
       if (data.success && this.selectedPatient) {
@@ -274,7 +279,7 @@ export class PatientsStore {
       refreshing ? (this.refreshing = true) : (this.loading = true);
       const data = await AdministratorServices.getPatientPictures(
         this.selectedPatientId,
-        token,
+        token
       );
       refreshing ? (this.refreshing = false) : (this.loading = false);
       if (data.success) {
@@ -310,7 +315,7 @@ export class PatientsStore {
       const data = await AdministratorServices.getAdminExercises(
         this.selectedPatientId,
         token,
-        this.currentDate,
+        this.currentDate
       );
       this.loading = false;
       if (data.succes) {
@@ -328,20 +333,71 @@ export class PatientsStore {
       this.AdminExercises = data.data.filter((item: any) =>
         moment
           .utc(item.fecha_ejercicio)
-          .isSame(moment.utc(this.currentDate), 'day'),
+          .isSame(moment.utc(this.currentDate), "day")
       );
+    }
+  };
+
+  public addComment = async (token: string, isAdmin: boolean) => {
+    this.loading = true;
+    const data = await CommonServices.addComment(
+      token,
+      this.commentTextPrompt.trim(),
+      isAdmin ? UserType.Admin : UserType.Patient,
+      this.selectedPatientId ?? undefined,
+      this.selectedAdminExercise
+        ? `${this.selectedAdminExercise.id}`
+        : undefined
+    );
+    this.loading = false;
+
+    if (data.success) {
+      this.alert = {
+        type: AlertType.Success,
+        title: "Operación exitosa",
+        message: "El comentario ha sido enviado",
+        showIcon: true,
+        actions: [],
+        autoClose: true,
+      };
+      await this.refreshExerciseDetails(token, isAdmin);
+      this.commentTextPrompt = "";
+    } else {
+      this.alert = {
+        type: AlertType.Error,
+        title: "Ocurrió un error",
+        message: "El comentario no se pudo enviar",
+        showIcon: true,
+        actions: [],
+        autoClose: true,
+        error: data.error,
+      };
+    }
+  };
+
+  public refreshExerciseDetails = async (token: string, isAdmin: boolean) => {
+    if (isAdmin) {
+      await this.getAdminExercises(token);
+    } else {
+      await this.getPatientExercises(token, this.currentDate);
+    }
+    const newElement = this.AdminExercises.find(
+      (item) => item.id === this.selectedAdminExercise?.id
+    );
+    if (newElement) {
+      this.selectedAdminExercise = newElement;
     }
   };
 
   public showExerciseCompletionAlert = (token: string, id: number) => {
     this.alert = {
-      title: 'Completar ejercicio',
-      message: '¿Deseas marcar este ejercicio como completado?',
+      title: "Completar ejercicio",
+      message: "¿Deseas marcar este ejercicio como completado?",
       showIcon: true,
       type: AlertType.Warning,
       actions: [
         {
-          label: 'Si, completar',
+          label: "Si, completar",
           onClick: async () => {
             const success = await this.markExerciseAsCompleted(token, id);
             if (success) {
@@ -353,7 +409,7 @@ export class PatientsStore {
           type: AlertActionType.Action,
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -393,7 +449,7 @@ export class PatientsStore {
       this.loading = true;
       const data = await CataloguesServices.getExercisesByCategory(
         token,
-        this.categories_raw[this.currentCategory.row].id,
+        this.categories_raw[this.currentCategory.row].id
       );
       this.loading = false;
       if (data.success) {
@@ -454,8 +510,8 @@ export class PatientsStore {
     this.currentSeries = undefined;
     this.currentRepetitions = undefined;
     this.currentRest = undefined;
-    this.weight = '';
-    this.note = '';
+    this.weight = "";
+    this.note = "";
   }
 
   public setWeight(value: string) {
@@ -476,18 +532,18 @@ export class PatientsStore {
           nombre_ejercicio: this.selectedExercise ?? 0,
           categoria_ejercicio: this.selectedCategory ?? 0,
           series: this.selectedSerie ?? 0,
-          peso: this.weight + 'kg',
+          peso: this.weight + "kg",
           repeticiones: this.selectedRepetition ?? 0,
           descansos: this.selectedRest ?? 0,
           notas: this.note,
-        },
+        }
       );
       this.loading = false;
       if (data.success) {
         this.alert = {
           type: AlertType.Success,
-          title: 'Operación exitosa',
-          message: 'El ejercicio ha sido guardado correctamente',
+          title: "Operación exitosa",
+          message: "El ejercicio ha sido guardado correctamente",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -495,8 +551,8 @@ export class PatientsStore {
       } else {
         this.alert = {
           type: AlertType.Error,
-          title: 'Ocurrió un error',
-          message: 'El ejercicio no pudo ser guardado correctamente',
+          title: "Ocurrió un error",
+          message: "El ejercicio no pudo ser guardado correctamente",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -517,8 +573,8 @@ export class PatientsStore {
     this.currentRepetitions = undefined;
     this.rest_raw = [];
     this.currentRest = undefined;
-    this.weight = '';
-    this.note = '';
+    this.weight = "";
+    this.note = "";
   }
 
   public setSelectedPatientWith(id: string) {
@@ -532,7 +588,7 @@ export class PatientsStore {
         this.selectedPatientId,
         token,
         asset,
-        this.selectedGalleryCategory,
+        this.selectedGalleryCategory
       );
       this.loading = false;
       if (data.success) {
@@ -540,8 +596,8 @@ export class PatientsStore {
       } else {
         this.alert = {
           type: AlertType.Error,
-          title: 'Ocurrió un error',
-          message: 'No se pudo subir la imagen correctamente',
+          title: "Ocurrió un error",
+          message: "No se pudo subir la imagen correctamente",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -555,13 +611,13 @@ export class PatientsStore {
   public postActivityPicture = async (
     token: string,
     asset: Asset,
-    category: GalleryCategory,
+    category: GalleryCategory
   ) => {
     this.loading = true;
     const data = await PatientServices.postActivityPicture(
       token,
       asset,
-      category,
+      category
     );
     this.loading = false;
     if (data.success) {
@@ -569,8 +625,8 @@ export class PatientsStore {
     } else {
       this.alert = {
         type: AlertType.Error,
-        title: 'Ocurrió un error',
-        message: 'No se pudo subir la imagen correctamente',
+        title: "Ocurrió un error",
+        message: "No se pudo subir la imagen correctamente",
         showIcon: true,
         actions: [],
         autoClose: true,
@@ -582,29 +638,29 @@ export class PatientsStore {
 
   public showPostActivityPicture = (
     isAdmin: boolean,
-    onChooseSource: (source: 'camera' | 'library') => void = () => {},
+    onChooseSource: (source: "camera" | "library") => void = () => {}
   ) => {
     this.alert = null;
     this.alert = {
-      title: 'Subir fotografía',
+      title: "Subir fotografía",
       message: `Elige la foto que deseas utilizar${
-        isAdmin ? '. Se guardará en la categoría seleccionada.' : ''
+        isAdmin ? ". Se guardará en la categoría seleccionada." : ""
       }`,
       showIcon: false,
       type: AlertType.Info,
       actions: [
         {
-          label: 'Tomar una foto',
+          label: "Tomar una foto",
           type: AlertActionType.Action,
-          onClick: () => onChooseSource('camera'),
+          onClick: () => onChooseSource("camera"),
         },
         {
-          label: 'Elegir una foto de tu biblioteca',
+          label: "Elegir una foto de tu biblioteca",
           type: AlertActionType.Action,
-          onClick: () => onChooseSource('library'),
+          onClick: () => onChooseSource("library"),
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -615,19 +671,19 @@ export class PatientsStore {
   public showToggleDisableAccessAlert = (onContinue: () => void) => {
     this.alert = null;
     this.alert = {
-      title: 'Desactivar acceso',
+      title: "Desactivar acceso",
       message:
-        '¿Estás seguro? El usuario perderá acceso a la aplicación hasta que lo reactives.',
+        "¿Estás seguro? El usuario perderá acceso a la aplicación hasta que lo reactives.",
       showIcon: true,
       type: AlertType.Warning,
       actions: [
         {
-          label: 'Estoy seguro',
+          label: "Estoy seguro",
           type: AlertActionType.Destructive,
           onClick: onContinue,
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -638,19 +694,19 @@ export class PatientsStore {
   public showToggleEnableAccessAlert = (onContinue: () => void) => {
     this.alert = null;
     this.alert = {
-      title: 'Activar acceso',
+      title: "Activar acceso",
       message:
-        '¿Estás seguro? El usuario podrá volver a iniciar sesión en su cuenta.',
+        "¿Estás seguro? El usuario podrá volver a iniciar sesión en su cuenta.",
       showIcon: true,
       type: AlertType.Warning,
       actions: [
         {
-          label: 'Estoy seguro',
+          label: "Estoy seguro",
           type: AlertActionType.Action,
           onClick: onContinue,
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -663,7 +719,7 @@ export class PatientsStore {
       this.loading = true;
       const data = await AdministratorServices.toggleAccess(
         this.selectedPatient.idUsuario,
-        token,
+        token
       );
       this.loading = false;
       if (data.success) {
@@ -671,8 +727,8 @@ export class PatientsStore {
       } else {
         this.alert = {
           type: AlertType.Error,
-          title: 'Ocurrió un error',
-          message: 'No se pudo completar la operación',
+          title: "Ocurrió un error",
+          message: "No se pudo completar la operación",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -686,19 +742,19 @@ export class PatientsStore {
   public showSelectDietDocument = (onContinue: () => void) => {
     this.alert = null;
     this.alert = {
-      title: 'Actualizar dieta',
+      title: "Actualizar dieta",
       message:
-        'Seleccione de sus archivos el documento en formato PDF que desea asignar al paciente.',
+        "Seleccione de sus archivos el documento en formato PDF que desea asignar al paciente.",
       showIcon: true,
       type: AlertType.Info,
       actions: [
         {
-          label: 'Continuar',
+          label: "Continuar",
           type: AlertActionType.Action,
           onClick: onContinue,
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -712,7 +768,7 @@ export class PatientsStore {
       const data = await AdministratorServices.uploadPatientDiet(
         this.selectedPatient.idUsuario,
         token,
-        asset,
+        asset
       );
       this.loading = false;
       if (data.success) {
@@ -720,8 +776,8 @@ export class PatientsStore {
       } else {
         this.alert = {
           type: AlertType.Error,
-          title: 'Ocurrió un error',
-          message: 'No se pudo completar la operación',
+          title: "Ocurrió un error",
+          message: "No se pudo completar la operación",
           showIcon: true,
           actions: [],
           autoClose: true,
@@ -735,8 +791,8 @@ export class PatientsStore {
   public showUploadDietSuccess = () => {
     this.alert = null;
     this.alert = {
-      title: 'Dieta actualizada',
-      message: 'Se ha actualizado la dieta con éxito',
+      title: "Dieta actualizada",
+      message: "Se ha actualizado la dieta con éxito",
       showIcon: true,
       type: AlertType.Success,
       actions: [],
@@ -748,15 +804,17 @@ export class PatientsStore {
     let filteredList = this.patients_raw;
     switch (this.selectedPatientsList) {
       case PatientsCategory.Inactive:
-        filteredList = this.patients_raw.filter(patient => !patient.activo);
+        filteredList = this.patients_raw.filter((patient) => !patient.activo);
         break;
       case PatientsCategory.Active:
-        filteredList = this.patients_raw.filter(patient => patient.activo);
+        filteredList = this.patients_raw.filter((patient) => patient.activo);
         break;
       default:
         break;
     }
-    return filteredList.filter(patient => patient.nombre.includes(this.query));
+    return filteredList.filter((patient) =>
+      patient.nombre.includes(this.query)
+    );
   }
 
   get preparedPictures() {
@@ -785,7 +843,7 @@ export class PatientsStore {
       }
     });
     lists = lists.reverse();
-    lists.forEach(item => {
+    lists.forEach((item) => {
       item.data = item.data.reverse();
     });
     return lists;
@@ -793,14 +851,14 @@ export class PatientsStore {
 
   get preparedPicturesAssetList() {
     const originalList = this.rawPictures;
-    const uriList = originalList.map(item => {
-      return {uri: item.url};
+    const uriList = originalList.map((item) => {
+      return { uri: item.url };
     });
     return uriList;
   }
 
   get categories() {
-    return this.categories_raw.map(item => item.categoria);
+    return this.categories_raw.map((item) => item.categoria);
   }
 
   get selectedCategory() {
@@ -820,7 +878,7 @@ export class PatientsStore {
   get exercises() {
     if (this.exercisesByCurrentCategory_raw) {
       return this.exercisesByCurrentCategory_raw.map(
-        item => item.NombreEjercicio.nombre_ejercicio,
+        (item) => item.NombreEjercicio.nombre_ejercicio
       );
     }
     return undefined;
@@ -843,7 +901,7 @@ export class PatientsStore {
   }
 
   get series() {
-    return this.series_raw.map(item => `${item.series}`);
+    return this.series_raw.map((item) => `${item.series}`);
   }
 
   get selectedSerie() {
@@ -861,7 +919,7 @@ export class PatientsStore {
   }
 
   get repetitions() {
-    return this.repetitions_raw.map(item => `${item.repeticiones}`);
+    return this.repetitions_raw.map((item) => `${item.repeticiones}`);
   }
 
   get selectedRepetition() {
@@ -879,7 +937,7 @@ export class PatientsStore {
   }
 
   get rest() {
-    return this.rest_raw.map(item => item.descansos);
+    return this.rest_raw.map((item) => item.descansos);
   }
 
   get selectedRest() {

@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@ui-kitten/components';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {KeyboardTypeOptions} from 'react-native';
 import Text from '../Text';
 
@@ -43,6 +49,7 @@ interface Props {
     | 'newPassword'
     | 'oneTimeCode'
     | undefined;
+  style?: StyleProp<ViewStyle>;
 
   onChangeText?: (nextValue: string) => void;
 }
@@ -73,6 +80,7 @@ const TextInput = ({
   textContentType,
   autocapitalize = true,
   disabled = false,
+  style,
   onChangeText = () => {},
 }: Props) => {
   const [state, setState] = useState({passwordVisible: false});
@@ -82,7 +90,7 @@ const TextInput = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {label && <Text style={styles.text}>{label}</Text>}
       <Input
         placeholder={placeholder}

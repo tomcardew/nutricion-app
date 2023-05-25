@@ -1,9 +1,9 @@
-import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/PatientsStore';
-import ScreenNames from '../../../../../../constants/Screens';
-import {Exercise} from '../../../../../../models/Catalogues';
-import {PatientExerciseListItem} from '../../../../../../models/Patients';
-import moment from 'moment';
+import { AuthStore } from "../../../../../store/AuthStore";
+import { PatientsStore } from "../../../../../store/PatientsStore";
+import ScreenNames from "../../../../../../constants/Screens";
+import { Exercise } from "../../../../../../models/Catalogues";
+import { PatientExerciseListItem } from "../../../../../../models/Patients";
+import moment from "moment";
 
 class AdminExercisesListViewModel {
   navigation: any;
@@ -13,7 +13,7 @@ class AdminExercisesListViewModel {
   constructor(
     authStore: AuthStore,
     patientsStore: PatientsStore,
-    navigation: any,
+    navigation: any
   ) {
     this.navigation = navigation;
     this.authStore = authStore;
@@ -21,7 +21,7 @@ class AdminExercisesListViewModel {
   }
 
   load = async () => {
-    await this.patientsStore.getAdminExercises(this.authStore.token ?? '');
+    await this.patientsStore.getAdminExercises(this.authStore.token ?? "");
   };
 
   goToAddExercise = () => {
@@ -37,11 +37,12 @@ class AdminExercisesListViewModel {
 
   didChangeDate = (date: Date) => {
     this.patientsStore.currentDate = date;
-    this.patientsStore.getAdminExercises(this.authStore.token ?? '');
+    this.patientsStore.getAdminExercises(this.authStore.token ?? "");
   };
 
   didChangeDateString = (dateString: string) => {
-    this.patientsStore.currentDate = moment(dateString, 'YYYY/MM/DD').toDate();
+    this.patientsStore.currentDate = moment(dateString, "YYYY/MM/DD").toDate();
+    this.didChangeDate(this.patientsStore.currentDate);
   };
 
   goBack = () => {

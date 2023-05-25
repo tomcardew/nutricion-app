@@ -143,6 +143,27 @@ const PatientServices = {
       console.log(error);
     }
   },
+  addComment: async (
+    token: string,
+    exerciseId: string,
+    notas: string,
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.addPatientComment,
+        token,
+      );
+      request.setParams(`/${exerciseId}`);
+      request.setBody({
+        notas
+      });
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;

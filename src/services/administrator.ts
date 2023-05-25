@@ -281,6 +281,28 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  addComment: async (
+    token: string,
+    patientId: string,
+    exerciseId: string,
+    notas: string,
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.addComment,
+        token,
+      );
+      request.setParams(`/${patientId}/${exerciseId}`);
+      request.setBody({
+        notas
+      });
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;

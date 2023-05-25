@@ -5,6 +5,7 @@ enum ScreenNames {
 	ForgotPassword,
 	Login,
 	Signup,
+	PatientExerciseComments,
 	PatientExercises,
 	Gallery,
 	PatientDiet,

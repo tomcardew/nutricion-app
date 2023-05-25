@@ -257,6 +257,12 @@ const getSteps: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const addComment: NetworkingConfig = {
+  url: fullURL,
+  path: 'admin/patients/exercises/add-comment',
+  method: RequestMethod.PATCH,
+}
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: 'catalogues/categories',
@@ -347,6 +353,12 @@ const postSteps: NetworkingConfig = {
   method: RequestMethod.POST,
 };
 
+const addPatientComment: NetworkingConfig = {
+  url: fullURL,
+  path: 'patient/exercises/add-comment',
+  method: RequestMethod.PATCH,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -370,6 +382,7 @@ export const Networking = {
     changePatientStatus,
     uploadPatientDiet,
     getSteps,
+    addComment
   },
   catalogues: {
     getExerciseCategories,
@@ -389,5 +402,6 @@ export const Networking = {
     getDates,
     getDiet,
     postSteps,
+    addPatientComment
   },
 };
