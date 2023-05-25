@@ -35,6 +35,7 @@ Aplicación de fitness y nutrición hecha con React Native y TypeScript.
 
 - Asegurate de tener instalado Android Studio y un JDK > 11
 - Ejectua `yarn`
+- Abre el emulador `/Users/andresvillagomez/Library/Android/sdk/emulator/emulator -avd Pixel_6_API_33 -netdelay none -netspeed full` o conecta tu celular a la computadora
 - Desde el directorio raiz, ejecuta `yarn android`
 
 ### Generar build release en Android

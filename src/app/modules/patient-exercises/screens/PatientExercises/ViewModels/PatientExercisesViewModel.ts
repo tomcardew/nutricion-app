@@ -1,8 +1,8 @@
-import moment from 'moment';
-import ScreenNames from '../../../../../../constants/Screens';
-import {PatientExerciseListItem} from '../../../../../../models/Patients';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/PatientsStore';
+import moment from "moment";
+import ScreenNames from "../../../../../../constants/Screens";
+import { PatientExerciseListItem } from "../../../../../../models/Patients";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { PatientsStore } from "../../../../../store/PatientsStore";
 
 class PatientExercisesViewModel {
   navigation: any;
@@ -12,7 +12,7 @@ class PatientExercisesViewModel {
   constructor(
     navigation: any,
     authStore: AuthStore,
-    patientsStore: PatientsStore,
+    patientsStore: PatientsStore
   ) {
     this.navigation = navigation;
     this.authStore = authStore;
@@ -21,26 +21,27 @@ class PatientExercisesViewModel {
 
   load = async () => {
     await this.patientsStore.getPatientExercises(
-      this.authStore.token ?? '',
-      new Date(),
+      this.authStore.token ?? "",
+      new Date()
     );
   };
 
   didChangeDate = async (date: Date) => {
     await this.patientsStore.getPatientExercises(
-      this.authStore.token ?? '',
-      date,
+      this.authStore.token ?? "",
+      date
     );
   };
 
   didChangeDateString = (dateString: string) => {
-    this.patientsStore.currentDate = moment(dateString, 'YYYY/MM/DD').toDate();
+    this.patientsStore.currentDate = moment(dateString, "YYYY/MM/DD").toDate();
+    this.didChangeDate(this.patientsStore.currentDate);
   };
 
   markExerciseAsCompleted = async (id: number) => {
     const success = await this.patientsStore.markExerciseAsCompleted(
-      this.authStore.token ?? '',
-      id,
+      this.authStore.token ?? "",
+      id
     );
     if (success) {
       await this.didChangeDate(new Date());

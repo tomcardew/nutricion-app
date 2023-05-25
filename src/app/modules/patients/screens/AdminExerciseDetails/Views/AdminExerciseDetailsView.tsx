@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import Video from 'react-native-video';
-import {Logger, theme, typeOfAsset} from '../../../../../../utils/Utils';
+import {theme, typeOfAsset} from '../../../../../../utils/Utils';
 import {FontWeight, MediaType} from '../../../../../../models/Common';
 import {Image} from '../../../../../../components/Images';
 import {VerticalInfoCard} from '../../../../../../components/Cards';
@@ -21,6 +21,7 @@ interface Props {
   completed: boolean;
 
   onGetExerciseImage?: () => void;
+  goToComments?: () => void;
 }
 
 const AdminExerciseDetailsView = ({
@@ -34,15 +35,9 @@ const AdminExerciseDetailsView = ({
   weight,
   completed,
   onGetExerciseImage = () => {},
+  goToComments = () => {},
 }: Props) => {
   const assetType = typeOfAsset(demoUrl ?? '');
-
-  // useEffect(() => {
-  //   Logger.warn(assetType);
-  //   if (assetType == MediaType.None) {
-  //     onGetExerciseImage();
-  //   }
-  // }, []);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -90,7 +85,12 @@ const AdminExerciseDetailsView = ({
           <VerticalInfoCard title="Repeticiones" content={repetitions} />
           <VerticalInfoCard title="Descansos" content={rest} />
           <VerticalInfoCard title="Peso" content={weight} />
-          <VerticalInfoCard title="Notas" content={notes} />
+          <VerticalInfoCard
+            title="Comentarios"
+            content={notes}
+            callToAction="Ver todos los comentarios"
+            didPressCallToAction={goToComments}
+          />
         </View>
       </View>
     </KeyboardAwareScrollView>

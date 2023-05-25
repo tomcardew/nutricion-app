@@ -108,6 +108,10 @@ export const dateToScrollHeight = (date: Date) => {
   return hours + minutes - 10;
 };
 
+export const generateExerciseNotesObject = (data: string) => {
+  return JSON.parse(data)
+}
+
 const loggerConfig = {
   levels: {
     debug: 0,
