@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: theme['color-primary-100'],
+    // backgroundColor: theme['color-primary-100'],
     width: Dimensions.get('window').width,
     height: 60,
     paddingHorizontal: 20,
+    borderTopColor: '#00000008',
+    borderTopWidth: 1,
   },
 });
 
