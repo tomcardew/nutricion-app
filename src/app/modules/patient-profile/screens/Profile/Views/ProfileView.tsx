@@ -15,6 +15,8 @@ import Text from '../../../../../../components/Text';
 import Environment from '../../../../../../constants/Environment';
 import {FontWeight} from '../../../../../../models/Common';
 import ProfileStepsCard from './ProfileStepsCard';
+import {ActionButton} from '../../../../../../components/Buttons';
+import {theme} from '../../../../../../utils/Utils';
 
 interface Props {
   profile?: Profile | null;
@@ -23,6 +25,7 @@ interface Props {
   stepCount?: number;
 
   onEditProfilePress?: () => void;
+  onLogout?: () => void;
   didPressGoToProgress?: () => void;
   didPressSeeDiet?: () => void;
   didPressSeeVersion?: () => void;
@@ -34,6 +37,7 @@ const ProfileView = ({
   enableSteps = true,
   stepCount = 0,
   onEditProfilePress = () => {},
+  onLogout = () => {},
   didPressGoToProgress = () => {},
   didPressSeeDiet = () => {},
   didPressSeeVersion = () => {},
@@ -103,6 +107,14 @@ const ProfileView = ({
               }}
             />
           )}
+          <View style={styles.bottomContainer}>
+            <ActionButton
+              style={styles.logoutButton}
+              textStyle={styles.logoutButtonText}
+              title="Cerrar sesión"
+              onPress={onLogout}
+            />
+          </View>
           <TouchableOpacity onPress={didPressSeeVersion}>
             <Text weight={FontWeight.Medium} style={styles.versionNumber}>
               Versión {Environment.VERSION}
@@ -133,6 +145,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: 'black',
     opacity: 0.25,
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  logoutButton: {
+    paddingHorizontal: 20,
+    backgroundColor: theme['color-danger-100'],
+  },
+  logoutButtonText: {
+    color: theme['color-danger-700'],
   },
 });
 

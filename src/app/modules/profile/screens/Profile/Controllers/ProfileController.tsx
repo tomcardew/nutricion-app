@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import ProfileView from '../Views/ProfileView';
 import ProfileViewModel from '../ViewModels/ProfileViewModel';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
-import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
   viewModel: ProfileViewModel;
@@ -11,7 +10,6 @@ interface Props {
 
 const ProfileController = observer(({viewModel}: Props) => {
   useEffect(() => {
-    Logger.warn('AdminProfileController.tsx:14');
     viewModel.load();
   }, []);
 
@@ -28,6 +26,7 @@ const ProfileController = observer(({viewModel}: Props) => {
         cover="https://alianzapronutricion.org/wp-content/uploads/2020/10/epigenetica-y-nutricion-1.png"
         profilePicture={viewModel.authStore.user?.urlFoto}
         onEditProfilePress={viewModel.showEditingOptions}
+        onLogout={viewModel.logout}
       />
     </BaseLayoutView>
   );

@@ -3,6 +3,8 @@ import {StyleSheet, View, Dimensions} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ProfilePicture} from '../../../../../../components/Images';
 import {nameToFirstLetters, theme} from '../../../../../../utils/Utils';
+import Text from '../../../../../../components/Text';
+import {ActionButton, PlainButton} from '../../../../../../components/Buttons';
 
 interface Props {
   fullname: string;
@@ -11,6 +13,7 @@ interface Props {
   date?: Date;
 
   onEditProfilePress?: () => void;
+  onLogout?: () => void;
 }
 
 interface State {
@@ -23,6 +26,7 @@ const ProfileView = ({
   cover,
   profilePicture = '',
   onEditProfilePress = () => {},
+  onLogout = () => {},
 }: Props) => {
   const [state, setState] = useState<State>({
     coverColor: theme['color-primary-600'],
@@ -46,6 +50,14 @@ const ProfileView = ({
           url={profilePicture}
           onEditProfilePress={onEditProfilePress}
         />
+        <View style={styles.bottomContainer}>
+          <ActionButton
+            style={styles.logoutButton}
+            textStyle={styles.logoutButtonText}
+            title="Cerrar sesión"
+            onPress={onLogout}
+          />
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -78,6 +90,18 @@ const styles = StyleSheet.create({
   },
   date: {
     marginTop: 20,
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  logoutButton: {
+    paddingHorizontal: 20,
+    backgroundColor: theme['color-danger-100'],
+  },
+  logoutButtonText: {
+    color: theme['color-danger-700'],
   },
 });
 

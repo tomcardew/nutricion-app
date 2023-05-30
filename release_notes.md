@@ -53,3 +53,7 @@
 ### 0.7.0
 
 - Se añade la pantalla de comentarios, en la que el paciente podrá dejar anotaciones o mensajes para el administrador con respecto a los ejercicios que se le asignaron
+
+### 0.8.0
+
+- Se mueve la opción de cerrar sesión 

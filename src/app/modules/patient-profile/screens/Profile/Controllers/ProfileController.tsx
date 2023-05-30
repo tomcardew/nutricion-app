@@ -27,6 +27,7 @@ const ProfileController = observer(({viewModel}: Props) => {
         profile={viewModel.authStore.user}
         enableSteps={viewModel.profileStore.isGoogleFitAuthorized}
         onEditProfilePress={viewModel.showEditingOptions}
+        onLogout={viewModel.logout}
         didPressGoToProgress={viewModel.goToProgress}
         didPressSeeDiet={viewModel.didPressSeeDiet}
         didPressSeeVersion={viewModel.didPressSeeVersion}
