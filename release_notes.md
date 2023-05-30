@@ -56,4 +56,5 @@
 
 ### 0.8.0
 
-- Se mueve la opción de cerrar sesión 
+- Se mueve la opción de cerrar sesión a la pantalla de perfil (paciente y administrador) para que sea más accesible
+- Se elimina botón de subir fotografía en categorías distinta a la de Actividades para usuario de tipo paciente
