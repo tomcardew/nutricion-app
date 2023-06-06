@@ -57,9 +57,11 @@ const AdminExerciseDetailsController = observer(({viewModel}: Props) => {
         rest={exercise?.Descansos.descansos ?? '--'}
         weight={exercise?.Peso ?? '--'}
         notes={firstNote ?? '--'}
+        isAdmin={viewModel.authStore.user?.esAdministrador}
         goToComments={viewModel.goToComments}
         completed={exercise?.completado ?? false}
         onGetExerciseImage={viewModel.getExerciseImage}
+        didPressDelete={viewModel.didPressDelete}
       />
     </BaseLayoutView>
   );

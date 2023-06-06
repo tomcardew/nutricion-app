@@ -1,12 +1,12 @@
-import {Logger} from '../utils/Utils';
-import Environment from './Environment';
+import { Logger } from "../utils/Utils";
+import Environment from "./Environment";
 
 export enum RequestMethod {
-  GET = 'GET',
-  POST = 'POST',
-  PATCH = 'PATCH',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
+  GET = "GET",
+  POST = "POST",
+  PATCH = "PATCH",
+  PUT = "PUT",
+  DELETE = "DELETE",
 }
 
 export type ObjectType = {
@@ -14,8 +14,8 @@ export type ObjectType = {
 };
 
 export class RequestData {
-  public url: string = '';
-  public path: string = '';
+  public url: string = "";
+  public path: string = "";
   public method: RequestMethod = RequestMethod.GET;
 
   constructor(
@@ -24,7 +24,7 @@ export class RequestData {
     public params?: string,
     public query?: string,
     public body?: ObjectType,
-    public formData?: FormData,
+    public formData?: FormData
   ) {
     this.url = service.url;
     this.path = service.path;
@@ -37,8 +37,8 @@ export class RequestData {
   }
 
   get fullPath() {
-    return `${this.url}/${this.path}${this.params ? this.params : ''}${
-      this.query ? '?' + this.query : ''
+    return `${this.url}/${this.path}${this.params ? this.params : ""}${
+      this.query ? "?" + this.query : ""
     }`;
   }
 
@@ -63,19 +63,19 @@ export class RequestData {
   }
 
   async request() {
-    Logger.info('Requesting endpoint', this.fullPath);
+    Logger.info("Requesting endpoint", this.fullPath);
     const data = this.formData
       ? await this.requestFormData()
       : await this.requestBody();
     if (data.error) {
       Logger.error(
-        'Request to endpoint',
+        "Request to endpoint",
         this.fullPath,
-        ' failed:',
-        data.error,
+        " failed:",
+        data.error
       );
     } else {
-      Logger.success('Request to endpoint', this.fullPath, 'was successful');
+      Logger.success("Request to endpoint", this.fullPath, "was successful");
     }
     return data;
   }
@@ -83,13 +83,13 @@ export class RequestData {
   private async requestBody() {
     this.body && Logger.warn(this.body);
     try {
-      Logger.info('Data used', JSON.stringify(this.body));
+      Logger.info("Data used", JSON.stringify(this.body));
       const result = await fetch(this.fullPath, {
         method: this.method,
         body: JSON.stringify(this.body),
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: this.token ?? '',
+          "Content-Type": "application/json",
+          Authorization: this.token ?? "",
         },
       });
       return await result.json();
@@ -110,7 +110,7 @@ export class RequestData {
         method: this.method,
         body: this.formData,
         headers: {
-          Authorization: this.token ?? '',
+          Authorization: this.token ?? "",
         },
       });
       return await result.json();
@@ -118,7 +118,7 @@ export class RequestData {
       return {
         error: {
           code: 0,
-          message: {...error},
+          message: { ...error },
         },
       };
     }
@@ -128,14 +128,14 @@ export class RequestData {
     const keyValuePairs = [];
     for (const key in obj) {
       keyValuePairs.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]),
+        encodeURIComponent(key) + "=" + encodeURIComponent(obj[key])
       );
     }
-    return keyValuePairs.join('&');
+    return keyValuePairs.join("&");
   }
 }
 
-const fullURL = Environment.URL + ':' + Environment.PORT;
+const fullURL = Environment.URL + ":" + Environment.PORT;
 
 export interface NetworkingConfig {
   url: string;
@@ -145,217 +145,223 @@ export interface NetworkingConfig {
 
 const login: NetworkingConfig = {
   url: fullURL,
-  path: 'auth/login',
+  path: "auth/login",
   method: RequestMethod.POST,
 };
 
 const signup: NetworkingConfig = {
   url: fullURL,
-  path: 'auth/signup',
+  path: "auth/signup",
   method: RequestMethod.POST,
 };
 
 const passwordRecovery: NetworkingConfig = {
   url: fullURL,
-  path: 'auth/recovery-password',
+  path: "auth/recovery-password",
   method: RequestMethod.PATCH,
 };
 
 const getProfile: NetworkingConfig = {
   url: fullURL,
-  path: 'admin',
+  path: "admin",
   method: RequestMethod.GET,
 };
 
 const getPatients: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients',
+  path: "admin/patients",
   method: RequestMethod.GET,
 };
 
 const getPatientById: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients',
+  path: "admin/patients",
   method: RequestMethod.GET,
 };
 
 const getPatientProgress: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/progress',
+  path: "admin/patients/progress",
   method: RequestMethod.GET,
 };
 
 const postPatientProgress: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/progress',
+  path: "admin/patients/progress",
   method: RequestMethod.POST,
 };
 
 const toggleExercises: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/activate-exercises',
+  path: "admin/patients/activate-exercises",
   method: RequestMethod.PATCH,
 };
 
 const getPatientPictures: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/pictures',
+  path: "admin/patients/pictures",
   method: RequestMethod.GET,
 };
 
 const getAdminExercises: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/exercises',
+  path: "admin/patients/exercises",
   method: RequestMethod.GET,
 };
 
 const postPatientExercise: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/set-exercise',
+  path: "admin/patients/set-exercise",
   method: RequestMethod.POST,
 };
 
 const changeProfilePicture: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/changeProfilePicture',
+  path: "admin/changeProfilePicture",
   method: RequestMethod.PATCH,
 };
 
 const getAllDates: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/dates',
+  path: "admin/dates",
   method: RequestMethod.GET,
 };
 
 const postPatientDate: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/set-date',
+  path: "admin/patients/set-date",
   method: RequestMethod.POST,
 };
 
 const postPatientActivityPicture: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/upload-activity-picture',
+  path: "admin/upload-activity-picture",
   method: RequestMethod.POST,
 };
 
 const changePatientStatus: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/change-status',
+  path: "admin/patients/change-status",
   method: RequestMethod.PATCH,
 };
 
 const uploadPatientDiet: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/diets/uploadDiet',
+  path: "admin/diets/uploadDiet",
   method: RequestMethod.POST,
 };
 
 const getSteps: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/steps',
+  path: "admin/patients/steps",
   method: RequestMethod.GET,
 };
 
 const addComment: NetworkingConfig = {
   url: fullURL,
-  path: 'admin/patients/exercises/add-comment',
+  path: "admin/patients/exercises/add-comment",
   method: RequestMethod.PATCH,
-}
+};
+
+const deleteExercise: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/set-exercise",
+  method: RequestMethod.DELETE,
+};
 
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
-  path: 'catalogues/categories',
+  path: "catalogues/categories",
   method: RequestMethod.GET,
 };
 
 const getExercisesByCategory: NetworkingConfig = {
   url: fullURL,
-  path: 'catalogues/exercisesByCategory',
+  path: "catalogues/exercisesByCategory",
   method: RequestMethod.GET,
 };
 
 const getSeries: NetworkingConfig = {
   url: fullURL,
-  path: 'catalogues/series',
+  path: "catalogues/series",
   method: RequestMethod.GET,
 };
 
 const getRepetitions: NetworkingConfig = {
   url: fullURL,
-  path: 'catalogues/repetitions',
+  path: "catalogues/repetitions",
   method: RequestMethod.GET,
 };
 
 const getRest: NetworkingConfig = {
   url: fullURL,
-  path: 'catalogues/rest',
+  path: "catalogues/rest",
   method: RequestMethod.GET,
 };
 
 const getExerciseImage: NetworkingConfig = {
-  url: 'https://api.serpdog.io',
-  path: 'images',
+  url: "https://api.serpdog.io",
+  path: "images",
   method: RequestMethod.GET,
 };
 
 const getPatientProfile: NetworkingConfig = {
   url: fullURL,
-  path: 'patient',
+  path: "patient",
   method: RequestMethod.GET,
 };
 
 const changePatientProfilePicture: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/changeProfilePicture',
+  path: "patient/changeProfilePicture",
   method: RequestMethod.PATCH,
 };
 
 const getPatientExercises: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/exercises',
+  path: "patient/exercises",
   method: RequestMethod.GET,
 };
 
 const markExerciseAsCompleted: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/exercises/mark-exercise-as-completed',
+  path: "patient/exercises/mark-exercise-as-completed",
   method: RequestMethod.PATCH,
 };
 
 const getActivityPictures: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/activity-pictures',
+  path: "patient/activity-pictures",
   method: RequestMethod.GET,
 };
 
 const postActivityPicture: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/upload-activity-picture',
+  path: "patient/upload-activity-picture",
   method: RequestMethod.POST,
 };
 
 const getDates: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/dates',
+  path: "patient/dates",
   method: RequestMethod.GET,
 };
 
 const getDiet: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/diet',
+  path: "patient/diet",
   method: RequestMethod.GET,
 };
 
 const postSteps: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/steps',
+  path: "patient/steps",
   method: RequestMethod.POST,
 };
 
 const addPatientComment: NetworkingConfig = {
   url: fullURL,
-  path: 'patient/exercises/add-comment',
+  path: "patient/exercises/add-comment",
   method: RequestMethod.PATCH,
 };
 
@@ -382,7 +388,8 @@ export const Networking = {
     changePatientStatus,
     uploadPatientDiet,
     getSteps,
-    addComment
+    addComment,
+    deleteExercise,
   },
   catalogues: {
     getExerciseCategories,
@@ -402,6 +409,6 @@ export const Networking = {
     getDates,
     getDiet,
     postSteps,
-    addPatientComment
+    addPatientComment,
   },
 };

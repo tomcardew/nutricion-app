@@ -1,5 +1,5 @@
-import {KeyValue} from '../utils/Utils';
-import {Category, ExerciseName, Serie, Repetition, Rest} from './Catalogues';
+import { KeyValue } from "../utils/Utils";
+import { Category, ExerciseName, Serie, Repetition, Rest } from "./Catalogues";
 
 export interface Patient {
   idUsuario: string;
@@ -15,15 +15,15 @@ export interface Patient {
 }
 
 export enum PatientProgresCategories {
-  PLIEGUES = 'pliegues',
-  PERIMETROS = 'perimetros',
-  RESULTADOS = 'resultados',
+  PLIEGUES = "pliegues",
+  PERIMETROS = "perimetros",
+  RESULTADOS = "resultados",
 }
 
 export const patientProgresCategoriesLabels = [
-  'Pliegues',
-  'Perimetros',
-  'Resultados',
+  "Pliegues",
+  "Perimetros",
+  "Resultados",
 ];
 
 export interface PatientProgress {
@@ -52,27 +52,47 @@ export interface PatientProgress {
 
 export function patientProgressToKeyValues(
   data: any,
-  category: PatientProgresCategories,
+  category: PatientProgresCategories
 ) {
   if (!data) {
     return [];
   }
-  let ignoreKeys = ['id', 'fecha_registro'];
-  let results: KeyValue[] = [];
-  let usingCategory: string = category.toString();
+  const ignoreKeys = ["id", "fecha_registro"];
+  const results: KeyValue[] = [];
+  const usingCategory: string = category.toString();
 
-  Object.keys(data).forEach(key => {
+  Object.keys(data).forEach((key) => {
     if (!ignoreKeys.includes(key) && key.startsWith(usingCategory)) {
-      results.push({
-        name: key.split('_').join(' '),
+      let result = {
+        name: key.split("_").join(" "),
         key,
         value: data[key],
-        properties: {isNumeric: usingCategory === 'pliegues'},
-      });
+        properties: {
+          isNumeric: true,
+          disabled: false,
+        },
+      };
+      if (key === "resultados_suma_pliegues") {
+        result.value = getPatientProgressPliguesTotal(data);
+        result.properties.disabled = true;
+      }
+      results.push(result);
     }
   });
 
   return results;
+}
+
+export function getPatientProgressPliguesTotal(data: any) {
+  const ignoreKeys = ["id", "fecha_registro"];
+  let total = 0.0;
+  Object.keys(data).forEach((key) => {
+    if (!ignoreKeys.includes(key) && key.startsWith("pliegues")) {
+      total += parseFloat(data[key]);
+    }
+  });
+
+  return total;
 }
 
 export interface GalleryItems {

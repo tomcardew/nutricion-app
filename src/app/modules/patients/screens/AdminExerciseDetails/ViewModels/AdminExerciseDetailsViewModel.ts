@@ -1,7 +1,7 @@
-import ScreenNames from '../../../../../../constants/Screens';
-import { Logger } from '../../../../../../utils/Utils';
-import { AuthStore } from '../../../../../store/AuthStore';
-import { PatientsStore } from '../../../../../store/PatientsStore';
+import ScreenNames from "../../../../../../constants/Screens";
+import { Logger } from "../../../../../../utils/Utils";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { PatientsStore } from "../../../../../store/PatientsStore";
 
 class AdminExerciseDetailsViewModel {
   navigation: any;
@@ -11,7 +11,7 @@ class AdminExerciseDetailsViewModel {
   constructor(
     navigation: any,
     patientsStore: PatientsStore,
-    authStore: AuthStore,
+    authStore: AuthStore
   ) {
     this.navigation = navigation;
     this.patientsStore = patientsStore;
@@ -20,8 +20,8 @@ class AdminExerciseDetailsViewModel {
 
   didPressComplete = () => {
     this.patientsStore.showExerciseCompletionAlert(
-      this.authStore.token ?? '',
-      this.patientsStore.selectedAdminExercise?.id ?? 0,
+      this.authStore.token ?? "",
+      this.patientsStore.selectedAdminExercise?.id ?? 0
     );
   };
 
@@ -31,7 +31,14 @@ class AdminExerciseDetailsViewModel {
 
   goToComments = () => {
     this.navigation.navigate(ScreenNames.PatientExerciseComments.toString());
-  }
+  };
+
+  didPressDelete = () => {
+    this.patientsStore.showDeleteExerciseAlert(() => {
+      this.patientsStore.alert = null;
+      this.patientsStore.deleteExercise(this.authStore.token ?? "");
+    });
+  };
 
   dismissAlert = () => {
     this.patientsStore.alert = null;

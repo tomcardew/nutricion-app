@@ -8,6 +8,7 @@ import {VerticalInfoCard} from '../../../../../../components/Cards';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Text from '../../../../../../components/Text';
 import {Icon} from '@ui-kitten/components';
+import {ActionButton} from '../../../../../../components/Buttons';
 
 interface Props {
   demoUrl?: string;
@@ -19,9 +20,11 @@ interface Props {
   weight: string;
   notes: string;
   completed: boolean;
+  isAdmin?: boolean;
 
   onGetExerciseImage?: () => void;
   goToComments?: () => void;
+  didPressDelete?: () => void;
 }
 
 const AdminExerciseDetailsView = ({
@@ -34,8 +37,10 @@ const AdminExerciseDetailsView = ({
   series,
   weight,
   completed,
+  isAdmin,
   onGetExerciseImage = () => {},
   goToComments = () => {},
+  didPressDelete = () => {},
 }: Props) => {
   const assetType = typeOfAsset(demoUrl ?? '');
 
@@ -91,6 +96,14 @@ const AdminExerciseDetailsView = ({
             callToAction="Ver todos los comentarios"
             didPressCallToAction={goToComments}
           />
+          {isAdmin && (
+            <ActionButton
+              style={styles.logoutButton}
+              textStyle={styles.logoutButtonText}
+              title="Eliminar"
+              onPress={didPressDelete}
+            />
+          )}
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -140,6 +153,15 @@ const styles = StyleSheet.create({
     height: 22,
     width: 22,
     marginRight: 5,
+  },
+  logoutButton: {
+    marginTop: 20,
+    backgroundColor: theme['color-danger-100'],
+    width: Dimensions.get('window').width - 40,
+    alignSelf: 'center',
+  },
+  logoutButtonText: {
+    color: theme['color-danger-700'],
   },
 });
 
