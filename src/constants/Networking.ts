@@ -269,6 +269,12 @@ const deleteExercise: NetworkingConfig = {
   method: RequestMethod.DELETE,
 };
 
+const getPendingDates: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/getPendingDates",
+  method: RequestMethod.GET,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: "catalogues/categories",
@@ -365,6 +371,18 @@ const addPatientComment: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const getPatientPendingDates: NetworkingConfig = {
+  url: fullURL,
+  path: "patient/getPendingDates",
+  method: RequestMethod.GET,
+};
+
+const getPatientPendingExercises: NetworkingConfig = {
+  url: fullURL,
+  path: "patient/getPendingExercises",
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -390,6 +408,7 @@ export const Networking = {
     getSteps,
     addComment,
     deleteExercise,
+    getPendingDates,
   },
   catalogues: {
     getExerciseCategories,
@@ -410,5 +429,7 @@ export const Networking = {
     getDiet,
     postSteps,
     addPatientComment,
+    getPatientPendingDates,
+    getPatientPendingExercises,
   },
 };

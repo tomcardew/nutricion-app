@@ -8,6 +8,7 @@ import { AlertMessage, UserType } from "../../../../../../models/Common";
 import { Logger } from "../../../../../../utils/Utils";
 import { AuthStore } from "../../../../../store/AuthStore";
 import { ProfileStore } from "../../../../../store/ProfileStore";
+import ScreenNames from "../../../../../../constants/Screens";
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -32,6 +33,8 @@ class ProfileViewModel {
     );
     Logger.success("Retreived profile:", data);
     this.authStore.setUser(data.data.profile);
+
+    this.profileStore.getPendingDates(this.authStore.token ?? "");
   };
 
   showEditingOptions = () => {

@@ -4,16 +4,20 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ProfilePicture} from '../../../../../../components/Images';
 import {nameToFirstLetters, theme} from '../../../../../../utils/Utils';
 import Text from '../../../../../../components/Text';
-import {ActionButton, PlainButton} from '../../../../../../components/Buttons';
+import {ActionButton} from '../../../../../../components/Buttons';
+import SimpleCard from '../../../../../../components/Cards/SimpleCard';
+import {FontWeight} from '../../../../../../models/Common';
 
 interface Props {
   fullname: string;
   cover?: string;
   profilePicture?: string;
   date?: Date;
+  upcomingDates?: {label: string; hours: string[]}[];
 
   onEditProfilePress?: () => void;
   onLogout?: () => void;
+  didPressSeeDates?: () => void;
 }
 
 interface State {
@@ -25,8 +29,10 @@ const ProfileView = ({
   date = new Date(),
   cover,
   profilePicture = '',
+  upcomingDates = [],
   onEditProfilePress = () => {},
   onLogout = () => {},
+  didPressSeeDates = () => {},
 }: Props) => {
   const [state, setState] = useState<State>({
     coverColor: theme['color-primary-600'],
@@ -50,6 +56,26 @@ const ProfileView = ({
           url={profilePicture}
           onEditProfilePress={onEditProfilePress}
         />
+        {upcomingDates.length > 0 && (
+          <SimpleCard title="Próximas citas" style={{marginVertical: 20}}>
+            {upcomingDates.map(item => (
+              <View style={{marginBottom: 10, paddingHorizontal: 10}}>
+                <Text
+                  weight={FontWeight.Bold}
+                  style={{color: theme['color-primary-700'], fontSize: 16}}>
+                  {item.label}
+                </Text>
+                {item.hours.map(hour => (
+                  <Text
+                    weight={FontWeight.Medium}
+                    style={{color: 'black', fontSize: 15}}>
+                    {hour}
+                  </Text>
+                ))}
+              </View>
+            ))}
+          </SimpleCard>
+        )}
         <View style={styles.bottomContainer}>
           <ActionButton
             style={styles.logoutButton}

@@ -1,13 +1,15 @@
-import {makeAutoObservable} from 'mobx';
-import {Asset} from 'react-native-image-picker';
+import { makeAutoObservable } from "mobx";
+import { Asset } from "react-native-image-picker";
 import {
   AlertActionType,
   AlertMessage,
   AlertType,
   UserType,
-} from '../../models/Common';
-import CommonServices from '../../services/common';
-import PatientServices from '../../services/patient';
+} from "../../models/Common";
+import CommonServices from "../../services/common";
+import PatientServices from "../../services/patient";
+import AdministratorServices from "../../services/administrator";
+import { pendingDatesToList } from "../../models/Profile";
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;
@@ -18,31 +20,33 @@ export class ProfileStore {
   public isGoogleFitAuthorized: boolean = false;
   public stepCount: number = 0;
 
+  public pendingDates: any[] = [];
+
   constructor() {
     makeAutoObservable(this);
   }
 
   public showAlert = (
     onLogout: () => void = () => {},
-    onChangeProfilePicture: (source: 'camera' | 'library') => void = () => {},
+    onChangeProfilePicture: (source: "camera" | "library") => void = () => {}
   ) => {
     this.alert = {
-      title: 'Editar perfil',
-      message: 'Selecciona qué acción deseas tomar',
+      title: "Editar perfil",
+      message: "Selecciona qué acción deseas tomar",
       showIcon: false,
       type: AlertType.Info,
       actions: [
         {
-          label: 'Cambiar foto de perfil',
+          label: "Cambiar foto de perfil",
           onClick: () => this.showChangeProfilePicture(onChangeProfilePicture),
         },
         {
-          label: 'Cerrar sesión',
+          label: "Cerrar sesión",
           type: AlertActionType.Destructive,
           onClick: () => this.showLogoutAlert(onLogout),
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -53,18 +57,18 @@ export class ProfileStore {
   public showLogoutAlert = (onContinue: () => void = () => {}) => {
     this.alert = null;
     this.alert = {
-      title: 'Cerrar sesión',
-      message: '¿Estás seguro(a) de cerrar la sesión?',
+      title: "Cerrar sesión",
+      message: "¿Estás seguro(a) de cerrar la sesión?",
       showIcon: true,
       type: AlertType.Warning,
       actions: [
         {
-          label: 'Continuar',
+          label: "Continuar",
           type: AlertActionType.Action,
           onClick: onContinue,
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -73,27 +77,27 @@ export class ProfileStore {
   };
 
   public showChangeProfilePicture = (
-    onChooseSource: (source: 'camera' | 'library') => void = () => {},
+    onChooseSource: (source: "camera" | "library") => void = () => {}
   ) => {
     this.alert = null;
     this.alert = {
-      title: 'Cambiar foto de perfil',
-      message: 'Elige la foto que deseas utilizar',
+      title: "Cambiar foto de perfil",
+      message: "Elige la foto que deseas utilizar",
       showIcon: false,
       type: AlertType.Info,
       actions: [
         {
-          label: 'Tomar una foto',
+          label: "Tomar una foto",
           type: AlertActionType.Action,
-          onClick: () => onChooseSource('camera'),
+          onClick: () => onChooseSource("camera"),
         },
         {
-          label: 'Elegir una foto de tu biblioteca',
+          label: "Elegir una foto de tu biblioteca",
           type: AlertActionType.Action,
-          onClick: () => onChooseSource('library'),
+          onClick: () => onChooseSource("library"),
         },
         {
-          label: 'Cancelar',
+          label: "Cancelar",
           type: AlertActionType.Cancel,
         },
       ],
@@ -104,7 +108,7 @@ export class ProfileStore {
   public changeProfilePicture = async (
     token: string,
     asset: Asset,
-    type: UserType,
+    type: UserType
   ) => {
     this.loading = true;
     const data = await CommonServices.changeProfilePicture(token, asset, type);
@@ -139,20 +143,29 @@ export class ProfileStore {
 
   public showDietError = (onRetry?: () => void) => {
     this.alert = {
-      title: 'No se pudo abrir el documento',
+      title: "No se pudo abrir el documento",
       message:
-        'Intenta más tarde y, si el problema persite, contacta con soporte.',
+        "Intenta más tarde y, si el problema persite, contacta con soporte.",
       type: AlertType.Error,
       showIcon: true,
       actions: [
         {
-          label: 'Reintentar',
+          label: "Reintentar",
           type: AlertActionType.Normal,
           onClick: onRetry,
         },
       ],
       autoClose: false,
     };
+  };
+
+  public getPendingDates = async (token: string) => {
+    this.loading = true;
+    const data = await AdministratorServices.getPendingDates(token);
+    this.loading = false;
+    if (data.success) {
+      this.pendingDates = pendingDatesToList(data.data.days);
+    }
   };
 
   public dismiss = () => {

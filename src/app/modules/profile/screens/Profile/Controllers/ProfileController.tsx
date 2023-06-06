@@ -25,6 +25,7 @@ const ProfileController = observer(({viewModel}: Props) => {
         fullname={viewModel.authStore.user?.nombre || ''}
         cover="https://alianzapronutricion.org/wp-content/uploads/2020/10/epigenetica-y-nutricion-1.png"
         profilePicture={viewModel.authStore.user?.urlFoto}
+        upcomingDates={viewModel.profileStore.pendingDates}
         onEditProfilePress={viewModel.showEditingOptions}
         onLogout={viewModel.logout}
       />
