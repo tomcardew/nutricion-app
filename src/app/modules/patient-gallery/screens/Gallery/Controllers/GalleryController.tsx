@@ -5,6 +5,7 @@ import GalleryViewModel from '../ViewModels/GalleryViewModel';
 import GalleryView from '../Views/GalleryView';
 import PreviewImage from '../../../../patients/screens/PatientGallery/Views/PreviewImage';
 import {Icon} from '@ui-kitten/components';
+import {GalleryCategory} from '../../../../../../models/Common';
 
 interface Props {
   viewModel: GalleryViewModel;
@@ -34,11 +35,14 @@ const GalleryController = observer(({viewModel}: Props) => {
       loadingMessage="Cargando..."
       showBackButton={false}
       actionButtonView={
-        <Icon
-          style={{width: 30, height: 30}}
-          fill="#FFF"
-          name="cloud-upload-outline"
-        />
+        viewModel.patientsStore.selectedGalleryCategory ===
+        GalleryCategory.Activities ? (
+          <Icon
+            style={{width: 30, height: 30}}
+            fill="#FFF"
+            name="cloud-upload-outline"
+          />
+        ) : undefined
       }
       showImageGallery={showingGallery}
       imageGalleryIndex={previewIndex}
@@ -50,7 +54,7 @@ const GalleryController = observer(({viewModel}: Props) => {
       onBackAction={viewModel.goBack}>
       <GalleryView
         data={viewModel.patientsStore.preparedPictures}
-        onRefresh={() => viewModel.load(true)}
+        onRefresh={onRefresh}
         onShowPreview={index => {
           setPreviewIndex(index);
           setShowingGallery(true);

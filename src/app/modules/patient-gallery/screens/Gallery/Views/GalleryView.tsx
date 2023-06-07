@@ -3,7 +3,7 @@ import {StyleSheet, View, Dimensions, RefreshControl} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {GalleryItems} from '../../../../../../models/Patients';
 import EmptyView from '../../../../../../components/EmptyView';
-import {dateToMonthYear} from '../../../../../../utils/Utils';
+import {dateToMonthYear, getRandomInt} from '../../../../../../utils/Utils';
 import PatientMonthCard from '../../../../patients/screens/PatientGallery/Views/PatientMonthCard';
 import {PillButton} from '../../../../../../components/Buttons';
 import {GalleryCategory} from '../../../../../../models/Common';
@@ -60,7 +60,12 @@ const GalleryView = ({
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        keyExtractor={item => `patient-gallery-${dateToMonthYear(item.date)}`}
+        keyExtractor={item =>
+          `patient-gallery-${dateToMonthYear(item.date)}-${getRandomInt(
+            -1000,
+            1000,
+          )}`
+        }
       />
     </View>
   );

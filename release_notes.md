@@ -53,3 +53,14 @@
 ### 0.7.0
 
 - Se añade la pantalla de comentarios, en la que el paciente podrá dejar anotaciones o mensajes para el administrador con respecto a los ejercicios que se le asignaron
+
+### 0.8.0
+
+- Se añade la tarjeta "Próximas citas" en el perfil del Administrador
+- Se añade la tarjeta "Próximas citas" y "Próximos ejercicos" en el perfil del Paciente.
+- El Administrador puede eliminar ejercicios ya programados
+- Los campos de progreso se vuelve por defecto de tipo numérico
+- El campo `RESULTADOS SUMA PLIEGUES` se deshabilita y su valor se computa del resto de respuestas
+- Se oculta el botón de subir fotografías en categorías distinta a "Actividades" en galería del paciente
+- Se añade un botón de cerrar sesión más visible y más accesible
+- Se reemplaza el campo de `Lugar` en la creación de una nueva cita del Administrador por un Select con los valores predeterminados

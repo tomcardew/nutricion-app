@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  TextStyle,
 } from 'react-native';
 import Text from '../Text';
 import {FontWeight} from '../../models/Common';
@@ -15,6 +16,7 @@ interface Props {
   title: string;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
 }
 
@@ -22,6 +24,7 @@ const PrimaryButton = ({
   title,
   disabled = false,
   style,
+  textStyle,
   onPress = () => {},
 }: Props) => {
   return (
@@ -32,7 +35,7 @@ const PrimaryButton = ({
           style,
           disabled && {backgroundColor: '#ddd'},
         ]}>
-        <Text weight={FontWeight.SemiBold} style={styles.text}>
+        <Text weight={FontWeight.SemiBold} style={[styles.text, textStyle]}>
           {title}
         </Text>
       </View>

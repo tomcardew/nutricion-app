@@ -1,18 +1,18 @@
-import {Networking, RequestData} from '../constants/Networking';
-import {PatientExerciseBody, PatientProgress} from '../models/Patients';
-import {Asset} from 'react-native-image-picker';
-import uuid from 'react-native-uuid';
-import {uriToFileType} from '../utils/Utils';
-import moment from 'moment';
-import {ScheduleDateBody} from '../models/Schedule';
-import {GalleryCategory} from '../models/Common';
+import { Networking, RequestData } from "../constants/Networking";
+import { PatientExerciseBody, PatientProgress } from "../models/Patients";
+import { Asset } from "react-native-image-picker";
+import uuid from "react-native-uuid";
+import { uriToFileType } from "../utils/Utils";
+import moment from "moment";
+import { ScheduleDateBody } from "../models/Schedule";
+import { GalleryCategory } from "../models/Common";
 
 const AdministratorServices = {
   getProfile: async (token: string) => {
     try {
       const request = new RequestData(
         Networking.administrator.getProfile,
-        token,
+        token
       );
 
       const response = await request.request();
@@ -25,7 +25,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.getPatients,
-        token,
+        token
       );
 
       const response = await request.request();
@@ -38,7 +38,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.getPatientById,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
@@ -52,7 +52,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.getPatientProgress,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
@@ -65,15 +65,15 @@ const AdministratorServices = {
   postPatientProgress: async (
     id: string,
     token: string,
-    data: PatientProgress,
+    data: PatientProgress
   ) => {
     try {
       const request = new RequestData(
         Networking.administrator.postPatientProgress,
-        token,
+        token
       );
       request.setParams(`/${id}`);
-      request.setBody({...data});
+      request.setBody({ ...data });
 
       const response = await request.request();
       return response;
@@ -85,7 +85,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.toggleExercises,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
@@ -99,7 +99,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.getPatientPictures,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
@@ -110,11 +110,11 @@ const AdministratorServices = {
     }
   },
   getAdminExercises: async (id: string, token: string, date: Date) => {
-    const _date = moment(date).utc(true).format('yyyy-MM-DD');
+    const _date = moment(date).utc(true).format("yyyy-MM-DD");
     try {
       const request = new RequestData(
         Networking.administrator.getAdminExercises,
-        token,
+        token
       );
       request.setParams(`/${id}/${_date}`);
 
@@ -127,15 +127,15 @@ const AdministratorServices = {
   postPatientExercise: async (
     id: string,
     token: string,
-    data: PatientExerciseBody,
+    data: PatientExerciseBody
   ) => {
     try {
       const request = new RequestData(
         Networking.administrator.postPatientExercise,
-        token,
+        token
       );
       request.setParams(`/${id}`);
-      request.setBody({...data});
+      request.setBody({ ...data });
 
       const response = await request.request();
       return response;
@@ -147,17 +147,17 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.changeProfilePicture,
-        token,
+        token
       );
 
       let formData = new FormData();
       const file = {
-        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? '.jpg')}`,
+        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? ".jpg")}`,
         type: asset.type,
         size: asset.fileSize,
         uri: asset.uri,
       };
-      formData.append('file', file);
+      formData.append("file", file);
 
       request.setFormData(formData);
 
@@ -171,7 +171,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.getAllDates,
-        token,
+        token
       );
 
       const response = await request.request();
@@ -183,15 +183,15 @@ const AdministratorServices = {
   postPatientDate: async (
     id: string,
     token: string,
-    data: ScheduleDateBody,
+    data: ScheduleDateBody
   ) => {
     try {
       const request = new RequestData(
         Networking.administrator.postPatientDate,
-        token,
+        token
       );
       request.setParams(`/${id}`);
-      request.setBody({...data});
+      request.setBody({ ...data });
 
       const response = await request.request();
       return response;
@@ -203,24 +203,24 @@ const AdministratorServices = {
     id: string,
     token: string,
     asset: Asset,
-    category: GalleryCategory,
+    category: GalleryCategory
   ) => {
     try {
       const request = new RequestData(
         Networking.administrator.postPatientActivityPicture,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
       let formData = new FormData();
       const file = {
-        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? '.jpg')}`,
+        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? ".jpg")}`,
         type: asset.type,
         size: asset.fileSize,
         uri: asset.uri,
       };
-      formData.append('file', file);
-      formData.append('categoria', category.toString());
+      formData.append("file", file);
+      formData.append("categoria", category.toString());
 
       request.setFormData(formData);
 
@@ -234,7 +234,7 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.changePatientStatus,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
@@ -248,18 +248,18 @@ const AdministratorServices = {
     try {
       const request = new RequestData(
         Networking.administrator.uploadPatientDiet,
-        token,
+        token
       );
       request.setParams(`/${id}`);
 
       let formData = new FormData();
       const file = {
-        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? '.jpg')}`,
+        name: `${uuid.v4()}.${uriToFileType(asset.uri ?? ".jpg")}`,
         type: asset.type,
         size: asset.fileSize,
         uri: asset.uri,
       };
-      formData.append('file', file);
+      formData.append("file", file);
 
       request.setFormData(formData);
 
@@ -270,7 +270,7 @@ const AdministratorServices = {
     }
   },
   getSteps: async (token: string, patientId: string, date: Date) => {
-    const _date = moment(date).utc(true).format('yyyy-MM-DD');
+    const _date = moment(date).utc(true).format("yyyy-MM-DD");
     try {
       const request = new RequestData(Networking.administrator.getSteps, token);
       request.setParams(`/${patientId}/${_date}`);
@@ -285,17 +285,48 @@ const AdministratorServices = {
     token: string,
     patientId: string,
     exerciseId: string,
-    notas: string,
+    notas: string
   ) => {
     try {
       const request = new RequestData(
         Networking.administrator.addComment,
-        token,
+        token
       );
       request.setParams(`/${patientId}/${exerciseId}`);
       request.setBody({
-        notas
+        notas,
       });
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteExercise: async (
+    token: string,
+    patientId: string,
+    exerciseId: number
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.deleteExercise,
+        token
+      );
+      request.setParams(`/${patientId}/${exerciseId}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getPendingDates: async (token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.getPendingDates,
+        token
+      );
 
       const response = await request.request();
       return response;

@@ -27,7 +27,6 @@ import {
   GoogleImageResults,
   MediaType,
   PatientsCategory,
-  StepCountRecord,
   UserType,
 } from "../../models/Common";
 import { Asset } from "react-native-image-picker";
@@ -37,14 +36,14 @@ import CommonServices from "../../services/common";
 
 export class PatientsStore {
   public alert: AlertMessage | null = null;
-  public loaded: boolean = false;
-  public loading: boolean = true;
-  public refreshing: boolean = false;
+  public loaded = false;
+  public loading = true;
+  public refreshing = false;
   public patients_raw: Patient[] = [];
-  public query: string = "";
+  public query = "";
   public selectedPatientsList: PatientsCategory = PatientsCategory.All;
 
-  public loadingSelectedPatient: boolean = true;
+  public loadingSelectedPatient = true;
   public selectedPatient: Patient | null = null;
   public selectedPatientId: string | null = null;
 
@@ -52,7 +51,7 @@ export class PatientsStore {
   public patientProgress: PatientProgress | null = null;
   public rawPictures: PatientPicture[] = [];
   public selectedGalleryCategory: GalleryCategory = GalleryCategory.Activities;
-  public patientStepCount: number = 0;
+  public patientStepCount = 0;
 
   // AdminExercisesList
   public currentDate: Date = new Date();
@@ -60,7 +59,7 @@ export class PatientsStore {
   public AdminExercises: PatientExerciseListItem[] = [];
 
   // Comments
-  public commentTextPrompt: string = "";
+  public commentTextPrompt = "";
 
   // AdminExercises
   public categories_raw: Category[] = [];
@@ -73,11 +72,11 @@ export class PatientsStore {
   public currentRepetitions: IndexPath | undefined = undefined;
   public rest_raw: Rest[] = [];
   public currentRest: IndexPath | undefined = undefined;
-  public weight: string = "";
-  public note: string = "";
+  public weight = "";
+  public note = "";
 
   // PatientDataEditor
-  public reloader: boolean = false;
+  public reloader = false;
   public selectedProgressCategory: PatientProgresCategories =
     PatientProgresCategories.PLIEGUES;
   public currentProgressCategory: IndexPath | undefined = undefined;
@@ -197,7 +196,7 @@ export class PatientsStore {
   public savePatientProgress = async (token: string) => {
     if (this.selectedPatientId) {
       this.loading = true;
-      let body: any = { ...this.dataPatientProgress };
+      const body: any = { ...this.dataPatientProgress };
       delete body.id;
       delete body.fecha_registro;
       const data = await AdministratorServices.postPatientProgress(
@@ -206,7 +205,6 @@ export class PatientsStore {
         body
       );
       this.loading = false;
-      console.log(data);
       if (data.success) {
         this.alert = {
           type: AlertType.Success,
@@ -283,7 +281,7 @@ export class PatientsStore {
       );
       refreshing ? (this.refreshing = false) : (this.loading = false);
       if (data.success) {
-        var values: PatientPicture[] = data.data;
+        const values: PatientPicture[] = data.data;
         values.forEach((item, index) => {
           item.global_index = index;
         });
@@ -297,7 +295,7 @@ export class PatientsStore {
     const data = await PatientServices.getActivityPictures(token);
     refreshing ? (this.refreshing = false) : (this.loading = false);
     if (data.success) {
-      var values: PatientPicture[] = data.data;
+      const values: PatientPicture[] = data.data;
       values.forEach((item, index) => {
         item.global_index = index;
       });
@@ -422,6 +420,53 @@ export class PatientsStore {
     const data = await PatientServices.markExerciseAsCompleted(id, token);
     this.loading = false;
     return data.success;
+  };
+
+  public showDeleteExerciseAlert = (onDelete = () => {}) => {
+    this.alert = {
+      title: "Eliminar ejercicio",
+      message:
+        "¿De verdad quieres eliminar el ejercicio? No podrá ser recuperado.",
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: "Si, eliminar",
+          type: AlertActionType.Destructive,
+          onClick: onDelete,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public deleteExercise = async (token: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.deleteExercise(
+        token,
+        this.selectedPatientId,
+        this.selectedAdminExercise?.id ?? 0
+      );
+      this.loading = false;
+      if (data.success) {
+        this.selectedAdminExercise = null;
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message: "El ejercicio no pudo ser eliminado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
+      }
+    }
   };
 
   public cleanExercises = () => {
@@ -638,7 +683,7 @@ export class PatientsStore {
 
   public showPostActivityPicture = (
     isAdmin: boolean,
-    onChooseSource: (source: "camera" | "library") => void = () => {}
+    onChooseSource: (source: "camera" | "library") => void = () => undefined
   ) => {
     this.alert = null;
     this.alert = {
@@ -818,12 +863,12 @@ export class PatientsStore {
   }
 
   get preparedPictures() {
-    var lists: GalleryItems[] = []; // will contain a list of pictures list separated by month
-    this.rawPictures.forEach((item, index) => {
+    let lists: GalleryItems[] = []; // will contain a list of pictures list separated by month
+    this.rawPictures.forEach((item) => {
       if (toGalleryCategory(item.categoria) == this.selectedGalleryCategory) {
         const date = moment.utc(item.fecha_foto);
-        var dateExists = false;
-        for (var j in lists) {
+        let dateExists = false;
+        for (const j in lists) {
           const listItem = lists[j];
           const itemDate = moment.utc(listItem.date);
           const year = itemDate.year();
