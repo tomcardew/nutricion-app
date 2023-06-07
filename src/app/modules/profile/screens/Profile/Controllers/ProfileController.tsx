@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import ProfileView from '../Views/ProfileView';
 import ProfileViewModel from '../ViewModels/ProfileViewModel';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props {
   viewModel: ProfileViewModel;
@@ -12,6 +13,12 @@ const ProfileController = observer(({viewModel}: Props) => {
   useEffect(() => {
     viewModel.load();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      viewModel.load();
+    }, []),
+  );
 
   return (
     <BaseLayoutView

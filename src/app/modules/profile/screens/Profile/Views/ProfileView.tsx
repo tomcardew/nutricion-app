@@ -7,13 +7,14 @@ import Text from '../../../../../../components/Text';
 import {ActionButton} from '../../../../../../components/Buttons';
 import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 import {FontWeight} from '../../../../../../models/Common';
+import {PendingDate} from '../../../../../../models/Profile';
 
 interface Props {
   fullname: string;
   cover?: string;
   profilePicture?: string;
   date?: Date;
-  upcomingDates?: {label: string; hours: string[]}[];
+  upcomingDates?: PendingDate[];
 
   onEditProfilePress?: () => void;
   onLogout?: () => void;
@@ -57,7 +58,10 @@ const ProfileView = ({
           onEditProfilePress={onEditProfilePress}
         />
         {upcomingDates.length > 0 && (
-          <SimpleCard title="Próximas citas" style={{marginVertical: 20}}>
+          <SimpleCard
+            iconName="bell-outline"
+            title="Próximas citas"
+            style={{marginVertical: 20}}>
             {upcomingDates.map(item => (
               <View style={{marginBottom: 10, paddingHorizontal: 10}}>
                 <Text

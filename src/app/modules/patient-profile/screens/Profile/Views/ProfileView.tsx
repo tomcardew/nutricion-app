@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {ProfilePicture} from '../../../../../../components/Images';
-import {Profile} from '../../../../../../models/Profile';
+import {PendingDate, Profile} from '../../../../../../models/Profile';
 import ProfileSummaryCard from './ProfileSummaryCard';
 import ProfileWeightCard from './ProfileWeightCard';
 import ProfileDietCard from './ProfileDietCard';
@@ -17,12 +17,15 @@ import {FontWeight} from '../../../../../../models/Common';
 import ProfileStepsCard from './ProfileStepsCard';
 import {ActionButton} from '../../../../../../components/Buttons';
 import {theme} from '../../../../../../utils/Utils';
+import SimpleCard from '../../../../../../components/Cards/SimpleCard';
 
 interface Props {
   profile?: Profile | null;
   date?: Date;
   enableSteps?: boolean;
   stepCount?: number;
+  upcomingDates?: PendingDate[];
+  upcomingExercises?: PendingDate[];
 
   onEditProfilePress?: () => void;
   onLogout?: () => void;
@@ -36,6 +39,8 @@ const ProfileView = ({
   date = new Date(),
   enableSteps = true,
   stepCount = 0,
+  upcomingDates = [],
+  upcomingExercises = [],
   onEditProfilePress = () => {},
   onLogout = () => {},
   didPressGoToProgress = () => {},
@@ -67,14 +72,67 @@ const ProfileView = ({
             url={profile?.urlFoto}
             onEditProfilePress={onEditProfilePress}
           />
+          {upcomingDates.length > 0 && (
+            <SimpleCard
+              iconName="bell-outline"
+              title="Próximas citas"
+              style={{
+                marginTop: -100,
+                marginBottom: 20,
+                width: Dimensions.get('window').width - 40,
+              }}>
+              {upcomingDates.map(item => (
+                <View style={{marginBottom: 10, paddingHorizontal: 10}}>
+                  <Text
+                    weight={FontWeight.Bold}
+                    style={{color: theme['color-primary-700'], fontSize: 16}}>
+                    {item.label}
+                  </Text>
+                  {item.hours.map(hour => (
+                    <Text
+                      weight={FontWeight.Medium}
+                      style={{color: 'black', fontSize: 15}}>
+                      {hour}
+                    </Text>
+                  ))}
+                </View>
+              ))}
+            </SimpleCard>
+          )}
+          {upcomingExercises.length > 0 && (
+            <SimpleCard
+              iconName="bell-outline"
+              title="Próximos ejercicios"
+              style={{
+                marginBottom: 20,
+                marginTop: upcomingDates.length > 0 ? 0 : -100,
+                width: Dimensions.get('window').width - 40,
+              }}>
+              {upcomingExercises.map(item => (
+                <View style={{marginBottom: 10, paddingHorizontal: 10}}>
+                  <Text
+                    weight={FontWeight.Bold}
+                    style={{color: theme['color-primary-700'], fontSize: 16}}>
+                    {item.label}
+                  </Text>
+                  {item.hours.map(hour => (
+                    <Text
+                      weight={FontWeight.Medium}
+                      style={{color: 'black', fontSize: 15}}>
+                      {hour}
+                    </Text>
+                  ))}
+                </View>
+              ))}
+            </SimpleCard>
+          )}
           <ProfileWeightCard
-            weight={
-              weight !== '--'
-                ? weight.substring(0, weight.length - 2).trim()
-                : undefined
-            }
+            weight={weight}
             style={{
-              marginTop: -100,
+              marginTop:
+                upcomingDates.length > 0 || upcomingExercises.length > 0
+                  ? 0
+                  : -100,
               width: Dimensions.get('window').width - 40,
             }}
           />

@@ -32,6 +32,8 @@ const ProfileController = observer(({viewModel}: Props) => {
         didPressSeeDiet={viewModel.didPressSeeDiet}
         didPressSeeVersion={viewModel.didPressSeeVersion}
         stepCount={viewModel.profileStore.stepCount}
+        upcomingDates={viewModel.profileStore.pendingDates}
+        upcomingExercises={viewModel.profileStore.pendingExercies}
       />
     </BaseLayoutView>
   );

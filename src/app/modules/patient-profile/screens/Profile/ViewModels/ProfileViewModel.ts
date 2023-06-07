@@ -29,6 +29,8 @@ class ProfileViewModel {
       this.authStore.token ?? "",
       UserType.Patient
     );
+    this.profileStore.getPatientPendingDates(this.authStore.token ?? "");
+    this.profileStore.getPatientPendingExercises(this.authStore.token ?? "");
     this.authStore.setUser(data.data.profile);
   };
 

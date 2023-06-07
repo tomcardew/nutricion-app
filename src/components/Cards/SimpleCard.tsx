@@ -15,6 +15,7 @@ interface Props {
   title?: string;
   padding?: number;
   children?: JSX.Element | JSX.Element[] | any;
+  iconName?: string;
   actionTitle?: string;
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
@@ -25,6 +26,7 @@ const SimpleCard = ({
   title,
   padding = 10,
   children,
+  iconName,
   actionTitle,
   style,
   contentStyle,
@@ -34,6 +36,12 @@ const SimpleCard = ({
     <View style={[styles.container, style]}>
       {title && (
         <View style={styles.titleContainer}>
+          {iconName && (
+            <Icon
+              style={{width: 18, height: 18, marginRight: 5, marginTop: -1}}
+              name={iconName}
+            />
+          )}
           <Text weight={FontWeight.Bold} style={styles.title}>
             {title}
           </Text>

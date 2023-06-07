@@ -20,7 +20,8 @@ export class ProfileStore {
   public isGoogleFitAuthorized: boolean = false;
   public stepCount: number = 0;
 
-  public pendingDates: any[] = [];
+  public pendingDates: any[] = []; // used for patient and admin
+  public pendingExercies: any[] = []; // used only for patient
 
   constructor() {
     makeAutoObservable(this);
@@ -165,6 +166,24 @@ export class ProfileStore {
     this.loading = false;
     if (data.success) {
       this.pendingDates = pendingDatesToList(data.data.days);
+    }
+  };
+
+  public getPatientPendingDates = async (token: string) => {
+    this.loading = true;
+    const data = await PatientServices.getPendingDates(token);
+    this.loading = false;
+    if (data.success) {
+      this.pendingDates = pendingDatesToList(data.data.days);
+    }
+  };
+
+  public getPatientPendingExercises = async (token: string) => {
+    this.loading = true;
+    const data = await PatientServices.getPendingExercises(token);
+    this.loading = false;
+    if (data.success) {
+      this.pendingExercies = pendingDatesToList(data.data.days);
     }
   };
 
