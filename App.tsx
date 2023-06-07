@@ -13,6 +13,7 @@ import {Logger} from './src/utils/Utils';
 import SplashScreen from './src/components/SplashScreen';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {FeatherIconsPack} from './src/components/FeatherIcons';
+import moment from 'moment';
 
 configure({
   enforceActions: 'never', // TODO: Enable strict mode

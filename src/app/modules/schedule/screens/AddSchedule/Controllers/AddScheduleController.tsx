@@ -37,6 +37,7 @@ const AddScheduleController = observer(({viewModel}: Props) => {
         patients={viewModel.scheduleStore.patients}
         date={viewModel.scheduleStore.selectedDate}
         place={viewModel.scheduleStore.place}
+        selectedPlaceIndex={viewModel.scheduleStore.currentPlace}
         selectedPatient={viewModel.scheduleStore.currentPatient}
         selectedPatientValue={viewModel.scheduleStore.selectedPatientValue}
         didChangePatient={viewModel.didChangePatient}

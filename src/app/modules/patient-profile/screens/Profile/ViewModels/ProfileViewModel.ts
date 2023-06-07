@@ -1,16 +1,16 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import {
   Asset,
   launchCamera,
   launchImageLibrary,
-} from 'react-native-image-picker';
-import {UserType} from '../../../../../../models/Common';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {ProfileStore} from '../../../../../store/ProfileStore';
-import ScreenNames from '../../../../../../constants/Screens';
-import {Logger} from '../../../../../../utils/Utils';
-import GoogleFit, {Scopes} from 'react-native-google-fit';
-import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+} from "react-native-image-picker";
+import { UserType } from "../../../../../../models/Common";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { ProfileStore } from "../../../../../store/ProfileStore";
+import ScreenNames from "../../../../../../constants/Screens";
+import { Logger } from "../../../../../../utils/Utils";
+import GoogleFit, { Scopes } from "react-native-google-fit";
+import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -26,9 +26,11 @@ class ProfileViewModel {
   load = async () => {
     await this.initiateGoogleFit();
     const data = await this.profileStore.getProfile(
-      this.authStore.token ?? '',
-      UserType.Patient,
+      this.authStore.token ?? "",
+      UserType.Patient
     );
+    this.profileStore.getPatientPendingDates(this.authStore.token ?? "");
+    this.profileStore.getPatientPendingExercises(this.authStore.token ?? "");
     this.authStore.setUser(data.data.profile);
   };
 
@@ -37,48 +39,48 @@ class ProfileViewModel {
       scopes: [Scopes.FITNESS_ACTIVITY_READ, Scopes.FITNESS_ACTIVITY_WRITE],
     };
     GoogleFit.authorize(options)
-      .then(result => {
+      .then((result) => {
         this.profileStore.isGoogleFitAuthorized = result.success;
-        Logger.success('Google fit authorization result:', result);
-        this.askPermissions().then(success => {
+        Logger.success("Google fit authorization result:", result);
+        this.askPermissions().then((success) => {
           if (success) {
             this.startRecording();
             this.getSteps();
           }
         });
       })
-      .catch(error => {
-        Logger.error('Google fit error', error);
+      .catch((error) => {
+        Logger.error("Google fit error", error);
       });
   };
 
   startRecording = () => {
     GoogleFit.startRecording(
-      callback => {
+      (callback) => {
         Logger.debug(callback);
       },
-      ['step', 'activity'],
+      ["step", "activity"]
     );
   };
 
   getSteps = () => {
-    GoogleFit.getDailySteps(new Date()).then(result => {
+    GoogleFit.getDailySteps(new Date()).then((result) => {
       Logger.debug(result);
       const steps = result.filter(
-        item => item.source == 'com.google.android.gms:estimated_steps',
+        (item) => item.source == "com.google.android.gms:estimated_steps"
       )[0].rawSteps[0].steps;
       this.profileStore.stepCount = steps;
       this.authStore.lastStepCount = steps;
 
       if (steps > 0) {
-        this.profileStore.postStepCount(this.authStore.token ?? '', steps);
+        this.profileStore.postStepCount(this.authStore.token ?? "", steps);
       }
     });
   };
 
   askPermissions = async (): Promise<boolean> => {
     const result = await request(PERMISSIONS.ANDROID.ACTIVITY_RECOGNITION);
-    Logger.debug('Permissions result', result);
+    Logger.debug("Permissions result", result);
     switch (result) {
       case RESULTS.GRANTED:
         return true;
@@ -98,21 +100,21 @@ class ProfileViewModel {
         this.disconnect();
         this.dismissAlert();
       },
-      source => {
+      (source) => {
         const launch = async () => {
           let result;
           switch (source) {
-            case 'camera':
+            case "camera":
               result = await launchCamera({
-                mediaType: 'photo',
+                mediaType: "photo",
                 quality: 0.6,
                 includeBase64: true,
                 saveToPhotos: true,
               });
               break;
-            case 'library':
+            case "library":
               result = await launchImageLibrary({
-                mediaType: 'photo',
+                mediaType: "photo",
                 quality: 0.6,
                 includeBase64: true,
               });
@@ -124,23 +126,31 @@ class ProfileViewModel {
           this.dismissAlert();
         };
         launch();
-      },
+      }
     );
   };
 
   changeProfilePicture = async (asset: Asset) => {
     const data = await this.profileStore.changeProfilePicture(
-      this.authStore.token ?? '',
+      this.authStore.token ?? "",
       asset,
-      UserType.Patient,
+      UserType.Patient
     );
     if (data.success) {
       const data = await this.profileStore.getProfile(
-        this.authStore.token ?? '',
-        UserType.Patient,
+        this.authStore.token ?? "",
+        UserType.Patient
       );
       this.authStore.setUser(data.data.profile);
     }
+  };
+
+  logout = () => {
+    this.profileStore.showLogoutAlert(() => {
+      this.authStore.logout();
+      this.disconnect();
+      this.dismissAlert();
+    });
   };
 
   dismissAlert = () => {

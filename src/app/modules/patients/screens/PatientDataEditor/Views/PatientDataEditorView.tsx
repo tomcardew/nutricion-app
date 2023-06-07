@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ActionButton} from '../../../../../../components/Buttons';
@@ -11,7 +11,6 @@ import {
 } from '../../../../../../models/Patients';
 import {IndexPath} from '@ui-kitten/components';
 import Separator from '../../../../../../components/Separator';
-import {Logger} from '../../../../../../utils/Utils';
 
 interface Props {
   data: PatientProgress;
@@ -27,18 +26,12 @@ interface Props {
 const PatientDataEditorView = ({
   data,
   selectedCategory,
-  canSave = false,
   category = PatientProgresCategories.PLIEGUES,
-  reloader,
   didChangeValue = () => {},
   onSaveProgress = () => {},
   didChangeCategory = () => {},
 }: Props) => {
   const items = patientProgressToKeyValues(data, category);
-
-  useEffect(() => {
-    Logger.warn('Data changed', data);
-  }, [data]);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -51,12 +44,13 @@ const PatientDataEditorView = ({
           keys={patientProgresCategoriesLabels}
           value={patientProgresCategoriesLabels[selectedCategory?.row ?? 0]}
         />
-        <Separator style={{marginVertical: 10}} />
+        <Separator style={styles.separator} />
         {items.slice().map(item => (
           <TextInput
             label={item.name?.toUpperCase()}
             value={`${item.value}`}
-            keyboardType="default"
+            keyboardType={item.properties.isNumeric ? 'numeric' : 'default'}
+            disabled={item.properties.disabled}
             key={`patient-data-editor-item-${item.key}`}
             onChangeText={value => {
               didChangeValue(value, item.key);
@@ -86,6 +80,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
+  },
+  separator: {
+    marginVertical: 10,
   },
 });
 

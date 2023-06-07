@@ -1,8 +1,8 @@
-import {IndexPath} from '@ui-kitten/components';
-import moment from 'moment';
-import {AlertType} from '../../../../../../models/Common';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {ScheduleStore} from '../../../../../store/ScheduleStore';
+import { IndexPath } from "@ui-kitten/components";
+import moment from "moment";
+import { AlertType } from "../../../../../../models/Common";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { ScheduleStore } from "../../../../../store/ScheduleStore";
 
 class AddScheduleViewModel {
   navigation: any;
@@ -12,7 +12,7 @@ class AddScheduleViewModel {
   constructor(
     navigation: any,
     authStore: AuthStore,
-    scheduleStore: ScheduleStore,
+    scheduleStore: ScheduleStore
   ) {
     this.navigation = navigation;
     this.authStore = authStore;
@@ -20,11 +20,11 @@ class AddScheduleViewModel {
   }
 
   load = async () => {
-    await this.scheduleStore.getPatients(this.authStore.token ?? '');
+    await this.scheduleStore.getPatients(this.authStore.token ?? "");
   };
 
   save = async () => {
-    await this.scheduleStore.saveDate(this.authStore.token ?? '');
+    await this.scheduleStore.saveDate(this.authStore.token ?? "");
   };
 
   didChangePatient = (path: IndexPath | IndexPath[]) => {
@@ -37,13 +37,17 @@ class AddScheduleViewModel {
 
   didChangeDate = (date: Date | undefined | string) => {
     if (date) {
-      const _date = moment(date, 'YYYY/MM/DD HH:mm').toDate();
+      const _date = moment(date, "YYYY/MM/DD HH:mm").toDate();
       this.scheduleStore.selectedDate = _date;
     }
   };
 
-  didChangePlace = (value: string) => {
-    this.scheduleStore.place = value;
+  didChangePlace = (path: IndexPath | IndexPath[]) => {
+    if (Array.isArray(path)) {
+      this.scheduleStore.setCurrentPlace(path[0]);
+      return;
+    }
+    this.scheduleStore.setCurrentPlace(path);
   };
 
   dismissAlert = () => {

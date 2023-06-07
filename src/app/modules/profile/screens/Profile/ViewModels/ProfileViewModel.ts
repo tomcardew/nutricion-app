@@ -1,13 +1,14 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import {
   launchCamera,
   launchImageLibrary,
   Asset,
-} from 'react-native-image-picker';
-import {AlertMessage, UserType} from '../../../../../../models/Common';
-import {Logger} from '../../../../../../utils/Utils';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {ProfileStore} from '../../../../../store/ProfileStore';
+} from "react-native-image-picker";
+import { AlertMessage, UserType } from "../../../../../../models/Common";
+import { Logger } from "../../../../../../utils/Utils";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { ProfileStore } from "../../../../../store/ProfileStore";
+import ScreenNames from "../../../../../../constants/Screens";
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -25,13 +26,15 @@ class ProfileViewModel {
   }
 
   load = async () => {
-    Logger.warn('Loading profile...');
+    Logger.warn("Loading profile...");
     const data = await this.profileStore.getProfile(
-      this.authStore.token ?? '',
-      this.isAdmin ? UserType.Admin : UserType.Patient,
+      this.authStore.token ?? "",
+      this.isAdmin ? UserType.Admin : UserType.Patient
     );
-    Logger.success('Retreived profile:', data);
+    Logger.success("Retreived profile:", data);
     this.authStore.setUser(data.data.profile);
+
+    this.profileStore.getPendingDates(this.authStore.token ?? "");
   };
 
   showEditingOptions = () => {
@@ -40,21 +43,21 @@ class ProfileViewModel {
         this.authStore.logout();
         this.dismissAlert();
       },
-      source => {
+      (source) => {
         const launch = async () => {
           let result;
           switch (source) {
-            case 'camera':
+            case "camera":
               result = await launchCamera({
-                mediaType: 'photo',
+                mediaType: "photo",
                 quality: 0.6,
                 includeBase64: true,
                 saveToPhotos: true,
               });
               break;
-            case 'library':
+            case "library":
               result = await launchImageLibrary({
-                mediaType: 'photo',
+                mediaType: "photo",
                 quality: 0.6,
                 includeBase64: true,
               });
@@ -66,23 +69,30 @@ class ProfileViewModel {
           this.dismissAlert();
         };
         launch();
-      },
+      }
     );
   };
 
   changeProfilePicture = async (asset: Asset) => {
     const data = await this.profileStore.changeProfilePicture(
-      this.authStore.token ?? '',
+      this.authStore.token ?? "",
       asset,
-      this.isAdmin ? UserType.Admin : UserType.Patient,
+      this.isAdmin ? UserType.Admin : UserType.Patient
     );
     if (data.success) {
       const data = await this.profileStore.getProfile(
-        this.authStore.token ?? '',
-        this.isAdmin ? UserType.Admin : UserType.Patient,
+        this.authStore.token ?? "",
+        this.isAdmin ? UserType.Admin : UserType.Patient
       );
       this.authStore.setUser(data.data.profile);
     }
+  };
+
+  logout = () => {
+    this.profileStore.showLogoutAlert(() => {
+      this.authStore.logout();
+      this.dismissAlert();
+    });
   };
 
   dismissAlert = () => {

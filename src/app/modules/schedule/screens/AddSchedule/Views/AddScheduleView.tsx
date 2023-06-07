@@ -9,11 +9,13 @@ import {
 } from '../../../../../../components/Inputs';
 import Separator from '../../../../../../components/Separator';
 import {ActionButton} from '../../../../../../components/Buttons';
+import {PLACES} from '../../../../../store/ScheduleStore';
 
 interface Props {
   patients: string[];
   date: Date;
-  place: string;
+  place?: string;
+  selectedPlaceIndex?: IndexPath | IndexPath[] | undefined;
   canSave?: boolean;
 
   selectedPatientValue?: string;
@@ -21,7 +23,7 @@ interface Props {
 
   didChangePatient?: (path: IndexPath | IndexPath[]) => void;
   didPressChangeDate?: () => void;
-  didChangePlace?: (value: string) => void;
+  didChangePlace?: (path: IndexPath | IndexPath[]) => void;
 
   onSaveDate?: () => void;
 }
@@ -30,6 +32,7 @@ const AddScheduleView = ({
   patients,
   date,
   place,
+  selectedPlaceIndex,
   canSave = false,
   selectedPatient,
   selectedPatientValue,
@@ -51,7 +54,14 @@ const AddScheduleView = ({
         />
         <Separator style={{marginTop: 10}} />
         <DatePicker date={date} label="Fecha" onPress={didPressChangeDate} />
-        <TextInput label="Lugar" value={place} onChangeText={didChangePlace} />
+        <Selector
+          label="Lugar"
+          placeholder="Selecciona una opción"
+          selectedIndex={selectedPlaceIndex}
+          onSelect={didChangePlace}
+          keys={PLACES}
+          value={place}
+        />
         <ActionButton
           style={styles.button}
           title="Guardar"
