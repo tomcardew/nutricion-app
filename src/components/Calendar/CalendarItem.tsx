@@ -14,7 +14,7 @@ interface Props {
 
 const CalendarItem = ({data}: Props) => {
   const dateTime = () => {
-    const date = moment.utc(data.fecha_cita);
+    const date = moment(data.fecha_cita);
     const hour24 = date.hour();
     const isAM = hour24 < 12;
     const hour = `${hour24 < 13 ? hour24 : hour24 - 12}`.padStart(2, '0');

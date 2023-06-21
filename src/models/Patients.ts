@@ -116,6 +116,7 @@ export interface PatientExerciseBody {
   repeticiones: number;
   descansos: number;
   notas: string;
+  fecha_ejercicio: string;
 }
 
 export interface PatientExerciseListItem {
