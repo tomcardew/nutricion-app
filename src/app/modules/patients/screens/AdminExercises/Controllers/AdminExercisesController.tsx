@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import AdminExercisesViewModel from '../ViewModels/AdminExercisesViewModel';
 import AdminExercisesView from '../Views/AdminExercisesView';
+import { DatePickerModal } from '../../../../../../components/Inputs';
 
 interface Props {
   viewModel: AdminExercisesViewModel;
 }
 
 const AdminExercisesController = observer(({viewModel}: Props) => {
+  const [showDatepicker, setShowDatePicker] = useState(false);
+
   useEffect(() => {
     viewModel.load();
 
@@ -25,8 +28,18 @@ const AdminExercisesController = observer(({viewModel}: Props) => {
       loadingMessage="Cargando..."
       alert={viewModel.patientsStore.alert}
       onAlertDismiss={viewModel.dismissAlert}
+      overlay={
+        showDatepicker ? (
+          <DatePickerModal
+            mode="datepicker"
+            onSelectedDate={viewModel.didChangeDate}
+            onClose={() => setShowDatePicker(false)}
+          />
+        ) : undefined
+      }
       onBackAction={viewModel.goBack}>
       <AdminExercisesView
+        date={viewModel.patientsStore.exerciseDate}
         categories={viewModel.patientsStore.categories}
         exercises={viewModel.patientsStore.exercises}
         series={viewModel.patientsStore.series}
@@ -37,6 +50,7 @@ const AdminExercisesController = observer(({viewModel}: Props) => {
         canSave={viewModel.patientsStore.canSaveExercise ?? false}
         selectedCategory={viewModel.patientsStore.currentCategory}
         selectedCategoryValue={viewModel.patientsStore.selectedCategoryValue}
+        didPressChangeDate={() => setShowDatePicker(true)}
         didChangeCategory={viewModel.didChangeCategory}
         selectedExercise={viewModel.patientsStore.currentExercise}
         selectedExerciseValue={viewModel.patientsStore.selectedExerciseValue}

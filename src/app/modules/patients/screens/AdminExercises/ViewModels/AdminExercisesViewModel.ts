@@ -1,8 +1,9 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {IndexPath} from '@ui-kitten/components';
-import {AlertType} from '../../../../../../models/Common';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/PatientsStore';
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { IndexPath } from "@ui-kitten/components";
+import { AlertType } from "../../../../../../models/Common";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { PatientsStore } from "../../../../../store/PatientsStore";
+import moment from "moment";
 
 class AdminExercisesViewModel {
   authStore: AuthStore;
@@ -16,10 +17,17 @@ class AdminExercisesViewModel {
   }
 
   load = async () => {
-    await this.patientsStore.getExerciseCategories(this.authStore.token ?? '');
-    await this.patientsStore.getSeries(this.authStore.token ?? '');
-    await this.patientsStore.getRepetitions(this.authStore.token ?? '');
-    await this.patientsStore.getRest(this.authStore.token ?? '');
+    await this.patientsStore.getExerciseCategories(this.authStore.token ?? "");
+    await this.patientsStore.getSeries(this.authStore.token ?? "");
+    await this.patientsStore.getRepetitions(this.authStore.token ?? "");
+    await this.patientsStore.getRest(this.authStore.token ?? "");
+  };
+
+  didChangeDate = (date: Date | undefined | string) => {
+    if (date) {
+      const _date = moment(date, "YYYY/MM/DD HH:mm").toDate();
+      this.patientsStore.exerciseDate = _date;
+    }
   };
 
   didChangeCategory = (path: IndexPath | IndexPath[]) => {
@@ -33,7 +41,7 @@ class AdminExercisesViewModel {
       this.patientsStore.currentCategory &&
       this.patientsStore.currentCategory !== oldCategory
     ) {
-      this.patientsStore.getExercisesByCategory(this.authStore.token ?? '');
+      this.patientsStore.getExercisesByCategory(this.authStore.token ?? "");
     }
   };
 
@@ -78,7 +86,7 @@ class AdminExercisesViewModel {
   };
 
   onSaveExercise = async () => {
-    await this.patientsStore.saveExercise(this.authStore.token ?? '');
+    await this.patientsStore.saveExercise(this.authStore.token ?? "");
   };
 
   dismissAlert = () => {

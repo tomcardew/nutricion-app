@@ -62,6 +62,7 @@ export class PatientsStore {
   public commentTextPrompt = "";
 
   // AdminExercises
+  public exerciseDate: Date = new Date();
   public categories_raw: Category[] = [];
   public currentCategory: IndexPath | undefined = undefined;
   public exercisesByCurrentCategory_raw: Exercise[] | null = null;
@@ -579,6 +580,9 @@ export class PatientsStore {
           repeticiones: this.selectedRepetition ?? 0,
           descansos: this.selectedRest ?? 0,
           notas: this.note,
+          fecha_ejercicio: moment(this.exerciseDate).format(
+            "YYYY-MM-DD HH:mm:00"
+          ),
         }
       );
       this.loading = false;
@@ -1005,7 +1009,8 @@ export class PatientsStore {
       this.currentRepetitions &&
       this.currentRest &&
       this.weight &&
-      this.note
+      this.note &&
+      this.exerciseDate
     ) {
       return true;
     }
