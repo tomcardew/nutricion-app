@@ -65,3 +65,4 @@ buck-out/
 
 /android/client_secret_921789876452-01e07uthllou1uedpjq4f8jk3n8oj004.apps.googleusercontent.com.json
 /android/app/src/main/
+android/app/src/main/assets/index.android.bundle

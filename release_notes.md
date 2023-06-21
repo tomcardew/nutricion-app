@@ -69,3 +69,7 @@
 
 - Se corrige formato de fechas para mantener consistencia entre frontend y backend
 - Se añade selector de fecha para creación de ejercicio con un usuario administrador
+
+### 0.9.1
+
+- Se elimina hora en el listado de "Próximos ejercicios" y en su lugar se muestra la cantidad de ejercicios por fecha

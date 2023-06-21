@@ -115,13 +115,8 @@ const ProfileView = ({
                     style={{color: theme['color-primary-700'], fontSize: 16}}>
                     {item.label}
                   </Text>
-                  {item.hours.map(hour => (
-                    <Text
-                      weight={FontWeight.Medium}
-                      style={{color: 'black', fontSize: 15}}>
-                      {hour}
-                    </Text>
-                  ))}
+                  <Text weight={FontWeight.Medium}
+                      style={{color: 'black', fontSize: 15}}>{item.hours.length} ejercicio{item.hours.length > 1 ? "s" : ""}</Text>
                 </View>
               ))}
             </SimpleCard>
