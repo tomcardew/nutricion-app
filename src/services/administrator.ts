@@ -110,7 +110,7 @@ const AdministratorServices = {
     }
   },
   getAdminExercises: async (id: string, token: string, date: Date) => {
-    const _date = moment(date).utc(true).format("yyyy-MM-DD");
+    const _date = moment(date).format("yyyy-MM-DD");
     try {
       const request = new RequestData(
         Networking.administrator.getAdminExercises,
@@ -270,7 +270,7 @@ const AdministratorServices = {
     }
   },
   getSteps: async (token: string, patientId: string, date: Date) => {
-    const _date = moment(date).utc(true).format("yyyy-MM-DD");
+    const _date = moment(date).format("yyyy-MM-DD");
     try {
       const request = new RequestData(Networking.administrator.getSteps, token);
       request.setParams(`/${patientId}/${_date}`);

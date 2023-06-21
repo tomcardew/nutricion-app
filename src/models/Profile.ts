@@ -43,7 +43,7 @@ export interface PendingDate {
 }
 
 export function pendingDatesToList(list: string[]) {
-  let dates = list.map((item) => moment(item).utc());
+  let dates = list.map((item) => moment(item));
   dates = dates.sort((a, b) => a.diff(b));
   let items: PendingDate[] = [];
   for (var i = 0; i < dates.length; i++) {
@@ -51,7 +51,7 @@ export function pendingDatesToList(list: string[]) {
     let added = false;
     for (var j = 0; j < items.length; j++) {
       let item = items[j];
-      if (moment(item.date).utc().isSame(date.utc(), "day")) {
+      if (moment(item.date).isSame(date, "day")) {
         items[j].hours.push(date.format("hh:mm A"));
         added = true;
         break;
@@ -70,7 +70,7 @@ export function pendingDatesToList(list: string[]) {
 
 export function setDateLabel(date: Date) {
   moment.locale("es");
-  let _date = moment(date).utc();
+  let _date = moment(date);
   if (_date.isSame(new Date(), "day")) return "Hoy";
   if (_date.isSame(moment().add(1, "day"), "day")) return "Mañana";
   return _date.format("DD [de] MMMM");
