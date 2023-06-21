@@ -108,9 +108,10 @@ export class ScheduleStore {
   get dates() {
     const date = moment(this.currentDate);
     const dates = this.dates_raw.filter((item) => {
-      const scheduleTime = moment.utc(item.fecha_cita);
+      const scheduleTime = moment(item.fecha_cita);
       return scheduleTime.isSame(date, "day");
     });
+    console.log(dates);
     return dates;
   }
 

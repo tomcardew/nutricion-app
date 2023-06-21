@@ -3,10 +3,11 @@ import React from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ActionButton} from '../../../../../../components/Buttons';
-import {Selector, TextInput} from '../../../../../../components/Inputs';
+import {DatePicker, Selector, TextInput} from '../../../../../../components/Inputs';
 import Separator from '../../../../../../components/Separator';
 
 interface Props {
+  date: Date;
   categories?: string[];
   exercises?: string[];
   series?: string[];
@@ -27,6 +28,7 @@ interface Props {
   selectedRestValue?: string;
   selectedRest?: IndexPath;
 
+  didPressChangeDate?: () => void;
   didChangeCategory?: (path: IndexPath | IndexPath[]) => void;
   didChangeExercise?: (path: IndexPath | IndexPath[]) => void;
   didChangeSerie?: (path: IndexPath | IndexPath[]) => void;
@@ -38,6 +40,7 @@ interface Props {
 }
 
 const AdminExercisesView = ({
+  date,
   categories,
   exercises,
   series,
@@ -56,6 +59,7 @@ const AdminExercisesView = ({
   selectedRepetitionValue,
   selectedRest,
   selectedRestValue,
+  didPressChangeDate = () => {},
   didChangeCategory = () => {},
   didChangeExercise = () => {},
   didChangeSerie = () => {},
@@ -68,6 +72,7 @@ const AdminExercisesView = ({
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
+        <DatePicker date={date} label="Fecha" onPress={didPressChangeDate} />
         {categories && (
           <Selector
             label="Categoría"

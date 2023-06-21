@@ -62,6 +62,7 @@ export class PatientsStore {
   public commentTextPrompt = "";
 
   // AdminExercises
+  public exerciseDate: Date = new Date();
   public categories_raw: Category[] = [];
   public currentCategory: IndexPath | undefined = undefined;
   public exercisesByCurrentCategory_raw: Exercise[] | null = null;
@@ -329,9 +330,7 @@ export class PatientsStore {
     this.loading = false;
     if (data.success) {
       this.AdminExercises = data.data.filter((item: any) =>
-        moment
-          .utc(item.fecha_ejercicio)
-          .isSame(moment.utc(this.currentDate), "day")
+        moment(item.fecha_ejercicio).isSame(moment(this.currentDate), "day")
       );
     }
   };
@@ -581,6 +580,9 @@ export class PatientsStore {
           repeticiones: this.selectedRepetition ?? 0,
           descansos: this.selectedRest ?? 0,
           notas: this.note,
+          fecha_ejercicio: moment(this.exerciseDate).format(
+            "YYYY-MM-DD HH:mm:00"
+          ),
         }
       );
       this.loading = false;
@@ -866,11 +868,11 @@ export class PatientsStore {
     let lists: GalleryItems[] = []; // will contain a list of pictures list separated by month
     this.rawPictures.forEach((item) => {
       if (toGalleryCategory(item.categoria) == this.selectedGalleryCategory) {
-        const date = moment.utc(item.fecha_foto);
+        const date = moment(item.fecha_foto);
         let dateExists = false;
         for (const j in lists) {
           const listItem = lists[j];
-          const itemDate = moment.utc(listItem.date);
+          const itemDate = moment(listItem.date);
           const year = itemDate.year();
           const month = itemDate.month();
           if (year === date.year() && month == date.month()) {
@@ -1007,7 +1009,8 @@ export class PatientsStore {
       this.currentRepetitions &&
       this.currentRest &&
       this.weight &&
-      this.note
+      this.note &&
+      this.exerciseDate
     ) {
       return true;
     }

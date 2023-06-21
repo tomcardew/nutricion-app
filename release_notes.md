@@ -64,3 +64,8 @@
 - Se oculta el botón de subir fotografías en categorías distinta a "Actividades" en galería del paciente
 - Se añade un botón de cerrar sesión más visible y más accesible
 - Se reemplaza el campo de `Lugar` en la creación de una nueva cita del Administrador por un Select con los valores predeterminados
+
+### 0.9.0
+
+- Se corrige formato de fechas para mantener consistencia entre frontend y backend
+- Se añade selector de fecha para creación de ejercicio con un usuario administrador

@@ -25,7 +25,6 @@ const AdminExerciseDetailsController = observer(({viewModel}: Props) => {
 
   const date = dateToDayMonth(
     moment(exercise?.fecha_ejercicio ?? '')
-      .utc()
       .toDate(),
   );
 
