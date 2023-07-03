@@ -77,3 +77,5 @@
 ### 0.10.0
 
 - Se cambia el mensaje de bienvenida de `Te damos la bienvenida a tu nueva casa` a `Juntos hasta lograr la meta`
+- Se añade la sección `Objetivos` en el menú de paciente del administrador, con la capacidad de ver y agregar los objetivos, así como marcar como completado alguno de ellos
+- Se añade la sección `Objetivos` al perfil del Paciente, donde podrá ver sus objetivos y su estado actual
