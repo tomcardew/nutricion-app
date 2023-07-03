@@ -136,3 +136,10 @@ export interface ExerciseComment {
   nota: string;
   Nombre: string;
 }
+
+export interface PatientObjective {
+  id: number;
+  fecha_registro: string;
+  Descripcion: string;
+  completado: boolean;
+}

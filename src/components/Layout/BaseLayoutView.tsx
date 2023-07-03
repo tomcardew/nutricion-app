@@ -43,7 +43,7 @@ interface Props {
 
   onAlertDismiss?: () => void;
   onBackAction?: () => void;
-  onActionButtonPress?: () => void;
+  onActionButtonPress?: (e: any) => void;
   didChangeSelectedDate?: (date: Date) => void;
   didPressCloseGallery?: () => void;
 }
@@ -92,6 +92,7 @@ const BaseLayoutView = ({
         actions={alert?.actions}
         autoClose={alert?.autoClose}
         onDismiss={onAlertDismiss}
+        useInput={alert?.useInput}
       />
       <LoaderView
         style={loadingStyle}

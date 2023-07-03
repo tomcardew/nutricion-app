@@ -1,9 +1,9 @@
-import {IndexPath} from '@ui-kitten/components';
-import {AlertType} from '../../../../../../models/Common';
-import {AuthStore} from '../../../../../store/AuthStore';
-import {PatientsStore} from '../../../../../store/PatientsStore';
-import {PatientProgresCategories} from '../../../../../../models/Patients';
-import {Logger} from '../../../../../../utils/Utils';
+import { IndexPath } from "@ui-kitten/components";
+import { AlertType } from "../../../../../../models/Common";
+import { AuthStore } from "../../../../../store/AuthStore";
+import { PatientsStore } from "../../../../../store/PatientsStore";
+import { PatientProgresCategories } from "../../../../../../models/Patients";
+import { Logger } from "../../../../../../utils/Utils";
 
 class PatientDataEditorViewModel {
   authStore: AuthStore;
@@ -13,7 +13,7 @@ class PatientDataEditorViewModel {
   constructor(
     authStore: AuthStore,
     patientsStore: PatientsStore,
-    navigation: any,
+    navigation: any
   ) {
     this.authStore = authStore;
     this.patientsStore = patientsStore;
@@ -42,7 +42,7 @@ class PatientDataEditorViewModel {
   };
 
   didPressSaveProgress = async () => {
-    await this.patientsStore.savePatientProgress(this.authStore.token ?? '');
+    await this.patientsStore.savePatientProgress(this.authStore.token ?? "");
   };
 
   dismissAlert = () => {

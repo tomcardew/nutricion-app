@@ -14,6 +14,8 @@ import {
   ProfileViewModel as PatientProfileViewModel,
   PatientDietController,
   PatientDietViewModel,
+  SinglePatientGoalsController,
+  SinglePatientGoalsViewModel,
 } from '../app/modules/patient-profile';
 import AboutRouter from './About';
 
@@ -49,6 +51,12 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
     profileStore,
   );
 
+  const singlePatientGoalsViewModel = new SinglePatientGoalsViewModel(
+    navigation,
+    authStore,
+    profileStore,
+  );
+
   const AdminProfileScreen = () => (
     <AdminProfileController viewModel={adminProfileViewModel} />
   );
@@ -63,6 +71,10 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
 
   const PatientDietScreen = () => (
     <PatientDietController viewModel={patientDietViewModel} />
+  );
+
+  const SinglePatientGoalsScreen = () => (
+    <SinglePatientGoalsController viewModel={singlePatientGoalsViewModel} />
   );
 
   const initialScreen = isAdmin
@@ -92,6 +104,10 @@ const ProfileRouter = ({isAdmin = true}: Props) => {
       <Stack.Screen
         name={ScreenNames.About.toString()}
         component={AboutRouter}
+      />
+      <Stack.Screen
+        name={ScreenNames.SinglePatientGoals.toString()}
+        component={SinglePatientGoalsScreen}
       />
     </Stack.Navigator>
   );

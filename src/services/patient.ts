@@ -186,6 +186,19 @@ const PatientServices = {
       console.log(error);
     }
   },
+  getObjectives: async (token: string) => {
+    try {
+      const request = new RequestData(
+        Networking.patient.getPatientObjectives,
+        token
+      );
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default PatientServices;

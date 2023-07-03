@@ -31,6 +31,7 @@ interface Props {
   onLogout?: () => void;
   didPressGoToProgress?: () => void;
   didPressSeeDiet?: () => void;
+  didPressSeeObjetives?: () => void;
   didPressSeeVersion?: () => void;
 }
 
@@ -46,6 +47,7 @@ const ProfileView = ({
   didPressGoToProgress = () => {},
   didPressSeeDiet = () => {},
   didPressSeeVersion = () => {},
+  didPressSeeObjetives = () => {},
 }: Props) => {
   const weight =
     profile && profile.Datos && profile.Datos.length > 0
@@ -115,8 +117,12 @@ const ProfileView = ({
                     style={{color: theme['color-primary-700'], fontSize: 16}}>
                     {item.label}
                   </Text>
-                  <Text weight={FontWeight.Medium}
-                      style={{color: 'black', fontSize: 15}}>{item.hours.length} ejercicio{item.hours.length > 1 ? "s" : ""}</Text>
+                  <Text
+                    weight={FontWeight.Medium}
+                    style={{color: 'black', fontSize: 15}}>
+                    {item.hours.length} ejercicio
+                    {item.hours.length > 1 ? 's' : ''}
+                  </Text>
                 </View>
               ))}
             </SimpleCard>
@@ -141,6 +147,19 @@ const ProfileView = ({
               count={stepCount}
             />
           )}
+          <SimpleCard
+            title="Objetivos"
+            actionTitle="Ver objetivos"
+            onActionPress={didPressSeeObjetives}
+            padding={0}
+            style={[
+              {
+                marginTop: 20,
+                width: Dimensions.get('window').width - 40,
+              },
+              {justifyContent: 'center', alignItems: 'center'},
+            ]}
+          />
           <ProfileSummaryCard
             weight={weight}
             bodyFat={bodyFat}
