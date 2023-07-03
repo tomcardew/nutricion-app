@@ -11,6 +11,7 @@ enum ScreenNames {
   PatientDiet,
   PatientProgress,
   Profile,
+  SinglePatientGoals,
   PatientSchedule,
   AdminExerciseDetails,
   AdminExercises,

@@ -166,8 +166,11 @@ class ProfileViewModel {
   };
 
   didPressSeeVersion = () => {
-    Logger.debug(`Navigating to ${ScreenNames.About.toString()}`);
     this.navigation.navigate(ScreenNames.About.toString());
+  };
+
+  didPressSeeObjectives = () => {
+    this.navigation.navigate(ScreenNames.SinglePatientGoals.toString());
   };
 
   goBack = () => {
