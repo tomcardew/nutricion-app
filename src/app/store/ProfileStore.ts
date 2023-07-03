@@ -10,6 +10,7 @@ import CommonServices from "../../services/common";
 import PatientServices from "../../services/patient";
 import AdministratorServices from "../../services/administrator";
 import { pendingDatesToList } from "../../models/Profile";
+import { PatientObjective } from "../../models/Patients";
 
 export class ProfileStore {
   public alert: AlertMessage | null = null;
@@ -22,6 +23,8 @@ export class ProfileStore {
 
   public pendingDates: any[] = []; // used for patient and admin
   public pendingExercies: any[] = []; // used only for patient
+
+  public objectives: PatientObjective[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -187,7 +190,22 @@ export class ProfileStore {
     }
   };
 
+  public getObjectives = async (token: string) => {
+    this.loading = true;
+    const data = await PatientServices.getObjectives(token);
+    this.loading = false;
+    if (data.success) {
+      this.objectives = data.data;
+    }
+  };
+
   public dismiss = () => {
     this.alert = null;
   };
+
+  get orderedObjectives() {
+    return this.objectives
+      .slice()
+      .sort((a: any, b: any) => a.completado - b.completado);
+  }
 }

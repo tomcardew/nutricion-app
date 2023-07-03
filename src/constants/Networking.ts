@@ -275,6 +275,24 @@ const getPendingDates: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getObjectives: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/objectives",
+  method: RequestMethod.GET,
+};
+
+const setObjectives: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/set-objective",
+  method: RequestMethod.POST,
+};
+
+const markObjectiveAsCompleted: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/mark-objective-as-completed",
+  method: RequestMethod.PATCH,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: "catalogues/categories",
@@ -383,6 +401,12 @@ const getPatientPendingExercises: NetworkingConfig = {
   method: RequestMethod.GET,
 };
 
+const getPatientObjectives: NetworkingConfig = {
+  url: fullURL,
+  path: "patient/objectives",
+  method: RequestMethod.GET,
+};
+
 export const Networking = {
   auth: {
     login,
@@ -409,6 +433,9 @@ export const Networking = {
     addComment,
     deleteExercise,
     getPendingDates,
+    getObjectives,
+    setObjectives,
+    markObjectiveAsCompleted,
   },
   catalogues: {
     getExerciseCategories,
@@ -431,5 +458,6 @@ export const Networking = {
     addPatientComment,
     getPatientPendingDates,
     getPatientPendingExercises,
+    getPatientObjectives,
   },
 };

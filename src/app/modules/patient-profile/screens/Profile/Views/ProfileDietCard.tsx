@@ -20,38 +20,4 @@ const ProfileDietCard = ({style, onSeeDietPress = () => {}}: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  circleOutside: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    borderColor: theme['color-primary-500'],
-    borderWidth: 4,
-    marginVertical: 10,
-  },
-  circleInside: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 185,
-    height: 185,
-    borderRadius: 100,
-    borderColor: theme['color-primary-500'],
-    borderWidth: 1.5,
-    borderStyle: 'dashed',
-    marginVertical: 10,
-  },
-  title: {
-    fontSize: 65,
-    color: theme['color-primary-700'],
-  },
-  indicator: {
-    position: 'absolute',
-    bottom: 20,
-    fontSize: 18,
-    color: theme['color-primary-500'],
-  },
-});
-
 export default ProfileDietCard;

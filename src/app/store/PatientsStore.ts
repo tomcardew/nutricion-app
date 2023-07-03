@@ -7,6 +7,7 @@ import {
   PatientExerciseListItem,
   PatientPicture,
   PatientProgress,
+  PatientObjective,
 } from "../../models/Patients";
 import moment from "moment";
 import {
@@ -105,6 +106,9 @@ export class PatientsStore {
     fecha_registro: "",
   };
 
+  // Patient Objectives
+  public objectives: PatientObjective[] = [];
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -190,6 +194,140 @@ export class PatientsStore {
       if (data.succes && data.data) {
         const lastValue = data.data.pop();
         this.patientStepCount = lastValue?.cantidad ?? 0;
+      }
+    }
+  };
+
+  public getPatientObjectives = async (token: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.getObjectives(
+        token,
+        this.selectedPatientId
+      );
+      this.loading = false;
+      if (data.success && data.data) {
+        this.objectives = data.data;
+      }
+    }
+  };
+
+  public showObjectiveCompletionAlert = (token: string, id: number) => {
+    this.alert = {
+      title: "Marcar objetivo como completado",
+      message:
+        "¿Deseas marcar este objetivo como completado? No se podrá revertir el cambio.",
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: "Si, completar",
+          onClick: async () => {
+            this.alert = null;
+            await this.markObjectiveAsCompleted(token, id);
+            this.getPatientObjectives(token);
+          },
+          type: AlertActionType.Action,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public showAddObjectiveAlert = (token: string) => {
+    this.alert = {
+      title: "Nuevo objetivo",
+      message: "Ingresa el título del nuevo objetivo",
+      useInput: true,
+      showIcon: false,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: "Guardar",
+          onClick: async (e: string) => {
+            if (e && e.trim().length > 0) {
+              this.alert = null;
+              await this.setNewObjective(token, e);
+              this.getPatientObjectives(token);
+            }
+          },
+          type: AlertActionType.Action,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public setNewObjective = async (token: string, objective: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.setObjective(
+        token,
+        this.selectedPatientId,
+        objective
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: "Operación exitosa",
+          message: "El objetivo fue asignado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message:
+            "El objetivo no pudo ser asignado. Intente de nuevo más tarde",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
+      }
+    }
+  };
+
+  public markObjectiveAsCompleted = async (token: string, id: number) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.markObjectiveAsCompleted(
+        token,
+        this.selectedPatientId,
+        id
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: "Operación exitosa",
+          message: "El objetivo fue actualizado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message:
+            "El objetivo no pudo ser actualizado. Intente de nuevo más tarde",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
       }
     }
   };
@@ -1015,6 +1153,12 @@ export class PatientsStore {
       return true;
     }
     return false;
+  }
+
+  get orderedObjectives() {
+    return this.objectives
+      .slice()
+      .sort((a: any, b: any) => a.completado - b.completado);
   }
 
   get canSavePatientProgress() {

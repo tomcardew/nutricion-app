@@ -11,6 +11,7 @@ export interface AlertMessage {
   showIcon: boolean;
   autoClose: boolean;
   actions: AlertAction[];
+  useInput?: boolean;
 }
 
 export enum AlertType {
@@ -41,9 +42,9 @@ export enum MediaType {
 }
 
 export enum GalleryCategory {
-  Activities = 'Activities',
-  Progress = 'Progress',
-  Other = 'Other',
+  Activities = "Activities",
+  Progress = "Progress",
+  Other = "Other",
 }
 
 export enum PatientsCategory {
@@ -57,28 +58,28 @@ export interface AlertAction {
   type?: AlertActionType;
   isFirstTwo?: boolean | null;
 
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 }
 
 export enum FontWeight {
-  Black = 'Black',
-  BlackItalic = 'BlackItalic',
-  Bold = 'Bold',
-  BoldItalic = 'BoldItalic',
-  ExtraBold = 'ExtraBold',
-  ExtraBoldItalic = 'ExtraBoldItalic',
-  ExtraLight = 'ExtraLight',
-  ExtraLightItalic = 'ExtraLightItalic',
-  Italic = 'Italic',
-  Light = 'Light',
-  LightItalic = 'LightItalic',
-  Medium = 'Medium',
-  MediumItalic = 'MediumItalic',
-  Regular = 'Regular',
-  SemiBold = 'SemiBold',
-  SemiBoldItalic = 'SemiBoldItalic',
-  Thin = 'Thin',
-  ThinItalic = 'ThinItalic',
+  Black = "Black",
+  BlackItalic = "BlackItalic",
+  Bold = "Bold",
+  BoldItalic = "BoldItalic",
+  ExtraBold = "ExtraBold",
+  ExtraBoldItalic = "ExtraBoldItalic",
+  ExtraLight = "ExtraLight",
+  ExtraLightItalic = "ExtraLightItalic",
+  Italic = "Italic",
+  Light = "Light",
+  LightItalic = "LightItalic",
+  Medium = "Medium",
+  MediumItalic = "MediumItalic",
+  Regular = "Regular",
+  SemiBold = "SemiBold",
+  SemiBoldItalic = "SemiBoldItalic",
+  Thin = "Thin",
+  ThinItalic = "ThinItalic",
 }
 
 export interface GoogleImageResults {

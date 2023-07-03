@@ -10,6 +10,8 @@ import {
   AdminExercisesViewModel,
   AdminExerciseDetailsViewModel,
   AdminExerciseDetailsController,
+  PatientGoalsViewModel,
+  PatientGoalsController,
 } from '../app/modules/patients';
 import ScreenNames from '../constants/Screens';
 import {useStores} from '../../use-store';
@@ -79,6 +81,12 @@ const PatientsRouter = () => {
     patientsStore,
   );
 
+  const patientGoalsViewModel = new PatientGoalsViewModel(
+    navigation,
+    authStore,
+    patientsStore,
+  );
+
   const PatientExerciseCommentsScreen = () => (
     <PatientExerciseCommentsController
       viewModel={patientExerciseCommentsViewModel}
@@ -103,6 +111,10 @@ const PatientsRouter = () => {
 
   const PatientGalleryScreen = () => (
     <PatientGalleryController viewModel={patientGalleryViewModel} />
+  );
+
+  const PatientGoalsScreen = () => (
+    <PatientGoalsController viewModel={patientGoalsViewModel} />
   );
 
   const AdminExercisesListScreen = () => (
@@ -154,6 +166,10 @@ const PatientsRouter = () => {
       <Stack.Screen
         name={ScreenNames.PatientExerciseComments.toString()}
         component={PatientExerciseCommentsScreen}
+      />
+      <Stack.Screen
+        name={ScreenNames.PatientGoals.toString()}
+        component={PatientGoalsScreen}
       />
     </Stack.Navigator>
   );

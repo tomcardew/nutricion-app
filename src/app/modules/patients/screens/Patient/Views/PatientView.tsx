@@ -40,6 +40,10 @@ const PatientView = ({
       },
     },
     {
+      title: 'Objetivos',
+      screen: ScreenNames.PatientGoals,
+    },
+    {
       title: 'Galería',
       screen: ScreenNames.PatientGallery,
     },

@@ -28,7 +28,7 @@ const LoginView = ({
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Banner
         imageUrl="https://alianzapronutricion.org/wp-content/uploads/2020/10/epigenetica-y-nutricion-1.png"
-        title="Te damos la bienvenida a tu nueva casa"
+        title="Juntos hasta lograr la meta"
       />
       <View style={styles.content}>
         <TextInput
