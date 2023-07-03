@@ -1,6 +1,6 @@
 import {Icon} from '@ui-kitten/components';
 import React, {useRef, useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, Animated} from 'react-native';
+import {View, StyleSheet, Dimensions, Animated, Keyboard} from 'react-native';
 import AlertActionButton from './AlertAction';
 import {default as theme} from '../../../custom-theme.json';
 import {
@@ -11,6 +11,7 @@ import {
   FontWeight,
 } from '../../models/Common';
 import Text from '../Text';
+import {TextInput} from '../Inputs';
 
 interface Props {
   title?: string;
@@ -20,8 +21,10 @@ interface Props {
   showIcon?: boolean;
   actions?: AlertAction[] | null;
   autoClose?: boolean;
+  useInput?: boolean;
 
   onDismiss?: () => void;
+  onInputChange?: (value: string) => void;
 }
 
 const ErrorIcon = (props: any) => (
@@ -69,6 +72,7 @@ const AlertPopup = ({
   actions = [],
   type = AlertType.Success,
   autoClose,
+  useInput,
   onDismiss = () => {},
 }: Props) => {
   const fadeBackdrop = useRef(new Animated.Value(0)).current;
@@ -84,6 +88,31 @@ const AlertPopup = ({
     autoClose: false,
     type: AlertType.Info,
   });
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [innerInputValue, setInnerInputValue] = useState('');
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setKeyboardVisible(true); // or some other action
+        setKeyboardHeight(e.endCoordinates.height);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or some other action
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (show && autoClose) {
@@ -164,7 +193,7 @@ const AlertPopup = ({
   };
 
   const handleActionClick = (action: AlertAction) => {
-    if (action.onClick) action.onClick();
+    if (action.onClick) action.onClick(innerInputValue);
     else onDismiss();
   };
 
@@ -176,8 +205,17 @@ const AlertPopup = ({
           style={[
             styles.container,
             {opacity: fadePopup, transform: [{scale: scalePopup}]},
+            {
+              transform: [
+                {
+                  translateY: isKeyboardVisible
+                    ? -(keyboardHeight / 2) ?? 0
+                    : 0,
+                },
+              ],
+            },
           ]}>
-          <View style={styles.innerContainer}>
+          <View style={[styles.innerContainer]}>
             <View style={styles.titleContainer}>
               {data.showIcon && (
                 <View style={styles.icon}>
@@ -189,6 +227,14 @@ const AlertPopup = ({
               </Text>
             </View>
             <Text style={styles.message}>{data.message}</Text>
+            {useInput && (
+              <TextInput
+                value={innerInputValue}
+                onChangeText={(value: string) => {
+                  setInnerInputValue(value);
+                }}
+              />
+            )}
           </View>
           <View
             style={[

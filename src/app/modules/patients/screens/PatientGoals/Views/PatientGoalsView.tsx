@@ -18,13 +18,16 @@ const PatientGoalsView = ({data, onMarkCompleted = () => {}}: Props) => {
       title={item.Descripcion}
       date={moment(item.fecha_registro).format('DD/MM/YY')}
       completed={item.completado}
-      onChange={() => onMarkCompleted(item.id)}
+      onChange={() => !item.completado && onMarkCompleted(item.id)}
     />
   );
   return (
     <View style={styles.container}>
       <FlatList
         data={data.slice()}
+        contentContainerStyle={{
+          paddingBottom: 150,
+        }}
         ListEmptyComponent={
           <EmptyView message="No hay objetivos registrados" />
         }

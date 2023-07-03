@@ -20,6 +20,10 @@ class PatientGoalsViewModel {
     await this.patientsStore.getPatientObjectives(this.authStore.token ?? "");
   };
 
+  addNewObjective = () => {
+    this.patientsStore.showAddObjectiveAlert(this.authStore.token ?? "");
+  };
+
   onMarkCompleted = (id: number) => {
     this.patientsStore.showObjectiveCompletionAlert(
       this.authStore.token ?? "",

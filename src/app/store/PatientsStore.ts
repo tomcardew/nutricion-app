@@ -238,6 +238,67 @@ export class PatientsStore {
     };
   };
 
+  public showAddObjectiveAlert = (token: string) => {
+    this.alert = {
+      title: "Nuevo objetivo",
+      message: "Ingresa el título del nuevo objetivo",
+      useInput: true,
+      showIcon: false,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: "Guardar",
+          onClick: async (e: string) => {
+            if (e && e.trim().length > 0) {
+              this.alert = null;
+              await this.setNewObjective(token, e);
+              this.getPatientObjectives(token);
+            }
+          },
+          type: AlertActionType.Action,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public setNewObjective = async (token: string, objective: string) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.setObjective(
+        token,
+        this.selectedPatientId,
+        objective
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: "Operación exitosa",
+          message: "El objetivo fue asignado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message:
+            "El objetivo no pudo ser asignado. Intente de nuevo más tarde",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
+      }
+    }
+  };
+
   public markObjectiveAsCompleted = async (token: string, id: number) => {
     if (this.selectedPatientId) {
       this.loading = true;
@@ -1092,6 +1153,12 @@ export class PatientsStore {
       return true;
     }
     return false;
+  }
+
+  get orderedObjectives() {
+    return this.objectives
+      .slice()
+      .sort((a: any, b: any) => a.completado - b.completado);
   }
 
   get canSavePatientProgress() {
