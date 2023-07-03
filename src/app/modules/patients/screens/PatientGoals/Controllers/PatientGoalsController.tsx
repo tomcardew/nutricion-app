@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import BaseLayoutView from '../../../../../../components/Layout/BaseLayoutView';
 import PatientGoalsViewModel from '../ViewModels/PatientGoalsViewModel';
@@ -9,13 +9,24 @@ interface Props {
 }
 
 const PatientGoalsController = observer(({viewModel}: Props) => {
+  useEffect(() => {
+    viewModel.load();
+  }, []);
+
   return (
     <BaseLayoutView
-      title="PatientGoals"
-      loading={false}
+      title="Objetivos"
+      subtitle={viewModel.patientsStore.selectedPatient?.nombre}
+      loading={viewModel.patientsStore.loading}
       loadingMessage="Cargando..."
+      disableScrollBar
+      alert={viewModel.patientsStore.alert}
+      onAlertDismiss={viewModel.dismissAlert}
       onBackAction={viewModel.goBack}>
-      <PatientGoalsView />
+      <PatientGoalsView
+        data={viewModel.patientsStore.objectives}
+        onMarkCompleted={viewModel.onMarkCompleted}
+      />
     </BaseLayoutView>
   );
 });
