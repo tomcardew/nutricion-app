@@ -46,21 +46,30 @@ export function pendingDatesToList(list: string[]) {
   let dates = list.map((item) => moment(item));
   dates = dates.sort((a, b) => a.diff(b));
   let items: PendingDate[] = [];
-  for (var i = 0; i < dates.length; i++) {
+  for (var i = 0; i < dates.length; i += 2) {
     const date = dates[i];
+    const place = list[i + 1];
     let added = false;
     for (var j = 0; j < items.length; j++) {
       let item = items[j];
       if (moment(item.date).isSame(date, "day")) {
-        items[j].hours.push(date.format("hh:mm A"));
+        const hour =
+          date.format("hh:mm A") +
+          " - " +
+          place.replace("Consultorio", "").trim();
+        items[j].hours.push(hour);
         added = true;
         break;
       }
     }
     if (!added) {
+      const hour =
+        date.format("hh:mm A") +
+        " - " +
+        place.replace("Consultorio", "").trim();
       items.push({
         label: setDateLabel(date.toDate()),
-        hours: [date.format("hh:mm A")],
+        hours: [hour],
         date: date.toDate(),
       });
     }
