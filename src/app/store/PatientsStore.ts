@@ -238,6 +238,70 @@ export class PatientsStore {
     };
   };
 
+  public showObjectiveOptionsAlert = (
+    token: string,
+    objective: PatientObjective
+  ) => {
+    this.alert = {
+      title: "Editar objetivo",
+      message: "Elige qué hacer con el objetivo",
+      showIcon: false,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: "Editar",
+          onClick: async () => {
+            this.alert = null;
+            await this.showEditObjectiveAlert(token, objective);
+          },
+          type: AlertActionType.Action,
+        },
+        {
+          label: "Borrar",
+          onClick: async () => {
+            this.alert = null;
+            await this.showDeleteObjectiveAlert(token, objective);
+          },
+          type: AlertActionType.Destructive,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public showEditObjectiveAlert = async (
+    token: string,
+    objective: PatientObjective
+  ) => {
+    this.alert = {
+      title: "Editar el objetivo",
+      message: "Ingresa el nuevo título del objetivo",
+      useInput: true,
+      showIcon: false,
+      type: AlertType.Info,
+      actions: [
+        {
+          label: "Guardar",
+          onClick: async (e: string) => {
+            this.alert = null;
+            await this.editObjective(token, objective, e);
+            this.getPatientObjectives(token);
+          },
+          type: AlertActionType.Action,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
   public showAddObjectiveAlert = (token: string) => {
     this.alert = {
       title: "Nuevo objetivo",
@@ -290,6 +354,109 @@ export class PatientsStore {
           title: "Ocurrió un error",
           message:
             "El objetivo no pudo ser asignado. Intente de nuevo más tarde",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
+      }
+    }
+  };
+
+  public editObjective = async (
+    token: string,
+    objective: PatientObjective,
+    newObjective: string
+  ) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.editObjective(
+        token,
+        this.selectedPatientId,
+        objective.id,
+        newObjective
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: "Operación exitosa",
+          message: "El objetivo fue editado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message:
+            "El objetivo no pudo ser editado. Intente de nuevo más tarde",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+          error: data.error,
+        };
+      }
+    }
+  };
+
+  public showDeleteObjectiveAlert = async (
+    token: string,
+    objective: PatientObjective
+  ) => {
+    this.alert = {
+      title: "Eliminar objetivo",
+      message:
+        "¿Estás seguro de eliminar este objetivo? No podrá ser recuperado después",
+      showIcon: true,
+      type: AlertType.Warning,
+      actions: [
+        {
+          label: "Eliminar",
+          onClick: async (_: string) => {
+            this.alert = null;
+            await this.deleteObjective(token, objective);
+            this.getPatientObjectives(token);
+          },
+          type: AlertActionType.Destructive,
+        },
+        {
+          label: "Cancelar",
+          type: AlertActionType.Cancel,
+        },
+      ],
+      autoClose: false,
+    };
+  };
+
+  public deleteObjective = async (
+    token: string,
+    objective: PatientObjective
+  ) => {
+    if (this.selectedPatientId) {
+      this.loading = true;
+      const data = await AdministratorServices.deleteObjective(
+        token,
+        this.selectedPatientId,
+        objective.id
+      );
+      this.loading = false;
+      if (data.success) {
+        this.alert = {
+          type: AlertType.Success,
+          title: "Operación exitosa",
+          message: "El objetivo fue eliminado correctamente",
+          showIcon: true,
+          actions: [],
+          autoClose: true,
+        };
+      } else {
+        this.alert = {
+          type: AlertType.Error,
+          title: "Ocurrió un error",
+          message:
+            "El objetivo no pudo ser eliminado. Intente de nuevo más tarde",
           showIcon: true,
           actions: [],
           autoClose: true,

@@ -381,6 +381,44 @@ const AdministratorServices = {
       console.log(error);
     }
   },
+  editObjective: async (
+    token: string,
+    patientId: string,
+    objectiveId: number,
+    objective: string
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.editObjective,
+        token
+      );
+      request.setParams(`/${patientId}/${objectiveId}`);
+      request.setBody({ descripcion: objective });
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteObjective: async (
+    token: string,
+    patientId: string,
+    objectiveId: number
+  ) => {
+    try {
+      const request = new RequestData(
+        Networking.administrator.deleteObjective,
+        token
+      );
+      request.setParams(`/${patientId}/${objectiveId}`);
+
+      const response = await request.request();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default AdministratorServices;

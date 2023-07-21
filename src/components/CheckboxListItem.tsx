@@ -1,5 +1,10 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  TouchableNativeFeedback,
+} from 'react-native';
 import Text from './Text';
 import {CheckBox} from '@ui-kitten/components';
 import {FontWeight} from '../models/Common';
@@ -10,6 +15,7 @@ interface Props {
   completed?: boolean;
 
   onChange?: (checked: boolean, indeterminate: boolean) => void;
+  onLongPress?: () => void;
 }
 
 const CheckboxListItem = ({
@@ -17,19 +23,22 @@ const CheckboxListItem = ({
   date,
   completed,
   onChange = () => {},
+  onLongPress = () => {},
 }: Props) => {
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.title} weight={FontWeight.Medium}>
-          {title}
-        </Text>
-        <Text style={styles.date} weight={FontWeight.Light}>
-          {date}
-        </Text>
+    <TouchableNativeFeedback onLongPress={onLongPress}>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.title} weight={FontWeight.Medium}>
+            {title}
+          </Text>
+          <Text style={styles.date} weight={FontWeight.Light}>
+            {date}
+          </Text>
+        </View>
+        <CheckBox checked={completed} onChange={onChange} />
       </View>
-      <CheckBox checked={completed} onChange={onChange} />
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 
