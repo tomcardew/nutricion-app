@@ -30,6 +30,7 @@ const PatientGoalsController = observer(({viewModel}: Props) => {
       onBackAction={viewModel.goBack}>
       <PatientGoalsView
         data={viewModel.patientsStore.orderedObjectives}
+        onLongPress={viewModel.onLongPress}
         onMarkCompleted={viewModel.onMarkCompleted}
       />
     </BaseLayoutView>
