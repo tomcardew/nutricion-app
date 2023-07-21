@@ -293,6 +293,18 @@ const markObjectiveAsCompleted: NetworkingConfig = {
   method: RequestMethod.PATCH,
 };
 
+const editObjective: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/edit-objective",
+  method: RequestMethod.PATCH,
+};
+
+const deleteObjective: NetworkingConfig = {
+  url: fullURL,
+  path: "admin/patients/delete-objective",
+  method: RequestMethod.DELETE,
+};
+
 const getExerciseCategories: NetworkingConfig = {
   url: fullURL,
   path: "catalogues/categories",
@@ -436,6 +448,8 @@ export const Networking = {
     getObjectives,
     setObjectives,
     markObjectiveAsCompleted,
+    editObjective,
+    deleteObjective,
   },
   catalogues: {
     getExerciseCategories,

@@ -10,15 +10,21 @@ interface Props {
   data: PatientObjective[];
 
   onMarkCompleted?: (id: number) => void;
+  onLongPress?: (objective: PatientObjective) => void;
 }
 
-const PatientGoalsView = ({data, onMarkCompleted = () => {}}: Props) => {
+const PatientGoalsView = ({
+  data,
+  onMarkCompleted = () => {},
+  onLongPress = () => {},
+}: Props) => {
   const renderItem = (item: PatientObjective) => (
     <CheckboxListItem
       title={item.Descripcion}
       date={moment(item.fecha_registro).format('DD/MM/YY')}
       completed={item.completado}
       onChange={() => !item.completado && onMarkCompleted(item.id)}
+      onLongPress={() => onLongPress(item)}
     />
   );
   return (

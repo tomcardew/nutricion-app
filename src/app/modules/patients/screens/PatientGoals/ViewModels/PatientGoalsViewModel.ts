@@ -1,3 +1,4 @@
+import { PatientObjective } from "../../../../../../models/Patients";
 import { AuthStore } from "../../../../../store/AuthStore";
 import { PatientsStore } from "../../../../../store/PatientsStore";
 
@@ -28,6 +29,13 @@ class PatientGoalsViewModel {
     this.patientsStore.showObjectiveCompletionAlert(
       this.authStore.token ?? "",
       id
+    );
+  };
+
+  onLongPress = (objective: PatientObjective) => {
+    this.patientsStore.showObjectiveOptionsAlert(
+      this.authStore.token ?? "",
+      objective
     );
   };
 

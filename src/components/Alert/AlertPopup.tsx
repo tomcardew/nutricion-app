@@ -193,6 +193,7 @@ const AlertPopup = ({
   };
 
   const handleActionClick = (action: AlertAction) => {
+    setInnerInputValue('');
     if (action.onClick) action.onClick(innerInputValue);
     else onDismiss();
   };
