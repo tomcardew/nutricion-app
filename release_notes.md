@@ -85,3 +85,8 @@
 - Se añade lugar al listado de citas próximas del administrador
 - El administrador ahora puede eliminar un objetivo
 - El administrador ahora puede editar un objetivo
+
+### 0.11.1
+
+- Se añade símbolo de % a indicador del paciente
+- Se inicializan las gráficas desde cero para mostrar valores desde el primer registro
