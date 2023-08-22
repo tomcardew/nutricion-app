@@ -17,12 +17,13 @@ interface Props {
 interface DataItemProps {
   name: string;
   value?: string;
+  unit?: string;
 }
 
-const DataItem = ({name, value}: DataItemProps) => (
+const DataItem = ({name, value, unit}: DataItemProps) => (
   <View style={styles.itemContainer}>
     <Text weight={FontWeight.SemiBold} style={styles.value}>
-      {value ?? '--'}
+      {value ?? '--'} {unit}
     </Text>
     <Text style={styles.key}>{name}</Text>
   </View>
@@ -43,15 +44,15 @@ const ProfileSummaryCard = ({
       style={[style, {justifyContent: 'center', alignItems: 'center'}]}>
       <View style={styles.container}>
         <View style={styles.column}>
-          <DataItem name="Peso" value={weight} />
+          <DataItem name="Peso" value={weight} unit="Kg" />
         </View>
         <Separator orientation="vertical" style={{height: '120%'}} />
         <View style={styles.column}>
-          <DataItem name="Grasa" value={bodyFat} />
+          <DataItem name="Grasa" value={bodyFat} unit="%" />
         </View>
         <Separator orientation="vertical" style={{height: '120%'}} />
         <View style={styles.column}>
-          <DataItem name="Kg. Músculo" value={muscle} />
+          <DataItem name="Músculo" value={muscle} unit="Kg" />
         </View>
       </View>
     </SimpleCard>
