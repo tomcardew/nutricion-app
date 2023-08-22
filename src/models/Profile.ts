@@ -29,7 +29,7 @@ export function profileDataToGraphData(profile: Profile, key: string) {
         : parseFloat(`${item[key as keyof PatientProgress]}`)
     );
     return {
-      data: values,
+      data: [0, ...values],
       labels: labels,
     };
   }

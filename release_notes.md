@@ -89,4 +89,4 @@
 ### 0.11.1
 
 - Se añade símbolo de % a indicador del paciente
-- Suma de pliegues no está siendo graficada
+- Se inicializan las gráficas desde cero para mostrar valores desde el primer registro
