@@ -27,7 +27,7 @@ const LoginView = ({
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Banner
-        imageUrl="https://alianzapronutricion.org/wp-content/uploads/2020/10/epigenetica-y-nutricion-1.png"
+        imageUrl="https://img.freepik.com/premium-vector/vitamin-seamless-pattern-vegetables-fruits-linear-style-green-outline-isolated-white-background-healthy-vegetarian-food-eco-concept-vector-illustration_259594-332.jpg"
         title="Juntos hasta lograr la meta"
       />
       <View style={styles.content}>

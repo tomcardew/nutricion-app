@@ -6,6 +6,7 @@ import EmptyView from '../../../../../../components/EmptyView';
 import PatientProgressGraphView, {GraphData} from './PatientProgressGraphView';
 import {PillButton} from '../../../../../../components/Buttons';
 import {PatientProgresCategories} from '../../../../../../models/Patients';
+import HorizontalScroller from '../../../../../../components/HorizontalScroller';
 
 export interface ProgressDataSetElement {
   title: string;
@@ -41,7 +42,7 @@ const PatientProgressView = ({
   );
   return (
     <View style={styles.container}>
-      <View style={styles.categoriesContainer}>
+      <HorizontalScroller>
         <PillButton
           title="Pliegues"
           style={{marginRight: 10}}
@@ -59,7 +60,7 @@ const PatientProgressView = ({
           selected={category === PatientProgresCategories.RESULTADOS}
           onPress={() => didChangeCategory(PatientProgresCategories.RESULTADOS)}
         />
-      </View>
+      </HorizontalScroller>
       <FlatList
         data={data.slice()}
         renderItem={renderItem}

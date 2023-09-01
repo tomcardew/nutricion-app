@@ -7,6 +7,7 @@ import {dateToMonthYear, getRandomInt} from '../../../../../../utils/Utils';
 import PatientMonthCard from '../../../../patients/screens/PatientGallery/Views/PatientMonthCard';
 import {PillButton} from '../../../../../../components/Buttons';
 import {GalleryCategory} from '../../../../../../models/Common';
+import HorizontalScroller from '../../../../../../components/HorizontalScroller';
 
 interface Props {
   data: GalleryItems[];
@@ -27,7 +28,7 @@ const GalleryView = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.categoriesContainer}>
+      <HorizontalScroller>
         <PillButton
           title="Actividades"
           style={{marginRight: 10}}
@@ -45,7 +46,7 @@ const GalleryView = ({
           selected={category === GalleryCategory.Other}
           onPress={() => didChangeCategory(GalleryCategory.Other)}
         />
-      </View>
+      </HorizontalScroller>
       <FlatList
         data={data.slice()}
         ListEmptyComponent={<EmptyView message="No hay fotos para mostrar" />}

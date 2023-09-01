@@ -127,6 +127,10 @@ const ProfilePicture = ({
     return (
       <View style={styles.contentTall}>
         <Image
+          style={styles.coverTall}
+          source={require('../../../public/assets/images/pattern.png')}
+        />
+        <Image
           style={[styles.item, styles.itemTall]}
           source={{
             uri: url
@@ -180,8 +184,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentTall: {
-    backgroundColor: theme['color-primary-600'],
     width: Dimensions.get('screen').width,
+    backgroundColor: theme['color-primary-600'],
   },
   item: {
     height: 200,
@@ -192,7 +196,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 6,
     overflow: 'hidden',
-    backgroundColor: '#eee',
     alignSelf: 'center',
     position: 'absolute',
     top: 50,
@@ -209,7 +212,12 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   coverTall: {
-    height: 120,
+    height: 250,
+    top: 0,
+    left: 0,
+    width: Dimensions.get('screen').width,
+    position: 'absolute',
+    opacity: 0.25,
   },
   pictureBottomContainer: {
     justifyContent: 'flex-start',
