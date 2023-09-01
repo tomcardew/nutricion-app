@@ -290,17 +290,18 @@ const styles = StyleSheet.create({
     left: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    backgroundColor: '#00000099',
+    backgroundColor: 'rgba(0,0,0,0.75)',
   },
   container: {
     width: Dimensions.get('window').width * 0.8,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 10,
     overflow: 'hidden',
     maxWidth: 400,
   },
   innerContainer: {
-    padding: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
   },
   actionContainer: {
     display: 'flex',
@@ -321,20 +322,20 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     marginBottom: 10,
   },
   message: {
-    fontSize: 15,
+    fontSize: 14,
     marginBottom: 0,
     textAlign: 'center',
     color: 'black',
   },
   icon: {
     width: '100%',
-    height: 40,
-    marginBottom: 10,
+    height: 30,
+    marginBottom: 5,
   },
   error: {
     fontWeight: '300',

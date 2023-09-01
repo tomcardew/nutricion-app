@@ -11,6 +11,7 @@ import ScreenNames from "../../../../../../constants/Screens";
 import { Logger } from "../../../../../../utils/Utils";
 import GoogleFit, { Scopes } from "react-native-google-fit";
 import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
+import moment from "moment";
 
 class ProfileViewModel {
   authStore: AuthStore;
@@ -64,11 +65,17 @@ class ProfileViewModel {
   };
 
   getSteps = () => {
-    GoogleFit.getDailySteps(new Date()).then((result) => {
-      Logger.debug(result);
-      const steps = result.filter(
+    GoogleFit.getDailySteps(moment().toDate()).then((result) => {
+      const stepsFilter = result.filter(
         (item) => item.source == "com.google.android.gms:estimated_steps"
-      )[0].rawSteps[0].steps;
+      );
+      const steps =
+        stepsFilter && stepsFilter.length > 0
+          ? stepsFilter[0] &&
+            stepsFilter[0].rawSteps &&
+            stepsFilter[0].rawSteps[0] &&
+            stepsFilter[0].rawSteps[0].steps
+          : 0;
       this.profileStore.stepCount = steps;
       this.authStore.lastStepCount = steps;
 

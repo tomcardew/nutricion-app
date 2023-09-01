@@ -84,7 +84,9 @@ const ProfileView = ({
                 width: Dimensions.get('window').width - 40,
               }}>
               {upcomingDates.map(item => (
-                <View style={{marginBottom: 10, paddingHorizontal: 10}}>
+                <View
+                  style={{marginBottom: 10, paddingHorizontal: 10}}
+                  key={`profile-view-upcoming-date-${item.label}`}>
                   <Text
                     weight={FontWeight.Bold}
                     style={{color: theme['color-primary-700'], fontSize: 16}}>
@@ -111,7 +113,9 @@ const ProfileView = ({
                 width: Dimensions.get('window').width - 40,
               }}>
               {upcomingExercises.map(item => (
-                <View style={{marginBottom: 10, paddingHorizontal: 10}}>
+                <View
+                  style={{marginBottom: 10, paddingHorizontal: 10}}
+                  key={`profile-view-upcoming-exercise-${item.label}`}>
                   <Text
                     weight={FontWeight.Bold}
                     style={{color: theme['color-primary-700'], fontSize: 16}}>
@@ -127,20 +131,13 @@ const ProfileView = ({
               ))}
             </SimpleCard>
           )}
-          <ProfileWeightCard
-            weight={weight}
-            style={{
-              marginTop:
-                upcomingDates.length > 0 || upcomingExercises.length > 0
-                  ? 0
-                  : -100,
-              width: Dimensions.get('window').width - 40,
-            }}
-          />
           {enableSteps && (
             <ProfileStepsCard
               style={{
-                marginTop: 20,
+                marginTop:
+                  upcomingDates.length > 0 || upcomingExercises.length > 0
+                    ? 0
+                    : -100,
                 width: Dimensions.get('window').width - 40,
               }}
               goal={5000}
@@ -169,6 +166,13 @@ const ProfileView = ({
               width: Dimensions.get('window').width - 40,
             }}
             onSeeAllPress={didPressGoToProgress}
+          />
+          <ProfileWeightCard
+            weight={weight}
+            style={{
+              marginTop: 20,
+              width: Dimensions.get('window').width - 40,
+            }}
           />
           {profile.seccion_ejercicios && (
             <ProfileDietCard

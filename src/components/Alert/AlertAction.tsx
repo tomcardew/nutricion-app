@@ -17,8 +17,8 @@ const AlertActionButton = ({
       <Text
         weight={
           type == AlertActionType.Cancel
-            ? FontWeight.Regular
-            : FontWeight.Medium
+            ? FontWeight.Medium
+            : FontWeight.SemiBold
         }
         style={[
           styles.label,
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme['color-primary-600'],
-    fontSize: 16,
-    fontWeight: '400',
+    fontSize: 14,
+    fontWeight: '500',
   },
   labelAction: {},
   labelDestructive: {

@@ -9,7 +9,7 @@ interface Props {
   title: string;
   onPress?: () => void;
   disabled?: boolean;
-  type?: 'menu' | 'toggle' | 'separator';
+  type?: 'menu' | 'toggle' | 'separator' | 'button';
   style?: 'regular' | 'destructive';
   active?: boolean;
 }
@@ -28,12 +28,17 @@ const MenuOptionView = ({
   }, [active]);
   return (
     <TouchableOpacity
-      style={[styles.container, type == 'separator' && styles.separator, disabled && styles.disabled]}
-      disabled={type != 'menu' || disabled}
+      style={[
+        styles.container,
+        type == 'separator' && styles.separator,
+        disabled && styles.disabled,
+      ]}
+      disabled={disabled || (type != 'button' && type != 'menu')}
       onPress={onPress}>
       {type != 'separator' && (
         <Text
           weight={style == 'regular' ? FontWeight.Medium : FontWeight.SemiBold}
+          numberOfLines={0}
           style={[
             styles.text,
             style == 'destructive' && styles.textDestructive,
@@ -79,9 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   text: {
-    fontSize: 17,
+    fontSize: 16,
     color: 'black',
     lineHeight: 20,
+    maxWidth: Dimensions.get('window').width - 90,
   },
   textDestructive: {
     color: theme['color-danger-500'],
@@ -98,8 +104,8 @@ const styles = StyleSheet.create({
     left: Dimensions.get('window').width - 70,
   },
   disabled: {
-    opacity: 0.5
-  }
+    opacity: 0.5,
+  },
 });
 
 export default MenuOptionView;
