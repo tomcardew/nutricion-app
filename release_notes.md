@@ -90,3 +90,14 @@
 
 - Se añade símbolo de % a indicador del paciente
 - Se inicializan las gráficas desde cero para mostrar valores desde el primer registro
+
+### 1.0.0
+
+¡La aplicación llega a producción!
+
+- Se añade la librería `react-native-linear-gradient` para mejorar el aspecto visual de la aplicación
+- Se corrige visualización de menús de tipo `PillButton` permitiendo ahora hacer scroll cuando el espacio de visualización es insuficiente
+- Se corrige visualización de menús de tipo `MenuOptionView`
+- Se cambia de `Activar/Desactivar Ejercicios` a `Acceso a Ejercicios` en el menú de paciente para el usuario Administrador
+- Se cambia imagen de banner en pantalla de Login a un archivo local
+- Se realizan ajustes menores a los tamaños utilizados en las alertas pop-up

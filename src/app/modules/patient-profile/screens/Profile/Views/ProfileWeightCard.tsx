@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   circleOutside: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     borderColor: theme['color-primary-500'],
     borderWidth: 4,
     marginVertical: 10,
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   circleInside: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 185,
-    height: 185,
+    width: 130,
+    height: 130,
     borderRadius: 100,
     borderColor: theme['color-primary-500'],
     borderWidth: 1.5,
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
-    fontSize: 65,
+    fontSize: 55,
     color: theme['color-primary-700'],
   },
   indicator: {
     position: 'absolute',
-    bottom: 20,
-    fontSize: 18,
+    bottom: 16,
+    fontSize: 16,
     color: theme['color-primary-500'],
   },
 });

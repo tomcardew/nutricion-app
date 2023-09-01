@@ -7,6 +7,7 @@ import EmptyView from '../../../../../../components/EmptyView';
 import {dateToMonthYear} from '../../../../../../utils/Utils';
 import {PillButton} from '../../../../../../components/Buttons';
 import {GalleryCategory} from '../../../../../../models/Common';
+import HorizontalScroller from '../../../../../../components/HorizontalScroller';
 
 interface Props {
   data: GalleryItems[];
@@ -27,7 +28,7 @@ const PatientGalleryView = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.categoriesContainer}>
+      <HorizontalScroller>
         <PillButton
           title="Actividades"
           style={{marginRight: 10}}
@@ -45,7 +46,7 @@ const PatientGalleryView = ({
           selected={category === GalleryCategory.Other}
           onPress={() => didChangeCategory(GalleryCategory.Other)}
         />
-      </View>
+      </HorizontalScroller>
       <FlatList
         data={data.slice()}
         ListEmptyComponent={

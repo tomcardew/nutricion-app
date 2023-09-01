@@ -7,6 +7,7 @@ import EmptyView from '../../../../../../components/EmptyView';
 import {Patient} from '../../../../../../models/Patients';
 import {PillButton} from '../../../../../../components/Buttons';
 import {PatientsCategory} from '../../../../../../models/Common';
+import HorizontalScroller from '../../../../../../components/HorizontalScroller';
 
 interface Props {
   query: string;
@@ -33,7 +34,7 @@ const PatientsView = ({
 
   return (
     <View style={styles.content}>
-      <View style={styles.pillContainer}>
+      <HorizontalScroller style={{marginLeft: -20, marginTop: -10}}>
         <PillButton
           title="Todos"
           selected={category == PatientsCategory.All}
@@ -51,7 +52,7 @@ const PatientsView = ({
           selected={category == PatientsCategory.Inactive}
           onPress={() => didPressCategory(PatientsCategory.Inactive)}
         />
-      </View>
+      </HorizontalScroller>
       <SearchBar value={query} onChangeText={didChangeQuery} />
       <FlatList
         data={data.slice()}

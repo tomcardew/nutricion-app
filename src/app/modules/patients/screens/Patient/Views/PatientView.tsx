@@ -19,7 +19,7 @@ interface MenuOption {
   title: string;
   screen?: ScreenNames;
   props?: any;
-  type?: 'menu' | 'toggle' | 'separator';
+  type?: 'menu' | 'toggle' | 'separator' | 'button';
   style?: 'regular' | 'destructive';
 }
 
@@ -62,7 +62,7 @@ const PatientView = ({
       type: 'separator',
     },
     {
-      title: 'Activar/Desactivar Ejercicios',
+      title: 'Acceso a Ejercicios',
       type: 'toggle',
       props: {
         isToggleExercises: true,
@@ -74,7 +74,7 @@ const PatientView = ({
     },
     {
       title: patientIsActive ? 'Desactivar acceso' : 'Activar acceso',
-      type: 'menu',
+      type: 'button',
       style: patientIsActive ? 'destructive' : 'regular',
       props: {
         isChangeAccess: true,

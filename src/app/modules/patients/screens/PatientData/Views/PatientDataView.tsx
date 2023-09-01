@@ -9,6 +9,7 @@ import {
 import EmptyView from '../../../../../../components/EmptyView';
 import {PillButton} from '../../../../../../components/Buttons';
 import ProfileStepsCard from '../../../../patient-profile/screens/Profile/Views/ProfileStepsCard';
+import HorizontalScroller from '../../../../../../components/HorizontalScroller';
 
 interface Props {
   data: PatientProgress | null;
@@ -37,7 +38,7 @@ const PatientDataView = ({
         goal={5000}
         count={stepCount}
       />
-      <View style={styles.categoriesContainer}>
+      <HorizontalScroller>
         <PillButton
           title="Pliegues"
           style={{marginRight: 10}}
@@ -55,7 +56,7 @@ const PatientDataView = ({
           selected={selectedCategory === PatientProgresCategories.RESULTADOS}
           onPress={() => didChangeCategory(PatientProgresCategories.RESULTADOS)}
         />
-      </View>
+      </HorizontalScroller>
       <FlatList
         data={items.slice()}
         contentContainerStyle={{paddingBottom: 50}}
