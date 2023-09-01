@@ -80,21 +80,21 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     width: barWidth,
-    height: 30,
+    height: 20,
     borderRadius: 30,
     borderWidth: 1,
     borderColor: theme['color-primary-200'],
     backgroundColor: theme['color-primary-100'],
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
   progressBar: {
-    height: 30,
+    height: 20,
     borderRadius: 30,
     backgroundColor: theme['color-primary-500'],
-    minWidth: 30,
+    minWidth: 0,
     maxWidth: barWidth,
     justifyContent: 'center',
     alignItems: 'flex-end',
@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 0,
   },
   stepsText: {
     color: 'white',
+    fontSize: 12,
   },
 });
 

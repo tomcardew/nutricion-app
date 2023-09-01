@@ -48,7 +48,7 @@ export function pendingDatesToList(list: string[]) {
   let items: PendingDate[] = [];
   for (var i = 0; i < dates.length; i += 2) {
     const date = dates[i];
-    const place = list[i + 1];
+    const place = list[i + 1] ?? "";
     let added = false;
     for (var j = 0; j < items.length; j++) {
       let item = items[j];
