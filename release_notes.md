@@ -101,3 +101,8 @@
 - Se cambia de `Activar/Desactivar Ejercicios` a `Acceso a Ejercicios` en el menú de paciente para el usuario Administrador
 - Se cambia imagen de banner en pantalla de Login a un archivo local
 - Se realizan ajustes menores a los tamaños utilizados en las alertas pop-up
+
+### Feature: Chat Core
+
+- Se añaden funcionalidades experimentales al apartado de chat:
+  - Se mejora la visualización de mensajes encadenados

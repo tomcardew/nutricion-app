@@ -8,6 +8,7 @@ import {
   PatientPicture,
   PatientProgress,
   PatientObjective,
+  ExerciseComment,
 } from "../../models/Patients";
 import moment from "moment";
 import {
@@ -1340,5 +1341,17 @@ export class PatientsStore {
     //   return true;
     // }
     return false;
+  }
+
+  get selectedAdminExerciseNotes() {
+    return this.selectedAdminExercise?.Notas.map(
+      (item: ExerciseComment, index: number) => {
+        return {
+          ...item,
+          isPrecededByOwn:
+            this.selectedAdminExercise?.Notas[index - 1].Nombre === item.Nombre,
+        };
+      }
+    );
   }
 }

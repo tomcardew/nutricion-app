@@ -39,6 +39,7 @@ const PatientExerciseCommentsView = ({
             owner={item.Nombre}
             comment={item.nota}
             isCurrentUser={item.Nombre === username}
+            isPrecededByOwn={item.isPrecededByOwn}
           />
         )}
         keyExtractor={item =>

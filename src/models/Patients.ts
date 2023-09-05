@@ -135,6 +135,8 @@ export interface PatientExerciseListItem {
 export interface ExerciseComment {
   nota: string;
   Nombre: string;
+  // ADDITIONAL PARAMS
+  isPrecededByOwn?: boolean;
 }
 
 export interface PatientObjective {

@@ -19,7 +19,7 @@ const PatientExerciseCommentsController = observer(({viewModel}: Props) => {
       onAlertDismiss={viewModel.dismiss}
       onBackAction={viewModel.goBack}>
       <PatientExerciseCommentsView
-        notes={viewModel.patientsStore.selectedAdminExercise?.Notas}
+        notes={viewModel.patientsStore.selectedAdminExerciseNotes}
         username={viewModel.authStore.user?.nombre}
         commentTextPrompt={viewModel.patientsStore.commentTextPrompt}
         onChangeText={viewModel.onChangeText}

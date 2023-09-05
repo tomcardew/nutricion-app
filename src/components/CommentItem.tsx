@@ -8,9 +8,15 @@ interface Props {
   owner: string;
   comment: string;
   isCurrentUser?: boolean;
+  isPrecededByOwn?: boolean;
 }
 
-const CommentItem = ({owner, comment, isCurrentUser}: Props) => {
+const CommentItem = ({
+  owner,
+  comment,
+  isCurrentUser,
+  isPrecededByOwn,
+}: Props) => {
   return (
     <View style={styles.container}>
       <View
@@ -24,23 +30,25 @@ const CommentItem = ({owner, comment, isCurrentUser}: Props) => {
             marginLeft: isCurrentUser ? 'auto' : 0,
           },
         ]}>
+        {!isPrecededByOwn && (
+          <Text
+            weight={FontWeight.Bold}
+            style={[
+              styles.text,
+              {
+                fontSize: 12,
+                color: isCurrentUser ? theme['color-primary-800'] : 'white',
+                textTransform: 'uppercase',
+              },
+            ]}>
+            {isCurrentUser ? 'Tú' : owner}
+          </Text>
+        )}
         <Text
-          weight={FontWeight.Bold}
           style={[
             styles.text,
             {
-              fontSize: 12,
-              color: isCurrentUser ? theme['color-primary-700'] : 'white',
-              textTransform: 'uppercase',
-            },
-          ]}>
-          {isCurrentUser ? 'Tú' : owner}
-        </Text>
-        <Text
-          style={[
-            styles.text,
-            {
-              color: isCurrentUser ? theme['color-primary-700'] : 'white',
+              color: isCurrentUser ? theme['color-primary-800'] : 'white',
               textAlign: isCurrentUser ? 'right' : 'left',
             },
           ]}>
@@ -59,7 +67,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     justifyContent: 'flex-start',
-    backgroundColor: theme['color-primary-700'],
+    backgroundColor: theme['color-primary-800'],
     width: (Dimensions.get('window').width - 20) * 0.8,
     padding: 10,
     borderRadius: 5,
